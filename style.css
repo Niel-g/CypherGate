@@ -592,28 +592,41 @@ img { max-width: 100%; }
   color: var(--text-mid);
   font-size: 0.78rem;
   white-space: nowrap;
-  line-height: 1;
-}
-.score-label { font-size: 0.7rem; color: var(--text-muted); }
-
-.health-breakdown {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
 }
 
-.breakdown-row {
+.breakdown-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: var(--emerald);
+  box-shadow: 0 0 6px rgba(16,185,129,0.5);
+  transition: width 1.5s cubic-bezier(0.4,0,0.2,1) 0.5s;
+}
+.bar-fill.amber-bar {
+  background: var(--amber);
+  box-shadow: 0 0 6px rgba(245,158,11,0.5);
+}
+
+.breakdown-val {
+  width: 24px;
+  font-size: 0.75rem;
+  text-align: right;
+  color: var(--emerald);
+}
+.breakdown-val.amber { color: var(--amber); }
+
+/* ── Status Cards ── */
+.dash-card--status {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.8rem;
-}
-
-.breakdown-label {
-  width: 110px;
-  flex-shrink: 0;
-  color: var(--text-mid);
-  font-size: 0.78rem;
   gap: 1rem;
   padding: 1.1rem 1.4rem;
 }
@@ -1466,9 +1479,30 @@ a.contact-value:hover { color: var(--emerald); }
   }
 
   /* Health breakdown: fixed label width causes overflow on small screens */
+  .breakdown-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label value"
+      "bar bar";
+    column-gap: 0.75rem;
+    row-gap: 0.5rem;
+    align-items: center;
+  }
   .breakdown-label {
-    width: 90px;
-    font-size: 0.72rem;
+    grid-area: label;
+    width: auto;
+    font-size: 0.78rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .breakdown-val {
+    grid-area: value;
+    width: auto;
+  }
+  .breakdown-bar {
+    grid-area: bar;
+    width: 100%;
   }
 
   /* Contact value: long emails must wrap */
@@ -1508,7 +1542,7 @@ a.contact-value:hover { color: var(--emerald); }
 
   /* Dashboard */
   .dash-card { padding: 1.1rem; }
-  .breakdown-label { width: 80px; font-size: 0.68rem; }
+  .breakdown-label { font-size: 0.75rem; }
 
   /* About philosophy */
   .philosophy-metrics { grid-template-columns: 1fr; }
