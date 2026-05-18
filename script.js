@@ -32,6 +32,24 @@
       mobileMenu.classList.remove('open');
     });
   });
+
+  // Close menu when any button inside mobile menu is clicked
+  mobileMenu.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Close menu on outside click
+  document.addEventListener('click', (e) => {
+    if (mobileMenu.classList.contains('open') &&
+        !mobileMenu.contains(e.target) &&
+        !hamburger.contains(e.target)) {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+  }, { passive: true });
 })();
 
 
