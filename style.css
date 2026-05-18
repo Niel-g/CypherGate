@@ -592,7 +592,6 @@ img { max-width: 100%; }
   color: var(--text-mid);
   font-size: 0.78rem;
   white-space: nowrap;
-white);
   line-height: 1;
 }
 .score-label { font-size: 0.7rem; color: var(--text-muted); }
@@ -615,7 +614,6 @@ white);
   flex-shrink: 0;
   color: var(--text-mid);
   font-size: 0.78rem;
-gn-items: center;
   gap: 1rem;
   padding: 1.1rem 1.4rem;
 }
