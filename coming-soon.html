@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Audit — Coming Soon | Cypher Gate</title>
+  <link rel="icon" href="asset/img/Logo.png">
+  <meta name="description" content="Cypher Gate's Free Security Audit portal is launching soon. Get notified when we go live." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ─── CSS Variables (matches CypherGate brand) ─── */
+    :root {
+      --bg-deep:       #0A0F14;
+      --bg-base:       #101820;
+      --bg-surface:    #111827;
+      --bg-card:       #131e2b;
+      --bg-card-hover: #162234;
+      --emerald:       #10B981;
+      --emerald-dim:   #0d9669;
+      --emerald-glow:  rgba(16, 185, 129, 0.15);
+      --emerald-glow2: rgba(16, 185, 129, 0.08);
+      --amber:         #F59E0B;
+      --amber-glow:    rgba(245, 158, 11, 0.15);
+      --magenta:       #FF006E;
+      --magenta-glow:  rgba(255, 0, 110, 0.15);
+      --text-white:    #FFFFFF;
+      --text-mid:      #A1A1AA;
+      --text-muted:    #71717A;
+      --border:        rgba(255,255,255,0.06);
+      --border-hover:  rgba(16, 185, 129, 0.25);
+      --radius-sm:     8px;
+      --radius-md:     14px;
+      --radius-lg:     20px;
+      --radius-xl:     28px;
+      --transition:    all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-card:   0 4px 32px rgba(0,0,0,0.4);
+      --shadow-glow:   0 0 40px rgba(16, 185, 129, 0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── Canvas Background ─── */
+    #bgCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── Grid overlay ─── */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 0;
+      background: rgba(10,15,20,0.0);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(0px);
+      transition: var(--transition);
+    }
+    .nav.scrolled {
+      background: rgba(10,15,20,0.92);
+      border-bottom-color: var(--border);
+      backdrop-filter: blur(16px);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+    .logo-img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    .logo-text { color: var(--text-white); }
+    .logo-accent { color: var(--emerald); }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .nav-back:hover {
+      color: var(--text-white);
+      border-color: var(--border-hover);
+      background: rgba(16,185,129,0.06);
+    }
+
+    /* ─── MAIN ─── */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+    }
+
+    /* ─── Status badge ─── */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.12em;
+      color: var(--emerald);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      animation: fadeSlideDown 0.6s ease both;
+    }
+    .pulse-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      position: relative;
+    }
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: rgba(16,185,129,0.3);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(2);   opacity: 0; }
+    }
+
+    /* ─── Shield Icon ─── */
+    .icon-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 96px;
+      height: 96px;
+      margin-bottom: 2.5rem;
+      animation: fadeSlideDown 0.7s ease 0.1s both;
+    }
+    .icon-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-xl);
+      background: var(--emerald-glow);
+      border: 1px solid rgba(16,185,129,0.25);
+    }
+    .icon-glow {
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%);
+      animation: breathe 3s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.6; transform: scale(0.95); }
+      50%       { opacity: 1;   transform: scale(1.05); }
+    }
+    .icon-wrap i {
+      position: relative;
+      font-size: 2.4rem;
+      color: var(--emerald);
+      z-index: 1;
+    }
+
+    /* ─── Headline ─── */
+    .cs-headline {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      animation: fadeSlideDown 0.7s ease 0.15s both;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--emerald) 0%, #34D399 50%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cs-sub {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      text-align: center;
+      max-width: 520px;
+      margin-bottom: 3.5rem;
+      animation: fadeSlideDown 0.7s ease 0.2s both;
+    }
+
+    /* ─── Countdown ─── */
+    .countdown-wrap {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+      animation: fadeSlideDown 0.7s ease 0.25s both;
+    }
+    .countdown-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      min-width: 72px;
+    }
+    .countdown-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 600;
+      color: var(--text-white);
+      line-height: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1.2rem;
+      min-width: 80px;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .countdown-num.tick {
+      border-color: rgba(16,185,129,0.4);
+    }
+    .countdown-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .countdown-sep {
+      font-size: 2rem;
+      color: var(--text-muted);
+      line-height: 1;
+      padding-top: 0.9rem;
+    }
+
+    /* ─── Notify Form ─── */
+    .notify-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      width: 100%;
+      max-width: 440px;
+      margin-bottom: 3.5rem;
+      animation: fadeSlideDown 0.7s ease 0.3s both;
+    }
+    .notify-label {
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .notify-row {
+      display: flex;
+      gap: 0.6rem;
+      width: 100%;
+    }
+    .notify-input {
+      flex: 1;
+      padding: 0.75rem 1.2rem;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .notify-input::placeholder { color: var(--text-muted); }
+    .notify-input:focus {
+      border-color: rgba(16,185,129,0.4);
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.08);
+    }
+    .btn-notify {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      background: var(--emerald);
+      color: var(--bg-deep);
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .btn-notify:hover {
+      background: #0ea571;
+      box-shadow: 0 0 24px rgba(16,185,129,0.45);
+      transform: translateY(-1px);
+    }
+    .notify-success {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--emerald);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .notify-success.show { display: flex; }
+
+    /* ─── Feature chips ─── */
+    .features-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 4rem;
+      animation: fadeSlideDown 0.7s ease 0.35s both;
+    }
+    .feature-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      transition: var(--transition);
+    }
+    .feature-chip i { color: var(--emerald); font-size: 0.75rem; }
+    .feature-chip:hover {
+      border-color: var(--border-hover);
+      color: var(--text-white);
+    }
+
+    /* ─── Progress bar ─── */
+    .progress-wrap {
+      width: 100%;
+      max-width: 440px;
+      margin-bottom: 4rem;
+      animation: fadeSlideDown 0.7s ease 0.4s both;
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+    }
+    .progress-header span:last-child { color: var(--emerald); }
+    .progress-bar {
+      height: 6px;
+      background: var(--bg-card);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--emerald), #34D399);
+      border-radius: 999px;
+      transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px rgba(16,185,129,0.5);
+    }
+
+    /* ─── Social links ─── */
+    .social-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      animation: fadeSlideDown 0.7s ease 0.45s both;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+    .social-link:hover {
+      border-color: var(--border-hover);
+      color: var(--emerald);
+      background: var(--emerald-glow);
+    }
+
+    /* ─── Footer note ─── */
+    .footer-note {
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      text-align: center;
+      animation: fadeSlideDown 0.7s ease 0.5s both;
+    }
+    .footer-note a { color: var(--emerald); }
+    .footer-note a:hover { text-decoration: underline; }
+
+    /* ─── Animations ─── */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Particle dots ─── */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float linear infinite;
+      z-index: 0;
+    }
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-100px) scale(1); opacity: 0; }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 600px) {
+      .page-wrap { padding: 5.5rem 1rem 3rem; }
+      .countdown-wrap { gap: 0.5rem; }
+      .countdown-num  { font-size: 1.6rem; min-width: 56px; padding: 0.55rem 0.7rem; }
+      .countdown-sep  { font-size: 1.2rem; }
+      .notify-row     { flex-direction: column; gap: 0.75rem; }
+      .notify-input   { width: 100%; min-width: 0; border-radius: 12px; }
+      .btn-notify     { width: 100%; justify-content: center; border-radius: 12px; }
+      .cs-headline    { font-size: 1.9rem; }
+      .cs-sub         { font-size: 0.9rem; }
+    }
+
+    @media (max-width: 380px) {
+      .countdown-num  { font-size: 1.3rem; min-width: 46px; padding: 0.45rem 0.5rem; }
+      .countdown-sep  { font-size: 1rem; padding: 0 0.1rem; }
+      .cs-headline    { font-size: 1.6rem; }
+      .nav-container  { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <canvas id="bgCanvas"></canvas>
+  <div class="bg-grid"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="asset/img/Logo.png" alt="Cypher Gate" class="logo-img" />
+        <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+      <a href="index.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Site
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN PAGE -->
+  <main class="page-wrap">
+
+    <!-- Status badge -->
+    <div class="status-badge mono">
+      <span class="pulse-dot"></span>
+      Portal Under Construction
+    </div>
+
+    <!-- Icon -->
+    <div class="icon-wrap">
+      <div class="icon-bg"></div>
+      <div class="icon-glow"></div>
+      <i class="fa-solid fa-shield-halved"></i>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="cs-headline">
+      Your Free Audit<br />Is <span class="gradient-text">Coming Soon.</span>
+    </h1>
+
+    <p class="cs-sub">
+      We're building the ultimate Security Audit portal — purpose-built to assess, diagnose, and fortify your business. No cost. No commitment. Just clarity.
+    </p>
+
+    <!-- Countdown -->
+    <div class="countdown-wrap" id="countdown">
+      <div class="countdown-block">
+        <div class="countdown-num mono" id="cd-days">00</div>
+        <span class="countdown-label">Days</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-block">
+        <div class="countdown-num mono" id="cd-hours">00</div>
+        <span class="countdown-label">Hours</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-block">
+        <div class="countdown-num mono" id="cd-mins">00</div>
+        <span class="countdown-label">Minutes</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-block">
+        <div class="countdown-num mono" id="cd-secs">00</div>
+        <span class="countdown-label">Seconds</span>
+      </div>
+    </div>
+
+    <!-- Notify -->
+    <div class="notify-wrap">
+      <span class="notify-label">Get notified when we launch</span>
+      <div class="notify-row" id="notifyRow">
+        <input
+          type="email"
+          class="notify-input"
+          id="notifyEmail"
+          placeholder="your@email.com"
+          autocomplete="email"
+        />
+        <button class="btn-notify" id="notifyBtn" onclick="handleNotify()">
+          <i class="fa-solid fa-bell"></i>
+          Notify Me
+        </button>
+      </div>
+      <div class="notify-success" id="notifySuccess">
+        <i class="fa-solid fa-circle-check"></i>
+        You're on the list — we'll notify you at launch!
+      </div>
+    </div>
+
+    <!-- What's coming chips -->
+    <div class="features-row">
+      <div class="feature-chip">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Vulnerability Scan
+      </div>
+      <div class="feature-chip">
+        <i class="fa-solid fa-network-wired"></i>
+        Network Assessment
+      </div>
+      <div class="feature-chip">
+        <i class="fa-solid fa-id-badge"></i>
+        Identity Risk Report
+      </div>
+      <div class="feature-chip">
+        <i class="fa-solid fa-file-shield"></i>
+        Compliance Check
+      </div>
+      <div class="feature-chip">
+        <i class="fa-solid fa-chart-line"></i>
+        Security Score Card
+      </div>
+    </div>
+
+    <!-- Build progress -->
+    <div class="progress-wrap">
+      <div class="progress-header">
+        <span>Build Progress</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- Social -->
+    <div class="social-row">
+      <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="#" class="social-link" aria-label="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="mailto:CypherGate@gmail.com" class="social-link" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+
+    <!-- Footer note -->
+    <p class="footer-note">
+      Questions? Reach us at
+      <a href="mailto:CypherGate@gmail.com">CypherGate@gmail.com</a>
+      &nbsp;·&nbsp; <a href="tel:+639939073410">+63 993 907 3410</a>
+      <br /><br />
+      © 2026 Cypher Gate. All rights reserved.
+    </p>
+
+  </main>
+
+  <!-- Three.js for background particles -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    /* ─── Nav scroll ─── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* ─── Countdown: 30 days from now ─── */
+    const launchDate = new Date();
+    launchDate.setDate(launchDate.getDate() + 30);
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function updateCountdown() {
+      const now  = new Date();
+      const diff = launchDate - now;
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent  = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-mins').textContent  = '00';
+        document.getElementById('cd-secs').textContent  = '00';
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      const secEl = document.getElementById('cd-secs');
+      const prev  = secEl.textContent;
+      const next  = pad(s);
+
+      document.getElementById('cd-days').textContent  = pad(d);
+      document.getElementById('cd-hours').textContent = pad(h);
+      document.getElementById('cd-mins').textContent  = pad(m);
+      secEl.textContent = next;
+
+      if (prev !== next) {
+        secEl.classList.add('tick');
+        setTimeout(() => secEl.classList.remove('tick'), 300);
+      }
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    /* ─── Progress bar animate on load ─── */
+    window.addEventListener('load', () => {
+      const target = 72;
+      setTimeout(() => {
+        document.getElementById('progressFill').style.width = target + '%';
+        document.getElementById('progressPct').textContent  = target + '%';
+      }, 600);
+    });
+
+    /* ─── Notify form ─── */
+    function handleNotify() {
+      const input   = document.getElementById('notifyEmail');
+      const row     = document.getElementById('notifyRow');
+      const success = document.getElementById('notifySuccess');
+      const email   = input.value.trim();
+      const re      = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!re.test(email)) {
+        input.style.borderColor = 'rgba(255,0,110,0.5)';
+        input.focus();
+        setTimeout(() => input.style.borderColor = '', 1500);
+        return;
+      }
+      row.style.display = 'none';
+      success.classList.add('show');
+    }
+    document.getElementById('notifyEmail').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleNotify();
+    });
+
+    /* ─── Three.js particle field (matches hero canvas style) ─── */
+    (() => {
+      const canvas   = document.getElementById('bgCanvas');
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const scene  = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+
+      /* Particle geometry */
+      const count  = 600;
+      const geo    = new THREE.BufferGeometry();
+      const pos    = new Float32Array(count * 3);
+      const cols   = new Float32Array(count * 3);
+
+      const emerald = new THREE.Color('#10B981');
+      const white   = new THREE.Color('#ffffff');
+      const amber   = new THREE.Color('#F59E0B');
+
+      for (let i = 0; i < count; i++) {
+        pos[i * 3]     = (Math.random() - 0.5) * 20;
+        pos[i * 3 + 1] = (Math.random() - 0.5) * 12;
+        pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
+
+        const pick = Math.random();
+        const c    = pick < 0.6 ? emerald : pick < 0.85 ? white : amber;
+        cols[i * 3]     = c.r;
+        cols[i * 3 + 1] = c.g;
+        cols[i * 3 + 2] = c.b;
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute('color',    new THREE.BufferAttribute(cols, 3));
+
+      const mat   = new THREE.PointsMaterial({ size: 0.025, vertexColors: true, transparent: true, opacity: 0.55 });
+      const pts   = new THREE.Points(geo, mat);
+      scene.add(pts);
+
+      /* Line connections */
+      const lineMat   = new THREE.LineBasicMaterial({ color: 0x10B981, transparent: true, opacity: 0.04 });
+      const lineGeo   = new THREE.BufferGeometry();
+      const linePos   = [];
+      const threshold = 2.5;
+
+      for (let i = 0; i < count; i++) {
+        for (let j = i + 1; j < count; j++) {
+          const dx = pos[i*3] - pos[j*3];
+          const dy = pos[i*3+1] - pos[j*3+1];
+          const dz = pos[i*3+2] - pos[j*3+2];
+          const d  = Math.sqrt(dx*dx + dy*dy + dz*dz);
+          if (d < threshold) {
+            linePos.push(pos[i*3], pos[i*3+1], pos[i*3+2]);
+            linePos.push(pos[j*3], pos[j*3+1], pos[j*3+2]);
+          }
+        }
+      }
+      lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePos, 3));
+      scene.add(new THREE.LineSegments(lineGeo, lineMat));
+
+      /* Animate */
+      let frame;
+      function animate() {
+        frame = requestAnimationFrame(animate);
+        pts.rotation.y += 0.0004;
+        pts.rotation.x += 0.0001;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+  </script>
+
+</body>
+</html>
