@@ -216,9 +216,12 @@ img { max-width: 100%; }
 }
 
 .logo-img {
-  height: 36px;        /* adjust to fit your logo */
-  width: auto;
+  height: 36px;
+  width: 36px;
   object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.4));
 }
 
 .nav-logo {
@@ -1567,4 +1570,251 @@ a.contact-value:hover { color: var(--emerald); }
   /* Section titles */
   .section-title { font-size: 1.6rem; }
   .section-sub { font-size: 0.9rem; }
+}
+
+/* ═══════════════════════════════════════
+   TEAM SECTION
+═══════════════════════════════════════ */
+
+/* ── Section Header (centered variant used in team) ── */
+.section-header {
+  text-align: center;
+}
+.section-header .section-label {
+  justify-content: center;
+}
+.section-header .section-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-section {
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+.team-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 50%, rgba(14, 124, 90, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 90% 20%, rgba(14, 124, 90, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+}
+
+/* ── Card ── */
+.team-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(14, 124, 90, 0.18);
+  border-radius: 1.25rem;
+  padding: 2rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(14, 124, 90, 0.5);
+  box-shadow: 0 20px 60px rgba(14, 124, 90, 0.12), 0 0 0 1px rgba(14, 124, 90, 0.12);
+}
+
+.team-card__glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(14, 124, 90, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.team-card:hover .team-card__glow {
+  opacity: 1;
+}
+
+/* ── Avatar ── */
+.team-avatar {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin-bottom: 0.25rem;
+  flex-shrink: 0;
+}
+
+.team-avatar__placeholder {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(14, 124, 90, 0.08);
+  border: 2px solid rgba(14, 124, 90, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  padding: 0;
+  overflow: hidden;
+}
+
+.team-avatar__placeholder:empty,
+.team-avatar__placeholder:not(:has(img[src])),
+.team-avatar__placeholder:has(img[src=""]) {
+  padding: 0.5rem;
+  background: rgba(14, 124, 90, 0.08);
+  border: 2px dashed rgba(14, 124, 90, 0.35);
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.team-avatar__ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  background: linear-gradient(135deg, rgba(14, 124, 90, 0.6), transparent 60%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  transition: opacity 0.3s ease;
+  opacity: 0.5;
+}
+
+.team-card:hover .team-avatar__ring {
+  opacity: 1;
+}
+
+/* ── Badge / Role ── */
+.team-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--emerald);
+  background: rgba(14, 124, 90, 0.1);
+  border: 1px solid rgba(14, 124, 90, 0.25);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  line-height: 1.4;
+}
+
+/* ── Name ── */
+.team-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ── Bio ── */
+.team-bio {
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+
+/* ── Skill Tags ── */
+.team-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.team-tag {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(14, 124, 90, 0.85);
+  background: rgba(14, 124, 90, 0.07);
+  border: 1px solid rgba(14, 124, 90, 0.18);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── Portfolio Button ── */
+.team-portfolio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+  color: var(--emerald);
+  background: transparent;
+  border: 1.5px solid rgba(14, 124, 90, 0.35);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+
+.team-portfolio-btn:hover {
+  background: var(--emerald);
+  border-color: var(--emerald);
+  color: var(--bg-deep);
+  box-shadow: 0 4px 20px rgba(14, 124, 90, 0.35);
+}
+
+.team-portfolio-btn i {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.team-portfolio-btn:hover i {
+  transform: translate(2px, -2px);
+}
+
+.team-portfolio-btn--disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+  border-style: dashed;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .team-grid { grid-template-columns: 1fr; }
+  .team-section { padding: 4rem 0; }
 }

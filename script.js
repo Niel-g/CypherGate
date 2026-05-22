@@ -19,37 +19,65 @@
     nav.classList.toggle('scrolled', window.scrollY > 30);
   }, { passive: true });
 
-  // Hamburger toggle
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
+  // Helper: close the mobile menu
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = ''; // re-enable body scroll
+  }
+
+  // Helper: open the mobile menu
+  function openMenu() {
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden'; // prevent background scroll
+  }
+
+  // Replace hamburger toggle with open/close helpers
+  hamburger.removeEventListener('click', hamburger._toggleHandler);
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (mobileMenu.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
-  // Close menu on mobile link click
+  // Re-wire mobile links to use closeMenu helper
   mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-    });
+    link.addEventListener('click', closeMenu);
   });
 
-  // Close menu when any button inside mobile menu is clicked
   mobileMenu.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-    });
+    btn.addEventListener('click', closeMenu);
   });
 
-  // Close menu on outside click
+  // Close on outside click (desktop browsers)
   document.addEventListener('click', (e) => {
     if (mobileMenu.classList.contains('open') &&
         !mobileMenu.contains(e.target) &&
         !hamburger.contains(e.target)) {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
+      closeMenu();
+    }
+  });
+
+  // Close on outside touchstart (iOS Safari fix — touch events on body)
+  document.addEventListener('touchstart', (e) => {
+    if (mobileMenu.classList.contains('open') &&
+        !mobileMenu.contains(e.target) &&
+        !hamburger.contains(e.target)) {
+      closeMenu();
     }
   }, { passive: true });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      closeMenu();
+      hamburger.focus(); // return focus for accessibility
+    }
+  });
 })();
 
 

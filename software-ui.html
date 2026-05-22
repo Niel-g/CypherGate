@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software UI Preview — Cypher Gate</title>
+  <link rel="icon" href="asset/img/Logo.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ─── Variables (matches main site) ─── */
+    :root {
+      --bg-deep:       #0A0F14;
+      --bg-base:       #101820;
+      --bg-surface:    #111827;
+      --bg-card:       #131e2b;
+      --bg-card-hover: #162234;
+      --emerald:       #10B981;
+      --emerald-dim:   #0d9669;
+      --emerald-glow:  rgba(16, 185, 129, 0.15);
+      --emerald-glow2: rgba(16, 185, 129, 0.06);
+      --amber:         #F59E0B;
+      --magenta:       #FF006E;
+      --magenta-glow:  rgba(255, 0, 110, 0.12);
+      --text-white:    #FFFFFF;
+      --text-mid:      #A1A1AA;
+      --text-muted:    #71717A;
+      --border:        rgba(255,255,255,0.06);
+      --border-hover:  rgba(16, 185, 129, 0.25);
+      --radius-sm:     8px;
+      --radius-md:     14px;
+      --radius-lg:     20px;
+      --radius-xl:     28px;
+      --transition:    all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── Background Noise/Grid Effect ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background: rgba(10, 15, 20, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .logo-accent { color: var(--emerald); }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--emerald-glow);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--emerald);
+      font-size: 0.9rem;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-mid);
+      font-size: 0.88rem;
+      font-family: 'JetBrains Mono', monospace;
+      transition: var(--transition);
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+
+    .nav-back:hover {
+      color: var(--emerald);
+      border-color: var(--border-hover);
+      background: var(--emerald-glow2);
+    }
+
+    /* ─── MAIN LAYOUT ─── */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      padding-top: 90px;
+      padding-bottom: 6rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ─── PAGE HEADER ─── */
+    .page-header {
+      text-align: center;
+      padding: 3.5rem 0 2.5rem;
+    }
+
+    .page-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .label-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .page-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--emerald) 0%, #34D399 50%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-sub {
+      color: var(--text-mid);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ─── TABS ─── */
+    .tabs-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2.5rem 0 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text-white);
+    }
+
+    .tab-btn.active {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: var(--bg-deep);
+      font-weight: 600;
+    }
+
+    /* ─── UI VIEWER CARD ─── */
+    .ui-viewer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 8px 64px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .ui-viewer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+      opacity: 0.5;
+    }
+
+    /* ─── BROWSER CHROME ─── */
+    .browser-chrome {
+      background: #0d1520;
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red   { background: #FF5F57; }
+    .dot-amber { background: #FFBD2E; }
+    .dot-green { background: #28CA41; }
+
+    .browser-url {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      max-width: 380px;
+    }
+
+    .url-lock { color: var(--emerald); font-size: 0.7rem; }
+
+    .browser-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .browser-action-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .browser-action-btn:hover {
+      color: var(--emerald);
+      border-color: var(--border-hover);
+    }
+
+    /* ─── IMAGE ZONE ─── */
+    .image-zone {
+      position: relative;
+      min-height: 520px;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ─── TAB SLIDES ─── */
+    .tab-slide {
+      display: none;
+      width: 100%;
+      min-height: 520px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-slide.active {
+      display: flex;
+    }
+
+    .tab-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Placeholder shown when no image set */
+    .image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 4rem 2rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .placeholder-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-lg);
+      background: var(--emerald-glow);
+      border: 1px dashed rgba(16,185,129,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--emerald);
+      font-size: 2rem;
+    }
+
+    .placeholder-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .placeholder-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .placeholder-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1.1rem;
+      background: var(--emerald-glow);
+      border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--emerald);
+      letter-spacing: 0.1em;
+    }
+
+    /* corner decorations */
+    .corner {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    .corner-tl { top: 12px; left: 12px; border-top: 2px solid var(--emerald); border-left: 2px solid var(--emerald); }
+    .corner-tr { top: 12px; right: 12px; border-top: 2px solid var(--emerald); border-right: 2px solid var(--emerald); }
+    .corner-bl { bottom: 12px; left: 12px; border-bottom: 2px solid var(--emerald); border-left: 2px solid var(--emerald); }
+    .corner-br { bottom: 12px; right: 12px; border-bottom: 2px solid var(--emerald); border-right: 2px solid var(--emerald); }
+
+    /* scan line animation */
+    .scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(16,185,129,0.5), transparent);
+      animation: scan 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scan {
+      0%   { top: 0%; opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* ─── IMAGE SLOT CONTROLS ─── */
+    .viewer-footer {
+      background: #0d1520;
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .viewer-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid rgba(16,185,129,0.25);
+      background: var(--emerald-glow);
+      color: var(--emerald);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* ─── EXPLANATION PANEL ─── */
+    .explanation-section {
+      margin-top: 2.5rem;
+    }
+
+    .explanation-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .explanation-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+      opacity: 0.4;
+    }
+
+    .explanation-header {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .explanation-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .expl-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--magenta-glow);
+      border: 1px solid rgba(255,0,110,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--magenta);
+      font-size: 0.9rem;
+    }
+
+    .expl-label {
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .expl-heading {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-top: 0.1rem;
+    }
+
+    /* ─── EXPLANATION BODY (static content) ─── */
+    .expl-body {
+      padding: 1.75rem 1.75rem 2rem;
+    }
+
+    /* ── paragraph text ── */
+    .expl-body p {
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .expl-body p:last-child { margin-bottom: 0; }
+
+    /* ── highlight a word/phrase in emerald ── */
+    .expl-body .highlight {
+      color: var(--emerald);
+      font-weight: 600;
+    }
+
+    /* ── bullet list ── */
+    .expl-body ul {
+      list-style: none;
+      margin: 0.75rem 0 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .expl-body ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      color: var(--text-mid);
+      font-size: 0.93rem;
+      line-height: 1.7;
+    }
+
+    .expl-body ul li::before {
+      content: '◆';
+      color: var(--emerald);
+      font-size: 0.55rem;
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    /* ── section heading inside body ── */
+    .expl-body h4 {
+      color: var(--text-white);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin: 1.25rem 0 0.5rem;
+      text-transform: uppercase;
+    }
+
+    /* ── code-style inline tag ── */
+    .expl-body code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.18);
+      border-radius: 4px;
+      padding: 0.1rem 0.45rem;
+      color: var(--emerald);
+    }
+
+    /* ── bottom label strip ── */
+    .expl-footer-strip {
+      padding: 0.85rem 1.75rem;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── SECTION META STATS ─── */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0 0;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--emerald);
+    }
+
+    .stat-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .browser-chrome { padding: 0.6rem 0.75rem; }
+      .browser-url { display: none; }
+      .image-zone { min-height: 280px; }
+      .stats-row { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <span>Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+      <a href="index.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Site
+      </a>
+    </div>
+  </nav>
+
+  <!-- ─── PAGE ─── -->
+  <div class="page-wrapper">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="page-header">
+        <div class="page-label mono">
+          <span class="label-dot"></span>
+          Platform Preview
+        </div>
+        <h1 class="page-title">
+          Our Software <span class="gradient-text">UI Showcase</span>
+        </h1>
+        <p class="page-sub">
+          Explore the interface powering Cypher Gate's real-time security monitoring and threat response platform.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs-bar" id="tabsBar">
+        <button class="tab-btn active" data-tab="0" onclick="switchTab(0)">Dashboard</button>
+        <button class="tab-btn" data-tab="1" onclick="switchTab(1)">MDR Monitor</button>
+        <button class="tab-btn" data-tab="2" onclick="switchTab(2)">Vulnerability Mgmt</button>
+        <button class="tab-btn" data-tab="3" onclick="switchTab(3)">Identity &amp; Access</button>
+        <button class="tab-btn" data-tab="4" onclick="switchTab(4)">Incident Response</button>
+        <button class="tab-btn" data-tab="5" onclick="switchTab(5)">Settings</button>
+        <button class="tab-btn" data-tab="6" onclick="switchTab(6)">Reports</button>
+      </div>
+
+      <!-- UI VIEWER CARD -->
+      <div class="ui-viewer-card">
+
+        <!-- Browser Chrome -->
+        <div class="browser-chrome">
+          <div class="browser-dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-amber"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <div class="browser-url">
+            <i class="fa-solid fa-lock url-lock"></i>
+            <span id="urlDisplay">app.cyphergate.com/dashboard</span>
+          </div>
+          <div class="browser-actions">
+            <div class="browser-action-btn" title="Refresh">
+              <i class="fa-solid fa-rotate-right"></i>
+            </div>
+            <div class="browser-action-btn" title="Fullscreen" onclick="toggleFullscreen()">
+              <i class="fa-solid fa-expand"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Zone -->
+        <div class="image-zone" id="imageZone">
+          <!-- Corner brackets -->
+          <div class="corner corner-tl"></div>
+          <div class="corner corner-tr"></div>
+          <div class="corner corner-bl"></div>
+          <div class="corner corner-br"></div>
+          <!-- Scan line -->
+          <div class="scan-line"></div>
+
+          <!-- ═══════════════════════════════════════════
+               TAB IMAGES — show/hide per tab.
+               To add a screenshot for a tab, replace
+               the <div class="image-placeholder"> inside
+               that tab-slide with:
+                 <img src="your-file.png" alt="..." />
+          ════════════════════════════════════════════ -->
+
+          <!-- TAB 0: Dashboard -->
+          <div class="tab-slide active" id="slide-0">
+            <!-- ADD: <img src="dashboard.png" alt="Dashboard" /> -->
+            <div class="image-placeholder">
+              <img src="assets/dashboard.png" alt="Dashboard">
+              <p class="placeholder-title">Dashboard</p>
+            </div>
+          </div>
+
+          <!-- TAB 1: MDR Monitor -->
+          <div class="tab-slide" id="slide-1">
+            <!-- ADD: <img src="mdr-monitor.png" alt="MDR Monitor" /> -->
+            <div class="image-placeholder">
+              <img src="assets/MDR.png" alt="MDR Monitor">
+              <p class="placeholder-title">MDR Monitor</p>
+            </div>
+          </div>
+
+          <!-- TAB 2: Vulnerability Mgmt -->
+          <div class="tab-slide" id="slide-2">
+            <!-- ADD: <img src="vulnerability.png" alt="Vulnerability Mgmt" /> -->
+            <div class="image-placeholder">
+              <img src="assets/Vuln mng.png" alt="Vulnerability Mgmt">
+              <p class="placeholder-title">Vulnerability Mgmt</p>
+            </div>
+          </div>
+
+          <!-- TAB 3: Identity & Access -->
+          <div class="tab-slide" id="slide-3">
+            <!-- ADD: <img src="identity-access.png" alt="Identity & Access" /> -->
+            <div class="image-placeholder">
+              <img src="assets/Identity.png" alt="Identity &amp; Access">
+              <p class="placeholder-title">Identity &amp; Access</p>
+            </div>
+          </div>
+
+          <!-- TAB 4: Incident Response -->
+          <div class="tab-slide" id="slide-4">
+            <!-- ADD: <img src="incident-response.png" alt="Incident Response" /> -->
+            <div class="image-placeholder">
+              <img src="assets/incident res.png" alt="Incident Response">
+              <p class="placeholder-title">Incident Response</p>
+            </div>
+          </div>
+
+          <!-- TAB 5: Settings -->
+          <div class="tab-slide" id="slide-5">
+            <!-- ADD: <img src="settings.png" alt="Settings" /> -->
+            <div class="image-placeholder">
+              <img src="assets/Settings.png" alt="Settings">
+              <p class="placeholder-title">Settings</p>
+            </div>
+          </div>
+
+          <!-- TAB 6: Reports -->
+          <div class="tab-slide" id="slide-6">
+            <!-- ADD: <img src="reports.png" alt="Reports" /> -->
+            <div class="image-placeholder">
+              <img src="assets/Reports.png" alt="Reports">
+              <p class="placeholder-title">Reports</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Viewer Footer -->
+        <div class="viewer-footer">
+          <div class="viewer-meta">
+            <div class="status-pill">
+              <div class="pulse-dot"></div>
+              LIVE INTERFACE
+            </div>
+            <span>Cypher Gate v2.4.1</span>
+          </div>
+          <div class="viewer-meta">
+            <span id="tabName" class="mono">Tab: Dashboard</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- EXPLANATION PANEL -->
+      <div class="explanation-section">
+        <div class="explanation-card">
+
+          <!-- Header -->
+          <div class="explanation-header">
+            <div class="explanation-title-row">
+              <div class="expl-icon">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+              <div>
+                <div class="expl-label">Explanation</div>
+                <div class="expl-heading">Software UI — Overview</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════
+               ADD YOUR EXPLANATION CONTENT BELOW.
+               You can use:
+                 <p>          — paragraphs
+                 <h4>         — sub-headings
+                 <ul><li>     — bullet points
+                 <code>       — inline code/tags
+                 <span class="highlight"> — green emphasis
+          ════════════════════════════════════════ -->
+          <div class="expl-body">
+
+            <p></p>
+
+          </div>
+
+          
+          <!-- ═══ END EXPLANATION CONTENT ═══ -->
+
+          <!-- Bottom strip -->
+          <div class="expl-footer-strip">
+            <i class="fa-solid fa-shield-halved" style="color: var(--emerald);"></i>
+            Cypher Gate — UI Documentation
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-val mono">99.9%</div>
+          <div class="stat-lbl">Uptime</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val mono">&lt;15min</div>
+          <div class="stat-lbl">Avg Response</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val mono">500+</div>
+          <div class="stat-lbl">Threats Blocked/Day</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val mono">24/7</div>
+          <div class="stat-lbl">Active Monitoring</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const tabUrls = [
+      'app.cyphergate.com/dashboard',
+      'app.cyphergate.com/mdr-monitor',
+      'app.cyphergate.com/vulnerability',
+      'app.cyphergate.com/identity-access',
+      'app.cyphergate.com/incident-response',
+      'app.cyphergate.com/settings',
+      'app.cyphergate.com/reports',
+    ];
+    const tabNames = [
+      'Dashboard',
+      'MDR Monitor',
+      'Vulnerability Mgmt',
+      'Identity & Access',
+      'Incident Response',
+      'Settings',
+      'Reports',
+    ];
+
+    function switchTab(index) {
+      // Update tab buttons
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+      // Update URL bar and footer label
+      document.getElementById('urlDisplay').textContent = tabUrls[index];
+      document.getElementById('tabName').textContent = 'Tab: ' + tabNames[index];
+      // Show the matching slide, hide the rest
+      document.querySelectorAll('.tab-slide').forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function toggleFullscreen() {
+      const zone = document.getElementById('imageZone');
+      if (!document.fullscreenElement) {
+        zone.requestFullscreen && zone.requestFullscreen();
+      } else {
+        document.exitFullscreen && document.exitFullscreen();
+      }
+    }
+  </script>
+
+</body>
+</html>
