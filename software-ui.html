@@ -658,12 +658,128 @@
       margin-top: 0.25rem;
     }
 
+    /* ─── IMAGE ZONE & SLIDES: always fill with correct aspect ratio ─── */
+    .image-zone {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 8;        /* matches ~1904x943 screenshots */
+      min-height: unset;
+      background: var(--bg-surface);
+      display: block;
+      overflow: hidden;
+    }
+
+    .tab-slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+
+    .tab-slide.active {
+      display: flex;
+    }
+
+    .tab-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+      display: block;
+    }
+
+    /* Remove placeholder wrapper — images render directly */
+    .image-placeholder {
+      display: contents;   /* dissolves the wrapper, children take over */
+    }
+
+    .image-placeholder .placeholder-title {
+      display: none;       /* hide text labels — images speak for themselves */
+    }
+
+    /* Corner brackets sit over the image zone */
+    .corner {
+      z-index: 2;
+    }
+
+    .scan-line {
+      z-index: 2;
+    }
+
+    /* ─── TABS BAR: scrollable strip on mobile, no wrapping ─── */
+    .tabs-bar {
+      display: flex;
+      justify-content: flex-start;
+      gap: 0.4rem;
+      margin: 2rem 0 1.5rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 4px;        /* room for scroll shadow */
+      /* fade edges to hint at scroll */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2%, black 96%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 2%, black 96%, transparent 100%);
+    }
+
+    .tabs-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      flex-shrink: 0;             /* prevent buttons from squishing */
+    }
+
     /* ─── RESPONSIVE ─── */
+
+    /* Tablet */
     @media (max-width: 768px) {
-      .browser-chrome { padding: 0.6rem 0.75rem; }
+      .browser-chrome { padding: 0.6rem 0.75rem; gap: 0.6rem; }
       .browser-url { display: none; }
-      .image-zone { min-height: 280px; }
+      .browser-action-btn { width: 26px; height: 26px; }
       .stats-row { gap: 1.5rem; }
+      .page-header { padding: 2rem 0 1.5rem; }
+      .page-title { font-size: 1.75rem; }
+      .page-sub { font-size: 0.9rem; }
+      .viewer-footer { padding: 0.6rem 0.75rem; }
+      .expl-body { padding: 1.25rem; }
+      .explanation-header { padding: 1rem 1.25rem; }
+    }
+
+    /* Mobile portrait — image aspect ratio shrinks naturally */
+    @media (max-width: 480px) {
+      .container { padding: 0 0.75rem; }
+      .page-wrapper { padding-top: 72px; }
+      .nav { padding: 0.75rem 1rem; }
+      .nav-logo { font-size: 1rem; }
+      .nav-back span { display: none; }   /* hide "Back to Site" text, keep icon */
+      .nav-back { padding: 0.45rem 0.75rem; gap: 0; }
+
+      .tab-btn { font-size: 0.68rem; padding: 0.38rem 0.75rem; }
+      .tabs-bar { gap: 0.3rem; margin: 1.5rem 0 1.25rem; }
+
+      .image-zone { aspect-ratio: 16 / 9; }   /* tighter on very small screens */
+      .stats-row { gap: 1rem; }
+      .stat-val { font-size: 1.2rem; }
+    }
+
+    /* Mobile landscape — maximize the viewer, compress chrome */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .page-wrapper { padding-top: 58px; padding-bottom: 2rem; }
+      .nav { padding: 0.5rem 1rem; }
+      .page-header { padding: 1rem 0 0.75rem; }
+      .page-title { font-size: 1.4rem; }
+      .page-sub { display: none; }
+      .page-label { display: none; }
+      .tabs-bar { margin: 0.75rem 0 0.75rem; }
+      .tab-btn { font-size: 0.65rem; padding: 0.3rem 0.65rem; }
+
+      /* In landscape, give the viewer more vertical space */
+      .image-zone { aspect-ratio: 16 / 7; }
+
+      .explanation-section { margin-top: 1.5rem; }
+      .stats-row { margin-top: 1.5rem; padding-top: 1.5rem; gap: 1rem; }
     }
   </style>
 </head>
@@ -673,9 +789,7 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <div class="logo-icon">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
+        <img src="asset/img/Logo.png" alt="Cypher Gate" style="height:32px;width:32px;object-fit:contain;filter:drop-shadow(0 0 5px rgba(16,185,129,0.4));" onerror="this.style.display='none'" />
         <span>Cypher<span class="logo-accent">Gate</span></span>
       </a>
       <a href="index.html" class="nav-back">
@@ -936,6 +1050,8 @@
       document.querySelectorAll('.tab-slide').forEach((slide, i) => {
         slide.classList.toggle('active', i === index);
       });
+      // Scroll active tab into view (important for the scrollable tab bar on mobile)
+      scrollTabIntoView(index);
     }
 
     function toggleFullscreen() {
@@ -945,6 +1061,46 @@
       } else {
         document.exitFullscreen && document.exitFullscreen();
       }
+    }
+
+    /* ── Swipe to change tabs on mobile ── */
+    (function initSwipe() {
+      const zone = document.getElementById('imageZone');
+      let startX = 0, startY = 0;
+      const TOTAL_TABS = 7;
+      let currentTab = 0;
+
+      zone.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+
+      zone.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        // Only trigger if horizontal swipe is dominant and long enough
+        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        if (dx < 0 && currentTab < TOTAL_TABS - 1) {
+          currentTab++;
+          switchTab(currentTab);
+          scrollTabIntoView(currentTab);
+        } else if (dx > 0 && currentTab > 0) {
+          currentTab--;
+          switchTab(currentTab);
+          scrollTabIntoView(currentTab);
+        }
+      }, { passive: true });
+
+      // Keep currentTab in sync when buttons are clicked
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+        btn.addEventListener('click', () => { currentTab = i; });
+      });
+    })();
+
+    /* Scroll the active tab button into view in the scrollable bar */
+    function scrollTabIntoView(index) {
+      const btn = document.querySelectorAll('.tab-btn')[index];
+      if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
   </script>
 
