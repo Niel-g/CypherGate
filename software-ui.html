@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software UI Preview — Cypher Gate</title>
+  <link rel="icon" href="asset/img/Logo-favicon.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ── Variables ── */
+    :root {
+      --bg-deep:      #0A0F14;
+      --bg-base:      #101820;
+      --bg-surface:   #111827;
+      --bg-card:      #131e2b;
+      --emerald:      #10B981;
+      --emerald-glow: rgba(16,185,129,0.15);
+      --emerald-glow2:rgba(16,185,129,0.06);
+      --amber:        #F59E0B;
+      --magenta:      #FF006E;
+      --magenta-glow: rgba(255,0,110,0.12);
+      --text-white:   #FFFFFF;
+      --text-mid:     #A1A1AA;
+      --text-muted:   #71717A;
+      --border:       rgba(255,255,255,0.06);
+      --border-hover: rgba(16,185,129,0.25);
+      --radius-sm:    8px;
+      --radius-md:    14px;
+      --radius-lg:    20px;
+      --radius-xl:    28px;
+      --transition:   all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Grid BG */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(16,185,129,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0.85rem 2rem;
+      background: rgba(10,15,20,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .logo-accent { color: var(--emerald); }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-mid);
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.45rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      transition: var(--transition);
+    }
+    .nav-back:hover {
+      color: var(--emerald);
+      border-color: var(--border-hover);
+      background: var(--emerald-glow2);
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      padding-top: 80px;
+      padding-bottom: 5rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+    }
+    .page-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+    .label-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; } 50% { opacity:0.4; }
+    }
+    .page-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.85rem;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--emerald) 0%, #34D399 50%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-sub {
+      color: var(--text-mid);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ── TABS BAR ── */
+    .tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 2rem 0 1.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+      padding: 0.42rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text-white);
+    }
+    .tab-btn.active {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: var(--bg-deep);
+      font-weight: 600;
+    }
+
+    /* ── VIEWER CARD ── */
+    .ui-viewer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 8px 64px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .ui-viewer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+      opacity: 0.5;
+      z-index: 1;
+    }
+
+    /* ── BROWSER CHROME ── */
+    .browser-chrome {
+      background: #0d1520;
+      border-bottom: 1px solid var(--border);
+      padding: 0.7rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .browser-dots { display: flex; gap: 6px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red   { background: #FF5F57; }
+    .dot-amber { background: #FFBD2E; }
+    .dot-green { background: #28CA41; }
+    .browser-url {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.3rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      max-width: 360px;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .browser-url span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .url-lock { color: var(--emerald); font-size: 0.68rem; flex-shrink: 0; }
+    .browser-actions { display: flex; gap: 0.5rem; align-items: center; margin-left: auto; }
+    .browser-action-btn {
+      width: 28px; height: 28px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .browser-action-btn:hover { color: var(--emerald); border-color: var(--border-hover); }
+
+    /* ══════════════════════════════════════════════
+       IMAGE ZONE — the core fix
+       Images are ~1904×943 (ratio ≈ 2.018:1)
+       We use padding-top trick so the zone always
+       matches the image ratio on every screen size.
+    ══════════════════════════════════════════════ */
+    .image-zone {
+      position: relative;
+      width: 100%;
+      /* padding-top = (height/width)*100 = (943/1904)*100 ≈ 49.53% */
+      padding-top: 49.53%;
+      background: #0d1a24;
+      overflow: hidden;
+    }
+
+    /* Every slide sits in the same absolute box */
+    .tab-slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+    }
+    .tab-slide.active {
+      display: block;
+    }
+
+    /* The image fills the slide perfectly — no zoom, no crop */
+    .tab-slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;   /* stretch to exact pixel — no black bars, no zoom */
+      display: block;
+    }
+
+    /* Corner brackets */
+    .corner {
+      position: absolute;
+      width: 16px; height: 16px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .corner-tl { top:10px; left:10px;  border-top:2px solid var(--emerald); border-left:2px solid var(--emerald); }
+    .corner-tr { top:10px; right:10px; border-top:2px solid var(--emerald); border-right:2px solid var(--emerald); }
+    .corner-bl { bottom:10px; left:10px;  border-bottom:2px solid var(--emerald); border-left:2px solid var(--emerald); }
+    .corner-br { bottom:10px; right:10px; border-bottom:2px solid var(--emerald); border-right:2px solid var(--emerald); }
+
+    /* Scan line */
+    .scan-line {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(16,185,129,0.45), transparent);
+      animation: scan 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes scan {
+      0%   { top:0%;   opacity:0; }
+      5%   { opacity:1; }
+      95%  { opacity:1; }
+      100% { top:100%; opacity:0; }
+    }
+
+    /* ── VIEWER FOOTER ── */
+    .viewer-footer {
+      background: #0d1520;
+      border-top: 1px solid var(--border);
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .viewer-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.62rem;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid rgba(16,185,129,0.25);
+      background: var(--emerald-glow);
+      color: var(--emerald);
+    }
+    .pulse-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    /* ── EXPLANATION PANEL ── */
+    .explanation-section { margin-top: 2rem; }
+    .explanation-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+    }
+    .explanation-card::before {
+      content: '';
+      position: absolute;
+      top:0; left:0; right:0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+      opacity: 0.4;
+    }
+    .explanation-header {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .expl-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--magenta-glow);
+      border: 1px solid rgba(255,0,110,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--magenta);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .expl-label {
+      font-size: 0.62rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .expl-heading { font-size: 1rem; font-weight: 600; color: var(--text-white); margin-top: 0.1rem; }
+    .expl-body { padding: 1.75rem; }
+    .expl-body p { color: var(--text-mid); font-size: 0.95rem; line-height: 1.85; margin-bottom: 1rem; }
+    .expl-body p:last-child { margin-bottom: 0; }
+    .expl-body .highlight { color: var(--emerald); font-weight: 600; }
+    .expl-body ul { list-style:none; margin: 0.75rem 0 1rem; display:flex; flex-direction:column; gap:0.55rem; }
+    .expl-body ul li { display:flex; align-items:flex-start; gap:0.65rem; color:var(--text-mid); font-size:0.93rem; line-height:1.7; }
+    .expl-body ul li::before { content:'◆'; color:var(--emerald); font-size:0.55rem; margin-top:0.45rem; flex-shrink:0; }
+    .expl-body h4 { color:var(--text-white); font-size:0.88rem; font-weight:700; letter-spacing:0.04em; margin:1.25rem 0 0.5rem; text-transform:uppercase; }
+    .expl-body code { font-family:'JetBrains Mono',monospace; font-size:0.8rem; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.18); border-radius:4px; padding:0.1rem 0.45rem; color:var(--emerald); }
+    .expl-footer-strip {
+      padding: 0.8rem 1.75rem;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.15);
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item { text-align: center; }
+    .stat-val { font-family:'JetBrains Mono',monospace; font-size:1.5rem; font-weight:600; color:var(--emerald); }
+    .stat-lbl { font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      .container { padding: 0 1.25rem; }
+      .browser-chrome { padding: 0.55rem 0.9rem; gap: 0.6rem; }
+      .browser-url { display: none; }
+      .browser-action-btn { width: 26px; height: 26px; }
+      .page-header { padding: 2rem 0 1.5rem; }
+      .stats-row { gap: 1.5rem; }
+      .expl-body { padding: 1.25rem; }
+      .explanation-header { padding: 1rem 1.25rem; }
+      .viewer-footer { padding: 0.55rem 0.9rem; }
+    }
+
+    /* Mobile portrait */
+    @media (max-width: 480px) {
+      .container { padding: 0 0.85rem; }
+      .page-wrapper { padding-top: 68px; padding-bottom: 3rem; }
+      .nav { padding: 0.65rem 1rem; }
+      .nav-logo { font-size: 1rem; }
+      .nav-back .back-label { display: none; }
+      .nav-back { padding: 0.4rem 0.7rem; gap: 0; }
+
+      .page-header { padding: 1.5rem 0 1.25rem; }
+      .page-title { font-size: 1.65rem; }
+      .page-sub { font-size: 0.875rem; }
+
+      .tab-btn { font-size: 0.67rem; padding: 0.35rem 0.7rem; }
+      .tabs-bar { gap: 0.3rem; margin: 1.25rem 0 1rem; }
+
+      .stats-row { gap: 1.25rem; }
+      .stat-val { font-size: 1.2rem; }
+      .stat-lbl { font-size: 0.7rem; }
+    }
+
+    /* Mobile landscape — compact chrome, maximize viewer */
+    @media (max-height: 520px) and (orientation: landscape) {
+      .page-wrapper { padding-top: 56px; padding-bottom: 2rem; }
+      .nav { padding: 0.45rem 1rem; }
+      .page-header { padding: 0.75rem 0 0.5rem; }
+      .page-title { font-size: 1.3rem; margin-bottom: 0.35rem; }
+      .page-sub { display: none; }
+      .page-label { display: none; }
+      .tabs-bar { margin: 0.6rem 0 0.6rem; }
+      .tab-btn { font-size: 0.63rem; padding: 0.28rem 0.6rem; }
+      .stats-row { margin-top: 1.25rem; padding-top: 1.25rem; gap: 1rem; }
+      .explanation-section { margin-top: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="asset/img/Logo.png" alt="CG"
+             style="height:30px;width:30px;object-fit:contain;filter:drop-shadow(0 0 5px rgba(16,185,129,0.45));"
+             onerror="this.style.display='none'" />
+        <span>Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+      <a href="index.html" class="nav-back">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span class="back-label">&nbsp;Back to Site</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- PAGE -->
+  <div class="page-wrapper">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="page-header">
+        <div class="page-label mono">
+          <span class="label-dot"></span>
+          Platform Preview
+        </div>
+        <h1 class="page-title">
+          Our Software <span class="gradient-text">UI Showcase</span>
+        </h1>
+        <p class="page-sub">
+          Explore the interface powering Cypher Gate's real-time security monitoring and threat response platform.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs-bar" id="tabsBar">
+        <button class="tab-btn active" onclick="switchTab(0)">Dashboard</button>
+        <button class="tab-btn"        onclick="switchTab(1)">MDR Monitor</button>
+        <button class="tab-btn"        onclick="switchTab(2)">Vulnerability Mgmt</button>
+        <button class="tab-btn"        onclick="switchTab(3)">Identity &amp; Access</button>
+        <button class="tab-btn"        onclick="switchTab(4)">Incident Response</button>
+        <button class="tab-btn"        onclick="switchTab(5)">Settings</button>
+        <button class="tab-btn"        onclick="switchTab(6)">Reports</button>
+      </div>
+
+      <!-- VIEWER CARD -->
+      <div class="ui-viewer-card">
+
+        <!-- Browser Chrome -->
+        <div class="browser-chrome">
+          <div class="browser-dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-amber"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <div class="browser-url">
+            <i class="fa-solid fa-lock url-lock"></i>
+            <span id="urlDisplay">app.cyphergate.com/dashboard</span>
+          </div>
+          <div class="browser-actions">
+            <div class="browser-action-btn" title="Refresh">
+              <i class="fa-solid fa-rotate-right"></i>
+            </div>
+            <div class="browser-action-btn" title="Fullscreen" onclick="toggleFullscreen()">
+              <i class="fa-solid fa-expand"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Zone -->
+        <div class="image-zone" id="imageZone">
+          <div class="corner corner-tl"></div>
+          <div class="corner corner-tr"></div>
+          <div class="corner corner-bl"></div>
+          <div class="corner corner-br"></div>
+          <div class="scan-line"></div>
+
+          <div class="tab-slide active" id="slide-0">
+            <img src="assets/dashboard.png" alt="Dashboard" />
+          </div>
+          <div class="tab-slide" id="slide-1">
+            <img src="assets/MDR.png" alt="MDR Monitor" />
+          </div>
+          <div class="tab-slide" id="slide-2">
+            <img src="assets/Vuln mng.png" alt="Vulnerability Mgmt" />
+          </div>
+          <div class="tab-slide" id="slide-3">
+            <img src="assets/Identity.png" alt="Identity &amp; Access" />
+          </div>
+          <div class="tab-slide" id="slide-4">
+            <img src="assets/incident res.png" alt="Incident Response" />
+          </div>
+          <div class="tab-slide" id="slide-5">
+            <img src="assets/Settings.png" alt="Settings" />
+          </div>
+          <div class="tab-slide" id="slide-6">
+            <img src="assets/Reports.png" alt="Reports" />
+          </div>
+        </div>
+
+        <!-- Viewer Footer -->
+        <div class="viewer-footer">
+          <div class="viewer-meta">
+            <div class="status-pill">
+              <div class="pulse-dot"></div>
+              LIVE INTERFACE
+            </div>
+            <span>Cypher Gate v2.4.1</span>
+          </div>
+          <div class="viewer-meta">
+            <span id="tabName" class="mono">Dashboard</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- EXPLANATION PANEL -->
+      <div class="explanation-section">
+        <div class="explanation-card">
+          <div class="explanation-header">
+            <div class="expl-icon">
+              <i class="fa-solid fa-file-lines"></i>
+            </div>
+            <div>
+              <div class="expl-label">Explanation</div>
+              <div class="expl-heading">Software UI — Overview</div>
+            </div>
+          </div>
+          <div class="expl-body">
+            <p></p>
+          </div>
+          <div class="expl-footer-strip">
+            <i class="fa-solid fa-shield-halved" style="color:var(--emerald);"></i>
+            Cypher Gate — UI Documentation
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-val mono">99.9%</div>
+          <div class="stat-lbl">Uptime</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val mono">&lt;15min</div>
+          <div class="stat-lbl">Avg Response</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val mono">500+</div>
+          <div class="stat-lbl">Threats Blocked/Day</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val mono">24/7</div>
+          <div class="stat-lbl">Active Monitoring</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const tabUrls = [
+      'app.cyphergate.com/dashboard',
+      'app.cyphergate.com/mdr-monitor',
+      'app.cyphergate.com/vulnerability',
+      'app.cyphergate.com/identity-access',
+      'app.cyphergate.com/incident-response',
+      'app.cyphergate.com/settings',
+      'app.cyphergate.com/reports',
+    ];
+    const tabNames = [
+      'Dashboard','MDR Monitor','Vulnerability Mgmt',
+      'Identity & Access','Incident Response','Settings','Reports',
+    ];
+
+    let currentTab = 0;
+
+    function switchTab(index) {
+      currentTab = index;
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i === index));
+      document.querySelectorAll('.tab-slide').forEach((slide, i) => slide.classList.toggle('active', i === index));
+      document.getElementById('urlDisplay').textContent = tabUrls[index];
+      document.getElementById('tabName').textContent    = tabNames[index];
+      // Scroll active tab button into view in the scrollable bar
+      const btn = document.querySelectorAll('.tab-btn')[index];
+      if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    function toggleFullscreen() {
+      const zone = document.getElementById('imageZone');
+      if (!document.fullscreenElement) {
+        (zone.requestFullscreen || zone.webkitRequestFullscreen || zone.mozRequestFullScreen).call(zone);
+      } else {
+        (document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen).call(document);
+      }
+    }
+
+    // Swipe left/right on the image zone to change tabs
+    (function() {
+      const zone = document.getElementById('imageZone');
+      let sx = 0, sy = 0;
+      zone.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      zone.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+        if (dx < 0 && currentTab < tabNames.length - 1) switchTab(currentTab + 1);
+        else if (dx > 0 && currentTab > 0)              switchTab(currentTab - 1);
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>

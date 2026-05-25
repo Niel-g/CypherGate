@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cypher Gate — Know You're Protected</title>
+  <link rel="icon" href="asset/img/Logo-favicon.png" type="image/png">
+  <meta name="description" content="Cypher Gate provides proactive cybersecurity services that monitor, defend, and recover your business operations 24/7." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <img src="asset/img/Logo.png" alt="Cypher Gate" class="logo-img" />
+        <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#team" class="nav-link">Team</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-ghost">Contact Us</a>
+        <a href="#contact" class="btn btn-primary">Get Protected</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#services" class="mobile-link">Services</a></li>
+        <li><a href="#dashboard" class="mobile-link">Dashboard</a></li>
+        <li><a href="#how-it-works" class="mobile-link">How It Works</a></li>
+        <li><a href="#about" class="mobile-link">About</a></li>
+        <li><a href="#team" class="mobile-link">Team</a></li>
+        <li><a href="#contact" class="mobile-link">Contact</a></li>
+      </ul>
+      <div class="mobile-actions">
+        <a href="#contact" class="btn btn-primary btn-full">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <!-- Three.js Canvas -->
+    <canvas id="heroCanvas"></canvas>
+
+    <!-- Gradient Overlays -->
+    <div class="hero-overlay-top"></div>
+    <div class="hero-overlay-bottom"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-text mono">24/7 Active Protection</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Security Shouldn't<br />Be a <span class="gradient-text">Mystery.</span>
+      </h1>
+
+      <p class="hero-subtext">
+        Cypher Gate provides proactive cybersecurity services that monitor,
+        defend, and recover your business operations 24/7.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary btn-lg">
+          <i class="fa-solid fa-shield-halved"></i>
+          Get Protected
+        </a>
+        <a href="#services" class="btn btn-outline btn-lg">
+          Explore Services
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value mono">99.9%</span>
+          <span class="stat-label">Uptime Monitoring</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value mono">&lt;15min</span>
+          <span class="stat-label">Avg Response Time</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value mono">500+</span>
+          <span class="stat-label">Threats Blocked Daily</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span class="mono">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SECURITY HEALTH DASHBOARD
+  ═══════════════════════════════════ -->
+  <section class="dashboard-section" id="dashboard">
+    <div class="container">
+      <div class="section-label mono">
+        <span class="label-dot"></span>
+        Security Operations
+      </div>
+      <h2 class="section-title">Your Security at a Glance</h2>
+      <p class="section-sub">Real-time overview of your organization's protection status.</p>
+
+      <div class="dashboard-grid">
+
+        <!-- Health Score Card -->
+        <div class="dash-card dash-card--main" data-reveal>
+          <div class="dash-card-header">
+            <span class="mono text-muted">SECURITY HEALTH SCORE</span>
+            <span class="status-pill status-green">
+              <span class="pulse-dot green"></span>
+              Protected
+            </span>
+          </div>
+          <div class="health-score-display">
+            <div class="score-ring-wrapper">
+              <svg class="score-ring" viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" id="scoreRing" />
+              </svg>
+              <div class="score-center">
+                <span class="score-number mono" id="scoreNumber">0</span>
+                <span class="score-label">/ 100</span>
+              </div>
+            </div>
+            <div class="health-breakdown">
+              <div class="breakdown-row">
+                <span class="breakdown-label">Network Security</span>
+                <div class="breakdown-bar"><div class="bar-fill" style="--fill: 94%"></div></div>
+                <span class="breakdown-val mono">94</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Endpoint Protection</span>
+                <div class="breakdown-bar"><div class="bar-fill" style="--fill: 88%"></div></div>
+                <span class="breakdown-val mono">88</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Identity & Access</span>
+                <div class="breakdown-bar"><div class="bar-fill" style="--fill: 97%"></div></div>
+                <span class="breakdown-val mono">97</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Vulnerability Score</span>
+                <div class="breakdown-bar"><div class="bar-fill amber-bar" style="--fill: 76%"></div></div>
+                <span class="breakdown-val mono amber">76</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Cards Column -->
+        <div class="dash-col">
+
+          <div class="dash-card dash-card--status" data-reveal>
+            <div class="status-icon green">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+            <div class="status-info">
+              <span class="mono text-muted" style="font-size:.7rem">SERVICE</span>
+              <p class="status-title">MDR Active</p>
+              <p class="status-desc mono">Monitoring since 09:00 UTC</p>
+            </div>
+            <div class="status-badge green-badge">LIVE</div>
+          </div>
+
+          <div class="dash-card dash-card--status" data-reveal>
+            <div class="status-icon green">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="status-info">
+              <span class="mono text-muted" style="font-size:.7rem">IDENTITY</span>
+              <p class="status-title">MFA Enabled</p>
+              <p class="status-desc mono">All 47 accounts secured</p>
+            </div>
+            <div class="status-badge green-badge">OK</div>
+          </div>
+
+          <div class="dash-card dash-card--status" data-reveal>
+            <div class="status-icon green">
+              <i class="fa-solid fa-satellite-dish"></i>
+            </div>
+            <div class="status-info">
+              <span class="mono text-muted" style="font-size:.7rem">MONITORING</span>
+              <p class="status-title">Threat Monitoring Online</p>
+              <p class="status-desc mono">0 active threats detected</p>
+            </div>
+            <div class="status-badge green-badge">CLEAR</div>
+          </div>
+
+          <div class="dash-card dash-card--status" data-reveal>
+            <div class="status-icon amber">
+              <i class="fa-solid fa-bug-slash"></i>
+            </div>
+            <div class="status-info">
+              <span class="mono text-muted" style="font-size:.7rem">VULNERABILITIES</span>
+              <p class="status-title">Vulnerabilities Patched</p>
+              <p class="status-desc mono">3 pending — low priority</p>
+            </div>
+            <div class="status-badge amber-badge">REVIEW</div>
+          </div>
+
+        </div>
+
+        <!-- Activity Feed Card -->
+        <div class="dash-card dash-card--activity" data-reveal>
+          <div class="dash-card-header">
+            <span class="mono text-muted">RECENT ACTIVITY</span>
+            <span class="mono text-muted" style="font-size:.7rem">Live Feed</span>
+          </div>
+          <ul class="activity-list">
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <div class="activity-info">
+                <p class="activity-msg">Suspicious login attempt blocked</p>
+                <span class="mono activity-time">2 min ago · IP 91.42.xx.xx</span>
+              </div>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <div class="activity-info">
+                <p class="activity-msg">Firewall rule updated successfully</p>
+                <span class="mono activity-time">18 min ago · System</span>
+              </div>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot amber"></span>
+              <div class="activity-info">
+                <p class="activity-msg">Patch available — OpenSSL 3.2.1</p>
+                <span class="mono activity-time">1 hr ago · Vulnerability Mgmt</span>
+              </div>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <div class="activity-info">
+                <p class="activity-msg">MFA enrollment completed — 3 users</p>
+                <span class="mono activity-time">3 hr ago · IAM</span>
+              </div>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <div class="activity-info">
+                <p class="activity-msg">Weekly vulnerability scan complete</p>
+                <span class="mono activity-time">6 hr ago · Scan Engine</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SERVICES SECTION
+  ═══════════════════════════════════ -->
+  <section class="services-section" id="services">
+    <div class="container">
+      <div class="section-label mono">
+        <span class="label-dot"></span>
+        What We Do
+      </div>
+      <h2 class="section-title">Four Pillars of<br /><span class="gradient-text">Complete Protection</span></h2>
+      <p class="section-sub">Enterprise-grade security services, simplified for your business.</p>
+
+      <div class="services-grid">
+
+        <div class="service-card" data-reveal>
+          <div class="service-icon-wrap">
+            <div class="service-icon">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+            <div class="service-icon-glow"></div>
+          </div>
+          <div class="service-tag mono">01 — MDR</div>
+          <h3 class="service-title">Managed Detection<br />& Response</h3>
+          <p class="service-desc">We monitor your systems 24/7 and stop suspicious activity before it becomes a breach. Think of us as a home security monitoring team that never sleeps.</p>
+          <div class="service-footer">
+            <div class="service-feature"><i class="fa-solid fa-check"></i> 24/7 Network Monitoring</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Real-time Threat Response</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Automated Incident Alerts</div>
+          </div>
+          <div class="card-glow-border"></div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <div class="service-icon-wrap">
+            <div class="service-icon amber-icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="service-icon-glow amber-glow"></div>
+          </div>
+          <div class="service-tag mono">02 — VULN</div>
+          <h3 class="service-title">Vulnerability<br />Management</h3>
+          <p class="service-desc">We identify weak points before hackers can exploit them. Like a building inspection — we find the unlocked windows before a thief does.</p>
+          <div class="service-footer">
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Regular Security Scans</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Patch Management</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Risk Prioritization</div>
+          </div>
+          <div class="card-glow-border card-glow-amber"></div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <div class="service-icon-wrap">
+            <div class="service-icon">
+              <i class="fa-solid fa-id-badge"></i>
+            </div>
+            <div class="service-icon-glow"></div>
+          </div>
+          <div class="service-tag mono">03 — IAM</div>
+          <h3 class="service-title">Identity & Access<br />Management</h3>
+          <p class="service-desc">We ensure only the right people can access sensitive systems. Every user gets a VIP backstage pass — no more, no less than what they need.</p>
+          <div class="service-footer">
+            <div class="service-feature"><i class="fa-solid fa-check"></i> MFA Implementation</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Role-Based Access Control</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Access Lifecycle Management</div>
+          </div>
+          <div class="card-glow-border"></div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <div class="service-icon-wrap">
+            <div class="service-icon magenta-icon">
+              <i class="fa-solid fa-fire-extinguisher"></i>
+            </div>
+            <div class="service-icon-glow magenta-glow"></div>
+          </div>
+          <div class="service-tag mono">04 — IR</div>
+          <h3 class="service-title">Incident Response<br />& Recovery</h3>
+          <p class="service-desc">If an attack happens, we recover your business fast. Our digital firefighter team jumps in immediately to contain, eliminate, and restore.</p>
+          <div class="service-footer">
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Emergency Response</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Ransomware Containment</div>
+            <div class="service-feature"><i class="fa-solid fa-check"></i> Business Continuity</div>
+          </div>
+          <div class="card-glow-border card-glow-magenta"></div>
+        </div>
+
+      </div>
+
+      <!-- View Software UI Button -->
+      <div class="ui-preview-cta" style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 3.5rem;
+        text-align: center;
+      ">
+        <p class="mono" style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.12em;">
+          <span style="color: var(--emerald);">◆</span> &nbsp;PLATFORM PREVIEW
+        </p>
+        <a href="software-ui.html" class="btn-view-ui" style="
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.9rem 2.2rem;
+          background: transparent;
+          border: 1.5px solid var(--emerald);
+          border-radius: 999px;
+          color: var(--emerald);
+          font-family: 'Inter', sans-serif;
+          font-weight: 600;
+          font-size: 0.95rem;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 0 24px rgba(16,185,129,0.12), inset 0 0 24px rgba(16,185,129,0.04);
+          text-decoration: none;
+          letter-spacing: 0.02em;
+          position: relative;
+          overflow: hidden;
+        "
+        onmouseover="this.style.background='var(--emerald)'; this.style.color='var(--bg-deep)'; this.style.boxShadow='0 0 40px rgba(16,185,129,0.35)';"
+        onmouseout="this.style.background='transparent'; this.style.color='var(--emerald)'; this.style.boxShadow='0 0 24px rgba(16,185,129,0.12), inset 0 0 24px rgba(16,185,129,0.04)';"
+        >
+          <i class="fa-solid fa-display" style="font-size: 1rem;"></i>
+          View Software UI
+          <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem;"></i>
+        </a>
+        <p style="color: var(--text-muted); font-size: 0.82rem;">See how our platform looks in action</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       HOW IT WORKS SECTION
+  ═══════════════════════════════════ -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-label mono">
+        <span class="label-dot"></span>
+        The Process
+      </div>
+      <h2 class="section-title">How Cypher Gate<br />Works for You</h2>
+      <p class="section-sub">Three clear phases. One continuous mission: keep you safe.</p>
+
+      <div class="timeline">
+
+        <div class="timeline-track">
+          <div class="track-line" id="trackLine"></div>
+        </div>
+
+        <div class="timeline-steps">
+
+          <div class="timeline-step" data-reveal>
+            <div class="step-node">
+              <div class="node-ring"></div>
+              <div class="node-core">
+                <i class="fa-solid fa-satellite-dish"></i>
+              </div>
+            </div>
+            <div class="step-content">
+              <div class="step-number mono">Step 01</div>
+              <h3 class="step-title">Detect</h3>
+              <p class="step-desc">Our systems and analysts watch your entire digital environment around the clock — network traffic, logins, file changes, and endpoint behavior. No suspicious activity goes unnoticed.</p>
+              <div class="step-tags">
+                <span class="step-tag mono">Network Analysis</span>
+                <span class="step-tag mono">Behavioral AI</span>
+                <span class="step-tag mono">Log Monitoring</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-step timeline-step--right" data-reveal>
+            <div class="step-node">
+              <div class="node-ring amber-ring"></div>
+              <div class="node-core amber-core">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+            </div>
+            <div class="step-content">
+              <div class="step-number mono">Step 02</div>
+              <h3 class="step-title">Defend</h3>
+              <p class="step-desc">When a threat is confirmed, we act immediately. Accounts are locked, connections are blocked, and systems are isolated — all before a breach can occur. Speed is our advantage.</p>
+              <div class="step-tags">
+                <span class="step-tag mono">Auto-Containment</span>
+                <span class="step-tag mono">Threat Neutralization</span>
+                <span class="step-tag mono">Patch Deployment</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-step" data-reveal>
+            <div class="step-node">
+              <div class="node-ring green-ring"></div>
+              <div class="node-core green-core">
+                <i class="fa-solid fa-arrow-rotate-right"></i>
+              </div>
+            </div>
+            <div class="step-content">
+              <div class="step-number mono">Step 03</div>
+              <h3 class="step-title">Recover</h3>
+              <p class="step-desc">If something gets through, we restore your operations fast. From data recovery to full system restoration, we get your business back online with a root-cause report to prevent recurrence.</p>
+              <div class="step-tags">
+                <span class="step-tag mono">Data Restoration</span>
+                <span class="step-tag mono">Root Cause Analysis</span>
+                <span class="step-tag mono">Post-Incident Report</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       ABOUT SECTION
+  ═══════════════════════════════════ -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-left" data-reveal>
+          <div class="section-label mono">
+            <span class="label-dot"></span>
+            Our Philosophy
+          </div>
+          <h2 class="section-title">Security Made<br /><span class="gradient-text">Simple.</span></h2>
+          <p class="about-text">
+            Cypher Gate simplifies cybersecurity for modern businesses by combining proactive monitoring, rapid response, and intelligent protection.
+          </p>
+          <p class="about-text">
+            We don't just sell software — we provide <strong>Security-as-a-Service</strong>. Our mission is to take the burden of protection off your shoulders so you can focus on what matters: growth.
+          </p>
+          <p class="about-text">
+            We operate on the principle of <strong>Proactive Hygiene</strong> — fixing the gaps before the hackers find them. Your success depends on digital trust. We make sure that trust is never broken.
+          </p>
+          <div class="about-values">
+            <div class="value-item">
+              <i class="fa-solid fa-bolt"></i>
+              <span>Proactive First</span>
+            </div>
+            <div class="value-item">
+              <i class="fa-solid fa-eye"></i>
+              <span>Always Watching</span>
+            </div>
+            <div class="value-item">
+              <i class="fa-solid fa-handshake"></i>
+              <span>Trusted Partner</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-right" data-reveal>
+          <div class="philosophy-card">
+            <div class="philosophy-quote">
+              <span class="quote-mark">"</span>
+              <p>Security shouldn't be a mystery. Cypher Gate brings clarity to the chaos of the digital world.</p>
+            </div>
+            <div class="philosophy-metrics">
+              <div class="metric">
+                <span class="metric-val mono">24/7</span>
+                <span class="metric-label">Monitoring</span>
+              </div>
+              <div class="metric">
+                <span class="metric-val mono">Zero</span>
+                <span class="metric-label">Tolerance Policy</span>
+              </div>
+              <div class="metric">
+                <span class="metric-val mono">100%</span>
+                <span class="metric-label">Transparency</span>
+              </div>
+            </div>
+            <div class="philosophy-footer mono">
+              <span class="pulse-dot green" style="display:inline-block; margin-right:.5rem"></span>
+              All systems operational
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       TEAM SECTION
+  ═══════════════════════════════════ -->
+  <section class="team-section" id="team">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <div class="section-label mono">
+          <span class="label-dot"></span> OUR TEAM
+        </div>
+        <h2 class="section-title">The People Behind<br /><span class="gradient-text">CypherGate.</span></h2>
+        <p class="section-sub">A dedicated team of specialists committed to keeping your business safe, every hour of every day.</p>
+      </div>
+
+      <div class="team-grid">
+
+        <!-- Member 1: CEO -->
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/Mariah.jpg" alt=""></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Chief Executive Officer</div>
+          <h3 class="team-name">Mariah Sumicad</h3>
+          <p class="team-bio">Effective leadership balances swift, high-stakes decision-making with continuous investment in organizational talent. By practicing decisive governance while cultivating a strong leadership pipeline, executives eliminate ambiguity and drive long-term, sustainable growth.</p>
+          <div class="team-tags">
+            <span class="team-tag">Corporate Visionary </span>
+            <span class="team-tag">Executive Director</span>
+          </div>
+          <a href="https://mamaesumicad.my.canva.site/mm/" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i>
+            View Portfolio
+          </a>
+        </div>
+
+        <!-- Member 2: Co-Founder -->
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/poliapoy.jpg" alt=""></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Co-Founder</div>
+          <h3 class="team-name">Emjay Poliapoy</h3>
+          <p class="team-bio">Successful co-founders combine market-disrupting vision with the technical agility needed to build a business from the ground up. By blending entrepreneurial drive with a focus on product execution, they establish scalable operations and align early teams toward shared growth.</p>
+          <div class="team-tags">
+            <span class="team-tag">Venture Architect</span>
+            <span class="team-tag">Product Innovator</span>
+          </div>
+          <a href="https://poliapoyportfolio.netlify.app/" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i>
+            View Portfolio
+          </a>
+        </div>
+
+        <!-- Member 3: Developer -->
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/UY.jpg" alt=""></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Lead Developer</div>
+          <h3 class="team-name">Chrislyn Jae Perez Uy</h3>
+          <p class="team-bio">Enforcing engineering excellence requires a balance of advanced technical architecture and rigorous software security standards. By architecting scalable, enterprise-grade systems while mitigating technical debt, developers eliminate system vulnerabilities and drive secure, long-term product innovation.</p>
+          <div class="team-tags">
+            <span class="team-tag">Security Architect</span>
+            <span class="team-tag">Engineering Lead</span>
+          </div>
+          <a href="https://sites.google.com/view/jaespersonalwebsite/home?authuser=0" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i>
+            View Portfolio
+          </a>
+        </div>
+
+        <!-- Member 4: Designer -->
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/niel Profile.png" alt=""></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Designer</div>
+          <h3 class="team-name">Joebeniel Ayes</h3>
+          <p class="team-bio">Creative director and UI/UX designer. Multimedia artist, photographer, videographer, and performer blending visuals with sound.</p>
+          <div class="team-tags">
+            <span class="team-tag">Product Designer</span>
+            <span class="team-tag">SaaS Design</span>
+          </div>
+          <a href="https://sites.google.com/view/ayesjoebeniel/home?authuser=0" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i>
+            View Portfolio
+          </a>
+        </div>
+
+        <!-- Member 5: Planner -->
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono">GJA</div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Strategic Planner</div>
+          <h3 class="team-name">Goldwyn Josh Alcuizar</h3>
+          <p class="team-bio">Sustainable growth balances market forecasting with proactive risk mitigation. By converting corporate vision into actionable roadmaps, planners eliminate resource waste and secure competitive advantage.</p>
+          <div class="team-tags">
+            <span class="team-tag">Growth Strategist</span>
+            <span class="team-tag">Risk Director</span>
+          </div>
+          <span class="team-portfolio-btn team-portfolio-btn--disabled">
+            <i class="fas fa-clock"></i>
+            Coming Soon
+          </span>
+        </div>
+
+        <!-- Member 6: Business Manager -->
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/bolar.jpg" alt=""></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Business Manager</div>
+          <h3 class="team-name">Popoy Bolar</h3>
+          <p class="team-bio">Operational efficiency balances optimized workflows with seamless team collaboration. By streamlining business processes, managers eliminate bottlenecks and drive scalable project execution.</p>
+          <div class="team-tags">
+            <span class="team-tag">Operations Manager</span>
+            <span class="team-tag">Efficiency Director</span>
+          </div>
+              <a href="https://ahronbolar.my.canva.site/" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i>
+            View Portfolio
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       CONTACT SECTION
+  ═══════════════════════════════════ -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-label mono">
+        <span class="label-dot"></span>
+        Get In Touch
+      </div>
+      <h2 class="section-title">Ready to Secure<br /><span class="gradient-text">Your Business?</span></h2>
+      <p class="section-sub">Don't wait for an incident. Reach out today and get a free security assessment.</p>
+
+      <div class="contact-grid">
+
+        <div class="contact-card" data-reveal>
+          <div class="contact-icon">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label mono">Mobile Number</span>
+            <a href="tel:+639123456789" class="contact-value">+63 993 907 3410</a>
+            <span class="contact-note">Available Mon–Sat, 8AM–6PM PHT</span>
+          </div>
+        </div>
+
+        <div class="contact-card" data-reveal>
+          <div class="contact-icon">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label mono">Email Address</span>
+            <a href="mailto:contact@cyphergate.com" class="contact-value">CypherGate@gmail.com</a>
+            <span class="contact-note">We respond within 24 hours</span>
+          </div>
+        </div>
+
+        <div class="contact-card contact-card--cta" data-reveal>
+          <div class="contact-icon magenta-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label mono">Free Assessment</span>
+            <p class="contact-value" style="font-size:1.1rem">Get a Security Audit</p>
+            <span class="contact-note">No commitment. No cost. Just clarity.</span>
+          </div>
+          <a href="coming-soon.html" class="btn btn-primary" style="margin-top:1.5rem; align-self:flex-start">
+            Start Today <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+
+          <div class="footer-brand">
+            <a href="#" class="nav-logo">
+              <span class="logo-icon"><i class="fa-solid fa-shield-halved"></i></span>
+              <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+            </a>
+            <p class="footer-tagline">"Don't Just Hope You're Safe —<br /><strong>Know You're Protected.</strong>"</p>
+            <div class="social-links">
+              <a href="https://www.linkedin.com" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://www.twitter.com" class="social-link" aria-label="Twitter / X" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.facebook.com" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="mailto:CypherGate@gmail.com" class="social-link" aria-label="Send us an email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <ul>
+              <li><a href="#services">Managed Detection & Response</a></li>
+              <li><a href="#services">Vulnerability Management</a></li>
+              <li><a href="#services">Identity & Access Management</a></li>
+              <li><a href="#services">Incident Response & Recovery</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <ul>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="#dashboard">Dashboard</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Contact</h4>
+            <ul>
+              <li><a href="tel:+639123456789">+63 993 907 3410</a></li>
+              <li><a href="mailto:contact@cyphergate.com">CypherGate@gmail.com</a></li>
+            </ul>
+            <div class="footer-status mono">
+              <span class="pulse-dot green" style="display:inline-block; margin-right:.4rem"></span>
+              All systems operational
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright mono">© 2026 Cypher Gate. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="coming-soon.html">Privacy Policy</a>
+          <a href="coming-soon.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Main JS -->
+  <script src="script.js"></script>
+</body>
+</html>
