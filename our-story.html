@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Story — CypherGate</title>
+  <link rel="icon" href="asset/img/Logo-favicon.png" type="image/png">
+  <meta name="description" content="The story behind CypherGate — how a ransomware attack on a friend's business sparked a mission to protect every business in Southeast Asia."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* PAGE HERO */
+    .page-hero {
+      position: relative; padding: 10rem 0 5rem; overflow: hidden;
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-base) 100%);
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: -80px; left: 30%; transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(ellipse, rgba(16,185,129,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .breadcrumb a { color: var(--emerald); }
+    .page-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: var(--emerald);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .page-title {
+      font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.2rem;
+    }
+    .page-subtitle { font-size: 1.1rem; color: var(--text-mid); max-width: 600px; line-height: 1.7; }
+    /* STORY SECTION */
+    .story-section { padding: 5rem 0; }
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .story-label {
+      font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--emerald); text-transform: uppercase;
+      letter-spacing: 0.12em; margin-bottom: 0.75rem;
+    }
+    .story-h2 { font-size: 1.75rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .body-text { font-size: 1rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1.25rem; }
+    .body-text strong { color: var(--text-white); font-weight: 600; }
+    /* QUOTE BLOCK */
+    .quote-block {
+      position: relative;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-left: 4px solid var(--emerald);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 1.75rem 1.75rem 1.75rem 2rem; margin: 2rem 0;
+    }
+    .quote-block::before {
+      content: '\201C'; position: absolute; top: -0.5rem; left: 1.25rem;
+      font-size: 4rem; color: var(--emerald); opacity: 0.18;
+      font-family: Georgia, serif; line-height: 1;
+    }
+    .quote-block p { font-size: 1rem; line-height: 1.75; color: var(--text-white); font-style: italic; font-weight: 300; }
+    .quote-block cite { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; font-style: normal; font-family: 'JetBrains Mono', monospace; }
+    /* STORY VISUAL PANEL */
+    .story-visual {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 2rem;
+      position: sticky; top: 100px;
+    }
+    .story-stat-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .story-stat {
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 1.1rem 1.25rem;
+      text-align: center;
+    }
+    .story-stat-num {
+      font-size: 1.8rem; font-weight: 800;
+      font-family: 'JetBrains Mono', monospace; color: var(--emerald);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .story-stat-label { font-size: 0.75rem; color: var(--text-muted); }
+    .story-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+    .founding-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .founding-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.85rem; color: var(--text-mid);
+    }
+    .founding-item i { color: var(--emerald); width: 14px; text-align: center; font-size: 0.78rem; }
+    .founding-item strong { color: var(--text-white); }
+    /* PHILOSOPHY SECTION */
+    .philosophy-section { padding: 4rem 0; background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .philosophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .philosophy-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      transition: var(--transition);
+    }
+    .philosophy-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: var(--shadow-glow); }
+    .philosophy-icon {
+      width: 44px; height: 44px; border-radius: var(--radius-sm);
+      background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--emerald); margin-bottom: 1rem;
+    }
+    .philosophy-title { font-size: 1rem; font-weight: 700; color: var(--text-white); margin-bottom: 0.5rem; }
+    .philosophy-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+    /* TEAM SECTION — reuse existing styles with enhancements */
+    .team-section { padding: 5rem 0; }
+    /* VALUES ROW */
+    .values-row {
+      display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 2rem 0;
+    }
+    .value-chip {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 999px; padding: 0.4rem 1rem;
+      font-size: 0.82rem; color: var(--emerald); font-weight: 500;
+    }
+    .value-chip i { font-size: 0.72rem; }
+    @media(max-width:900px) {
+      .story-grid { grid-template-columns: 1fr; }
+      .story-visual { position: static; }
+      .philosophy-grid { grid-template-columns: 1fr 1fr; }
+      .story-stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:600px) {
+      .philosophy-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="asset/img/Logo.png" alt="Cypher Gate" class="logo-img"/>
+        <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="index.html#dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="our-story.html" class="nav-link" style="color:var(--emerald)">About</a></li>
+        <li><a href="index.html#team" class="nav-link">Team</a></li>
+        <li><a href="is-components.html" class="nav-link">IS Components</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="index.html#contact" class="btn btn-ghost">Contact Us</a>
+        <a href="index.html#contact" class="btn btn-primary">Get Protected</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html#services" class="mobile-link">Services</a></li>
+        <li><a href="our-story.html" class="mobile-link">About / Our Story</a></li>
+        <li><a href="mission.html" class="mobile-link">Mission</a></li>
+        <li><a href="vision.html" class="mobile-link">Vision</a></li>
+        <li><a href="is-components.html" class="mobile-link">IS Components</a></li>
+        <li><a href="index.html#contact" class="mobile-link">Contact</a></li>
+      </ul>
+      <div class="mobile-actions">
+        <a href="index.html#contact" class="btn btn-primary btn-full">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span>Company</span>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span>Our Story</span>
+      </div>
+      <div class="page-tag"><i class="fa-solid fa-book-open"></i> Section 03</div>
+      <h1 class="page-title">About <span class="gradient-text">CypherGate</span></h1>
+      <p class="page-subtitle">We didn't build CypherGate because it was a good business idea. We built it because we watched a ransomware attack destroy everything a friend worked for — and we refused to let that happen again.</p>
+    </div>
+  </section>
+
+  <!-- WHERE IT BEGAN -->
+  <section class="story-section">
+    <div class="container">
+      <div class="story-grid">
+        <div>
+          <div class="story-label"><i class="fa-solid fa-map-pin" style="margin-right:6px;"></i>Where It All Began</div>
+          <h2 class="story-h2">A Ransomware Attack That <span class="gradient-text">Changed Everything</span></h2>
+          <p class="body-text">In early 2025, a group of young technology professionals in the Philippines watched helplessly as a friend's growing e-commerce business was crippled by ransomware. The attack was devastating — <strong>three weeks offline, thousands of pesos lost</strong>, and a customer base shaken to its core.</p>
+          <p class="body-text">The hardest part? The breach exploited a vulnerability that had been publicly known for over six months. A simple patch would have prevented everything. There was no sophisticated attack. No nation-state threat actor. Just a known gap that no one had closed — because the business had no one watching.</p>
+          <p class="body-text">That moment became the founding spark. <strong>Mariah Sumicad</strong>, then leading her thesis on enterprise security architecture, gathered her closest collaborators and posed a single question:</p>
+          <div class="quote-block">
+            <p>"Why should cybersecurity be complicated and exclusive when it doesn't have to be?"</p>
+            <cite>— Mariah Sumicad, CEO & Co-Founder</cite>
+          </div>
+        </div>
+        <div>
+          <div class="story-visual">
+            <div class="story-label" style="margin-bottom:1.25rem;"><i class="fa-solid fa-chart-line" style="margin-right:6px;"></i>CypherGate At a Glance</div>
+            <div class="story-stat-row">
+              <div class="story-stat">
+                <div class="story-stat-num">2025</div>
+                <div class="story-stat-label">Year Founded</div>
+              </div>
+              <div class="story-stat">
+                <div class="story-stat-num">6</div>
+                <div class="story-stat-label">Founding Members</div>
+              </div>
+              <div class="story-stat">
+                <div class="story-stat-num">4</div>
+                <div class="story-stat-label">Service Pillars</div>
+              </div>
+              <div class="story-stat">
+                <div class="story-stat-num">24/7</div>
+                <div class="story-stat-label">Active Monitoring</div>
+              </div>
+            </div>
+            <div class="story-divider"></div>
+            <div class="story-label" style="margin-bottom:1rem;"><i class="fa-solid fa-flag" style="margin-right:6px;"></i>Company Details</div>
+            <div class="founding-list">
+              <div class="founding-item"><i class="fa-solid fa-location-dot"></i><span><strong>Headquarters:</strong> Philippines</span></div>
+              <div class="founding-item"><i class="fa-solid fa-tag"></i><span><strong>Type:</strong> Security-as-a-Service (SaaS)</span></div>
+              <div class="founding-item"><i class="fa-solid fa-bullseye"></i><span><strong>Market:</strong> Southeast Asia (SEA)</span></div>
+              <div class="founding-item"><i class="fa-solid fa-shield-halved"></i><span><strong>Philosophy:</strong> Proactive Hygiene</span></div>
+              <div class="founding-item"><i class="fa-solid fa-envelope"></i><span><strong>Email:</strong> CypherGate@gmail.com</span></div>
+              <div class="founding-item"><i class="fa-solid fa-phone"></i><span><strong>Phone:</strong> +63 993 907 3410</span></div>
+            </div>
+            <div class="story-divider"></div>
+            <div class="values-row">
+              <div class="value-chip"><i class="fa-solid fa-check"></i> Transparency</div>
+              <div class="value-chip"><i class="fa-solid fa-check"></i> Proactive</div>
+              <div class="value-chip"><i class="fa-solid fa-check"></i> 24/7 Vigilance</div>
+              <div class="value-chip"><i class="fa-solid fa-check"></i> Client-First</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILDING THE COMPANY -->
+  <section style="padding:0 0 5rem;">
+    <div class="container">
+      <div class="story-label"><i class="fa-solid fa-hammer" style="margin-right:6px;"></i>Building the Company</div>
+      <h2 class="story-h2" style="max-width:700px;margin-bottom:1.5rem;">From Thesis Project to <span class="gradient-text">Full Security Startup</span></h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
+        <div>
+          <p class="body-text">What began as a thesis project and a weekend hackathon entry quickly evolved into a structured startup. The founding team spent months studying how enterprise security firms operated, dissecting what made them effective, and identifying exactly what smaller businesses were missing.</p>
+          <p class="body-text">The answer was never just software — it was the <strong>people, the process, and the around-the-clock attention</strong> that software alone could never provide. A firewall doesn't call you at 3 AM. An automated scanner doesn't make the judgment call between a real threat and a false positive. Humans do.</p>
+        </div>
+        <div>
+          <p class="body-text">They built CypherGate on a single foundational philosophy: <strong>Security-as-a-Service</strong>. Not a one-time tool you install and forget, but a living, breathing external security department that monitors, defends, and recovers on behalf of its clients — every hour of every day.</p>
+          <p class="body-text">They named the company <strong>CypherGate</strong> to represent the gateway between vulnerability and protection — between the chaos of the digital world and the clarity every business deserves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE PHILOSOPHY -->
+  <section class="philosophy-section">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3rem;">
+        <div class="section-label mono" style="justify-content:center;margin-bottom:1rem;"><span class="label-dot"></span> WHAT WE STAND FOR</div>
+        <h2 class="section-title">The Philosophy Behind<br/><span class="gradient-text">Everything We Do</span></h2>
+      </div>
+      <div class="philosophy-grid">
+        <div class="philosophy-card">
+          <div class="philosophy-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="philosophy-title">Security-as-a-Service</div>
+          <p class="philosophy-text">Not software — a full external security department. We monitor, defend, and recover for you around the clock so you can focus on your business.</p>
+        </div>
+        <div class="philosophy-card">
+          <div class="philosophy-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <div class="philosophy-title">Proactive Hygiene</div>
+          <p class="philosophy-text">We don't wait for threats to land. We find the unlocked windows before a thief does. Every gap is closed before it becomes a breach.</p>
+        </div>
+        <div class="philosophy-card">
+          <div class="philosophy-icon"><i class="fa-solid fa-eye"></i></div>
+          <div class="philosophy-title">Radical Transparency</div>
+          <p class="philosophy-text">Clients always know exactly what is being protected and why. No black boxes. Every alert, every action, every report — fully visible.</p>
+        </div>
+        <div class="philosophy-card">
+          <div class="philosophy-icon"><i class="fa-solid fa-clock"></i></div>
+          <div class="philosophy-title">24/7 Vigilance</div>
+          <p class="philosophy-text">Round-the-clock monitoring with under 15-minute average response time. We watch when you can't — every hour, every day, every year.</p>
+        </div>
+        <div class="philosophy-card">
+          <div class="philosophy-icon"><i class="fa-solid fa-handshake"></i></div>
+          <div class="philosophy-title">Trusted Partnership</div>
+          <p class="philosophy-text">We're not a vendor. We're your external security department. Shared accountability, shared goals, shared success.</p>
+        </div>
+        <div class="philosophy-card">
+          <div class="philosophy-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="philosophy-title">Universal Access</div>
+          <p class="philosophy-text">Enterprise-grade protection should not be reserved for enterprises. Every business — regardless of size or budget — deserves to be protected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM SECTION -->
+  <section class="team-section" id="team">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <div class="section-label mono"><span class="label-dot"></span> OUR TEAM</div>
+        <h2 class="section-title">The People Behind<br/><span class="gradient-text">CypherGate.</span></h2>
+        <p class="section-sub">Six specialists. One mission. Every member brings a distinct perspective — from executive leadership and security architecture to strategic planning, design, and operations.</p>
+      </div>
+      <div class="team-grid">
+
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/Mariah.jpg" alt="Mariah Sumicad"/></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Chief Executive Officer</div>
+          <h3 class="team-name">Mariah Sumicad</h3>
+          <p class="team-bio">Effective leadership balances swift, high-stakes decision-making with continuous investment in organizational talent. By practicing decisive governance while cultivating a strong leadership pipeline, executives eliminate ambiguity and drive long-term, sustainable growth.</p>
+          <div class="team-tags">
+            <span class="team-tag">Corporate Visionary</span>
+            <span class="team-tag">Executive Director</span>
+          </div>
+          <a href="https://mamaesumicad.my.canva.site/mm/" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i> View Portfolio
+          </a>
+        </div>
+
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/poliapoy.jpg" alt="Emjay Poliapoy"/></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Co-Founder</div>
+          <h3 class="team-name">Emjay Poliapoy</h3>
+          <p class="team-bio">Successful co-founders combine market-disrupting vision with the technical agility needed to build a business from the ground up. By blending entrepreneurial drive with a focus on product execution, they establish scalable operations and align early teams toward shared growth.</p>
+          <div class="team-tags">
+            <span class="team-tag">Venture Architect</span>
+            <span class="team-tag">Product Innovator</span>
+          </div>
+          <a href="https://poliapoyportfolio.netlify.app/" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i> View Portfolio
+          </a>
+        </div>
+
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/UY.jpg" alt="Chrislyn Jae Perez Uy"/></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Lead Developer</div>
+          <h3 class="team-name">Chrislyn Jae Perez Uy</h3>
+          <p class="team-bio">Enforcing engineering excellence requires a balance of advanced technical architecture and rigorous software security standards. By architecting scalable, enterprise-grade systems while mitigating technical debt, developers eliminate system vulnerabilities and drive secure, long-term product innovation.</p>
+          <div class="team-tags">
+            <span class="team-tag">Security Architect</span>
+            <span class="team-tag">Engineering Lead</span>
+          </div>
+          <a href="https://sites.google.com/view/jaespersonalwebsite/home?authuser=0" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i> View Portfolio
+          </a>
+        </div>
+
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono"><img src="asset/members/niel Profile.png" alt="Joebeniel Ayes"/></div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Designer</div>
+          <h3 class="team-name">Joebeniel Ayes</h3>
+          <p class="team-bio">Creative director and UI/UX designer. Multimedia artist, photographer, videographer, and performer blending visuals with sound to create product experiences that are as beautiful as they are functional.</p>
+          <div class="team-tags">
+            <span class="team-tag">Product Designer</span>
+            <span class="team-tag">SaaS Visual Systems</span>
+          </div>
+          <a href="https://sites.google.com/view/ayesjoebeniel/home?authuser=0" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i> View Portfolio
+          </a>
+        </div>
+
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono">GJA</div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Strategic Planner</div>
+          <h3 class="team-name">Goldwyn Josh Alcuizar</h3>
+          <p class="team-bio">Sustainable growth balances market forecasting with proactive risk mitigation. By converting corporate vision into actionable roadmaps, planners eliminate resource waste and secure competitive advantage.</p>
+          <div class="team-tags">
+            <span class="team-tag">Growth Strategist</span>
+            <span class="team-tag">Risk Director</span>
+          </div>
+          <span class="team-portfolio-btn team-portfolio-btn--disabled"><i class="fas fa-clock"></i> Coming Soon</span>
+        </div>
+
+        <div class="team-card" data-reveal>
+          <div class="team-card__glow"></div>
+          <div class="team-avatar">
+            <div class="team-avatar__placeholder mono">PB</div>
+            <div class="team-avatar__ring"></div>
+          </div>
+          <div class="team-badge mono">Business Manager</div>
+          <h3 class="team-name">Popoy Bolar</h3>
+          <p class="team-bio">Operational efficiency balances optimized workflows with seamless team collaboration. By streamlining business processes, managers eliminate bottlenecks and drive scalable project execution across every department.</p>
+          <div class="team-tags">
+            <span class="team-tag">Operations Manager</span>
+            <span class="team-tag">Efficiency Director</span>
+          </div>
+          <span class="team-portfolio-btn team-portfolio-btn--disabled"><i class="fas fa-clock"></i> Coming Soon</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMISE CTA -->
+  <section style="padding:5rem 0;background:var(--bg-surface);border-top:1px solid var(--border);">
+    <div class="container">
+      <div class="quote-block" style="max-width:780px;margin:0 auto 3rem;border-left-color:var(--emerald);">
+        <p>"We didn't build CypherGate to be another software tool collecting dust on a server. We built it to be the guardian at the gate — watching while you sleep, fighting while you work, and recovering what matters most when the worst happens."</p>
+        <cite>— Mariah Sumicad, CEO</cite>
+      </div>
+      <div style="text-align:center;">
+        <a href="index.html#contact" class="btn btn-primary btn-lg"><i class="fa-solid fa-shield-halved"></i> Work With Us</a>
+        <a href="mission.html" class="btn btn-outline btn-lg" style="margin-left:1rem;"><i class="fa-solid fa-bullseye"></i> Read Our Mission</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top"><div class="container"><div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <span class="logo-icon"><i class="fa-solid fa-shield-halved"></i></span>
+          <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+        </a>
+        <p class="footer-tagline">"Don't Just Hope You're Safe —<br/><strong>Know You're Protected.</strong>"</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com" class="social-link" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.twitter.com" class="social-link" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.facebook.com" class="social-link" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="mailto:CypherGate@gmail.com" class="social-link"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Services</h4>
+        <ul>
+          <li><a href="index.html#services">Managed Detection & Response</a></li>
+          <li><a href="index.html#services">Vulnerability Management</a></li>
+          <li><a href="index.html#services">Identity & Access Management</a></li>
+          <li><a href="index.html#services">Incident Response & Recovery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Company</h4>
+        <ul>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="mission.html">Mission Statement</a></li>
+          <li><a href="vision.html">Vision Statement</a></li>
+          <li><a href="is-components.html">IS Components</a></li>
+          <li><a href="index.html#team">Our Team</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Contact</h4>
+        <ul>
+          <li><a href="tel:+639993907410">+63 993 907 3410</a></li>
+          <li><a href="mailto:CypherGate@gmail.com">CypherGate@gmail.com</a></li>
+        </ul>
+        <div class="footer-status mono">
+          <span class="pulse-dot green" style="display:inline-block;margin-right:.4rem"></span>All systems operational
+        </div>
+      </div>
+    </div></div></div>
+    <div class="footer-bottom"><div class="container">
+      <p class="copyright mono">© 2026 Cypher Gate. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="coming-soon.html">Privacy Policy</a>
+        <a href="coming-soon.html">Terms of Service</a>
+      </div>
+    </div></div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vision Statement — CypherGate</title>
+  <link rel="icon" href="asset/img/Logo-favicon.png" type="image/png">
+  <meta name="description" content="CypherGate's vision: to be the most trusted cybersecurity partner for modern businesses worldwide."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .page-hero {
+      position: relative;
+      padding: 10rem 0 5rem;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-base) 100%);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(ellipse, rgba(245,158,11,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .breadcrumb a { color: var(--emerald); transition: var(--transition); }
+    .breadcrumb a:hover { color: #34D399; }
+    .page-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: var(--amber);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .page-title {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.03em; margin-bottom: 1.2rem;
+    }
+    .page-subtitle {
+      font-size: 1.1rem; color: var(--text-mid);
+      max-width: 600px; line-height: 1.7;
+    }
+    .gradient-amber {
+      background: linear-gradient(135deg, var(--amber) 0%, #FCD34D 50%, var(--amber) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* CONTENT */
+    .page-content { padding: 5rem 0 7rem; }
+    .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: start; }
+    /* QUOTE */
+    .quote-block {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid rgba(245,158,11,0.15);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 2rem 2rem 2rem 2.5rem;
+      margin: 2rem 0;
+    }
+    .quote-block::before {
+      content: '\201C';
+      position: absolute; top: -0.5rem; left: 1.5rem;
+      font-size: 5rem; color: var(--amber); opacity: 0.18;
+      font-family: Georgia, serif; line-height: 1;
+    }
+    .quote-block p {
+      font-size: 1.15rem; line-height: 1.75;
+      color: var(--text-white); font-style: italic;
+      font-weight: 300; position: relative; z-index: 1;
+    }
+    .body-text {
+      font-size: 1rem; color: var(--text-mid);
+      line-height: 1.8; margin-bottom: 1.5rem;
+    }
+    .body-text strong { color: var(--text-white); font-weight: 600; }
+    /* VISION PILLARS */
+    .vision-pillars { display: flex; flex-direction: column; gap: 0; margin: 2.5rem 0; }
+    .vision-pillar {
+      display: flex; gap: 1.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+      transition: var(--transition);
+    }
+    .vision-pillar:last-child { border-bottom: none; }
+    .vision-pillar:hover .pillar-icon-wrap { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.3); }
+    .pillar-icon-wrap {
+      flex-shrink: 0; width: 44px; height: 44px;
+      border-radius: var(--radius-sm);
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--amber);
+      transition: var(--transition);
+    }
+    .pillar-info { flex: 1; }
+    .pillar-info h4 { font-size: 1rem; font-weight: 700; color: var(--text-white); margin-bottom: 0.3rem; }
+    .pillar-info p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.6; }
+    /* 2030 GOAL CARD */
+    .goal-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(245,158,11,0.07) 0%, rgba(245,158,11,0.02) 100%);
+      border: 1px solid rgba(245,158,11,0.18);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin: 2.5rem 0;
+      overflow: hidden;
+    }
+    .goal-card::after {
+      content: '2030';
+      position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%);
+      font-size: 5rem; font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(245,158,11,0.06); line-height: 1;
+      pointer-events: none;
+    }
+    .goal-card-tag {
+      font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--amber); text-transform: uppercase;
+      letter-spacing: 0.12em; margin-bottom: 0.75rem;
+    }
+    .goal-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-white); margin-bottom: 0.5rem; }
+    .goal-card p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; max-width: 70%; }
+    /* SIDEBAR */
+    .sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      position: sticky; top: 100px;
+    }
+    .sidebar-card-title {
+      font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--amber); text-transform: uppercase;
+      letter-spacing: 0.12em; margin-bottom: 1.25rem;
+    }
+    .sidebar-timeline { position: relative; padding-left: 1.5rem; }
+    .sidebar-timeline::before {
+      content: ''; position: absolute; left: 6px; top: 0; bottom: 0;
+      width: 1.5px; background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 1.25rem; }
+    .timeline-dot {
+      position: absolute; left: -1.5rem; top: 4px;
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid;
+    }
+    .timeline-dot.done { border-color: var(--emerald); background: var(--emerald); }
+    .timeline-dot.active { border-color: var(--amber); background: var(--amber); box-shadow: 0 0 8px rgba(245,158,11,0.4); }
+    .timeline-dot.future { border-color: var(--border); background: transparent; }
+    .timeline-year { font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-bottom: 2px; }
+    .timeline-event { font-size: 0.84rem; color: var(--text-mid); font-weight: 500; }
+    .sidebar-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+    .sidebar-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.84rem; color: var(--text-mid);
+      padding: 0.6rem 0.75rem; border-radius: var(--radius-sm);
+      border: 1px solid transparent; transition: var(--transition);
+    }
+    .sidebar-link:hover { color: var(--emerald); border-color: rgba(16,185,129,0.2); background: rgba(16,185,129,0.05); }
+    .sidebar-link i { font-size: 0.78rem; width: 14px; text-align: center; }
+    @media(max-width:900px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .sidebar-card { position: static; }
+      .goal-card p { max-width: 100%; }
+      .goal-card::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="asset/img/Logo.png" alt="Cypher Gate" class="logo-img"/>
+        <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="index.html#dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="our-story.html" class="nav-link">About</a></li>
+        <li><a href="index.html#team" class="nav-link">Team</a></li>
+        <li><a href="vision.html" class="nav-link" style="color:var(--amber)">Vision</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="index.html#contact" class="btn btn-ghost">Contact Us</a>
+        <a href="index.html#contact" class="btn btn-primary">Get Protected</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html#services" class="mobile-link">Services</a></li>
+        <li><a href="our-story.html" class="mobile-link">About</a></li>
+        <li><a href="mission.html" class="mobile-link">Mission</a></li>
+        <li><a href="vision.html" class="mobile-link">Vision</a></li>
+        <li><a href="is-components.html" class="mobile-link">IS Components</a></li>
+        <li><a href="index.html#contact" class="mobile-link">Contact</a></li>
+      </ul>
+      <div class="mobile-actions">
+        <a href="index.html#contact" class="btn btn-primary btn-full">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span>Company</span>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span>Vision Statement</span>
+      </div>
+      <div class="page-tag"><i class="fa-solid fa-binoculars"></i> Section 02</div>
+      <h1 class="page-title">Our <span class="gradient-amber">Vision</span></h1>
+      <p class="page-subtitle">Where CypherGate is going — and the world we are committed to building. A future where every business operates with unshakeable digital confidence.</p>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="page-content">
+    <div class="container">
+      <div class="content-grid">
+
+        <!-- MAIN -->
+        <div>
+          <div class="quote-block">
+            <p>To be the most trusted cybersecurity partner for modern businesses worldwide — building a future where every company, regardless of size or budget, operates with the confidence that their digital world is fully protected.</p>
+          </div>
+
+          <p class="body-text">CypherGate envisions a digital world where cybersecurity is not a luxury reserved for large enterprises with dedicated IT departments, but a <strong>fundamental right and reality for every business</strong>. We see a future where a small retail shop in Manila and a mid-sized firm in Singapore operate with the same level of protection as a Fortune 500 company — because CypherGate bridges that gap.</p>
+
+          <p class="body-text">We are building toward a world where the question is never <strong>"Can we afford security?"</strong> but rather <strong>"Can we afford NOT to have CypherGate?"</strong> Our vision drives us to continually innovate, expand our services, and deepen our expertise so that the businesses we protect never fall behind the ever-evolving threat landscape.</p>
+
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--text-white);margin-bottom:0.5rem;">Our Strategic Vision Pillars</h3>
+          <p class="body-text">Five commitments that define how we move from where we are today to where we intend to be.</p>
+
+          <div class="vision-pillars">
+            <div class="vision-pillar">
+              <div class="pillar-icon-wrap"><i class="fa-solid fa-globe"></i></div>
+              <div class="pillar-info">
+                <h4>Universal Access</h4>
+                <p>Make enterprise-grade security accessible to SMEs and startups at every budget level. Security should not depend on the size of your company's balance sheet.</p>
+              </div>
+            </div>
+            <div class="vision-pillar">
+              <div class="pillar-icon-wrap"><i class="fa-solid fa-brain"></i></div>
+              <div class="pillar-info">
+                <h4>Intelligence-Driven</h4>
+                <p>Build AI-powered threat detection that stays ahead of attackers, not behind them. Our systems learn, adapt, and evolve faster than the threats they guard against.</p>
+              </div>
+            </div>
+            <div class="vision-pillar">
+              <div class="pillar-icon-wrap"><i class="fa-solid fa-eye"></i></div>
+              <div class="pillar-info">
+                <h4>Radical Transparency</h4>
+                <p>Give every client full visibility into what is being protected and why, at all times. No black boxes. No mystery. Every action is documented and explained.</p>
+              </div>
+            </div>
+            <div class="vision-pillar">
+              <div class="pillar-icon-wrap"><i class="fa-solid fa-bell-slash"></i></div>
+              <div class="pillar-info">
+                <h4>Zero Surprise Culture</h4>
+                <p>Eliminate the shock of breaches through relentless proactive monitoring and communication. If it's happening in your network, you know about it before anyone else.</p>
+              </div>
+            </div>
+            <div class="vision-pillar">
+              <div class="pillar-icon-wrap"><i class="fa-solid fa-handshake"></i></div>
+              <div class="pillar-info">
+                <h4>Trusted Partnership</h4>
+                <p>Be the external security department that clients rely on as much as their own team. Not a vendor relationship — a partnership built on shared accountability.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="goal-card">
+            <div class="goal-card-tag"><i class="fa-solid fa-flag" style="margin-right:6px;"></i>Where We Are Going</div>
+            <h3>10,000 Businesses Protected by 2030</h3>
+            <p>By 2030, CypherGate aims to protect over 10,000 businesses across Southeast Asia — becoming the region's most recognized Security-as-a-Service brand.</p>
+          </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside>
+          <div class="sidebar-card">
+            <div class="sidebar-card-title"><i class="fa-solid fa-road" style="margin-right:6px;"></i>CypherGate Roadmap</div>
+            <div class="sidebar-timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot done"></div>
+                <div class="timeline-year">2025</div>
+                <div class="timeline-event">Founded in the Philippines. First 4 service pillars launched.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot active"></div>
+                <div class="timeline-year">2026 — NOW</div>
+                <div class="timeline-event">Client portal live. AI-assisted MDR. SEA market entry.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot future"></div>
+                <div class="timeline-year">2027</div>
+                <div class="timeline-event">Expand to 500+ active clients. SME subscription tiers.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot future"></div>
+                <div class="timeline-year">2028</div>
+                <div class="timeline-event">Regional offices. Full AI-native threat intelligence engine.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot future"></div>
+                <div class="timeline-year">2030</div>
+                <div class="timeline-event">10,000 businesses protected. SEA's #1 SaaS security brand.</div>
+              </div>
+            </div>
+            <div class="sidebar-divider"></div>
+            <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;font-family:'JetBrains Mono',monospace;">Company Pages</div>
+            <div class="sidebar-links">
+              <a href="mission.html" class="sidebar-link"><i class="fa-solid fa-bullseye"></i> Mission Statement</a>
+              <a href="our-story.html" class="sidebar-link"><i class="fa-solid fa-book-open"></i> Our Story</a>
+              <a href="is-components.html" class="sidebar-link"><i class="fa-solid fa-cubes"></i> IS Components</a>
+              <a href="index.html#services" class="sidebar-link"><i class="fa-solid fa-shield-halved"></i> Our Services</a>
+              <a href="index.html#contact" class="sidebar-link" style="color:var(--emerald);"><i class="fa-solid fa-arrow-right"></i> Get Protected</a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:4rem 0;background:var(--bg-surface);border-top:1px solid var(--border);">
+    <div class="container" style="text-align:center;">
+      <div class="section-label mono" style="justify-content:center;margin-bottom:1rem;">
+        <span class="label-dot"></span> JOIN THE VISION
+      </div>
+      <h2 class="section-title" style="max-width:600px;margin:0 auto 1rem;">Be Part of a <span class="gradient-text">Safer Digital Future</span></h2>
+      <p style="color:var(--text-mid);margin-bottom:2rem;font-size:1rem;">Every business we protect is a step closer to the world we are building. Start your free security assessment today.</p>
+      <a href="index.html#contact" class="btn btn-primary btn-lg"><i class="fa-solid fa-arrow-right"></i> Get Started</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top"><div class="container"><div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <span class="logo-icon"><i class="fa-solid fa-shield-halved"></i></span>
+          <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+        </a>
+        <p class="footer-tagline">"Don't Just Hope You're Safe —<br/><strong>Know You're Protected.</strong>"</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com" class="social-link" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.twitter.com" class="social-link" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.facebook.com" class="social-link" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="mailto:CypherGate@gmail.com" class="social-link"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Services</h4>
+        <ul>
+          <li><a href="index.html#services">Managed Detection & Response</a></li>
+          <li><a href="index.html#services">Vulnerability Management</a></li>
+          <li><a href="index.html#services">Identity & Access Management</a></li>
+          <li><a href="index.html#services">Incident Response & Recovery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Company</h4>
+        <ul>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="mission.html">Mission Statement</a></li>
+          <li><a href="vision.html">Vision Statement</a></li>
+          <li><a href="is-components.html">IS Components</a></li>
+          <li><a href="index.html#team">Our Team</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Contact</h4>
+        <ul>
+          <li><a href="tel:+639993907410">+63 993 907 3410</a></li>
+          <li><a href="mailto:CypherGate@gmail.com">CypherGate@gmail.com</a></li>
+        </ul>
+        <div class="footer-status mono">
+          <span class="pulse-dot green" style="display:inline-block;margin-right:.4rem"></span>All systems operational
+        </div>
+      </div>
+    </div></div></div>
+    <div class="footer-bottom"><div class="container">
+      <p class="copyright mono">© 2026 Cypher Gate. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="coming-soon.html">Privacy Policy</a>
+        <a href="coming-soon.html">Terms of Service</a>
+      </div>
+    </div></div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

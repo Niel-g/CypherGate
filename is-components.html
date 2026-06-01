@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>5 Core IS Components — CypherGate</title>
+  <link rel="icon" href="asset/img/Logo-favicon.png" type="image/png">
+  <meta name="description" content="How CypherGate maps across the 5 core components of Information Systems: People, Hardware, Software, Process, and Data."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* PAGE HERO */
+    .page-hero {
+      position: relative; padding: 10rem 0 5rem; overflow: hidden;
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-base) 100%);
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(16,185,129,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .breadcrumb a { color: var(--emerald); }
+    .page-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: var(--emerald);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .page-title {
+      font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.2rem;
+    }
+    .page-subtitle { font-size: 1.1rem; color: var(--text-mid); max-width: 620px; line-height: 1.7; }
+    /* OVERVIEW TABLE */
+    .overview-section { padding: 4rem 0 2rem; }
+    .overview-table-wrap {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 4rem;
+    }
+    .ov-table { width: 100%; border-collapse: collapse; }
+    .ov-table thead tr {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .ov-table th {
+      padding: 1rem 1.25rem; text-align: left;
+      font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--emerald); text-transform: uppercase;
+      letter-spacing: 0.1em; font-weight: 600;
+    }
+    .ov-table td {
+      padding: 1.1rem 1.25rem; font-size: 0.88rem;
+      color: var(--text-mid); line-height: 1.5;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .ov-table tr:last-child td { border-bottom: none; }
+    .ov-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .ov-comp {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-weight: 700; font-size: 0.9rem; color: var(--text-white);
+      white-space: nowrap;
+    }
+    .ov-comp-icon {
+      width: 32px; height: 32px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; flex-shrink: 0;
+    }
+    /* ACCORDION SECTION */
+    .accordion-section { padding: 2rem 0 7rem; }
+    .accordion-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2.5rem; align-items: start; }
+    /* COMPONENT TABS */
+    .comp-tabs { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 0.5rem; }
+    .comp-tab {
+      display: flex; align-items: center; gap: 0.85rem;
+      padding: 1rem 1.1rem; border-radius: var(--radius-md);
+      border: 1px solid var(--border); background: var(--bg-card);
+      cursor: pointer; transition: var(--transition);
+      text-decoration: none; color: var(--text-mid);
+    }
+    .comp-tab:hover { border-color: var(--border-hover); color: var(--text-white); }
+    .comp-tab.active { border-color: var(--emerald); background: rgba(16,185,129,0.06); color: var(--text-white); }
+    .comp-tab-icon {
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; flex-shrink: 0;
+      background: rgba(255,255,255,0.04); color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .comp-tab.active .comp-tab-icon { background: rgba(16,185,129,0.12); color: var(--emerald); }
+    .comp-tab-info { flex: 1; }
+    .comp-tab-num { font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-bottom: 1px; }
+    .comp-tab-name { font-size: 0.9rem; font-weight: 600; }
+    .comp-tab-arrow { font-size: 0.7rem; opacity: 0; transition: var(--transition); }
+    .comp-tab.active .comp-tab-arrow { opacity: 1; color: var(--emerald); }
+    /* COMPONENT PANELS */
+    .comp-panels { min-height: 500px; }
+    .comp-panel { display: none; animation: panel-in 0.3s ease; }
+    .comp-panel.active { display: block; }
+    @keyframes panel-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-header {
+      display: flex; align-items: flex-start; gap: 1.25rem;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .panel-header-icon {
+      width: 56px; height: 56px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .panel-section-num {
+      font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 0.3rem;
+    }
+    .panel-title { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+    .panel-role { font-size: 0.88rem; color: var(--text-muted); }
+    .panel-desc {
+      font-size: 1rem; color: var(--text-mid); line-height: 1.8;
+      margin-bottom: 1.75rem;
+    }
+    .panel-desc strong { color: var(--text-white); font-weight: 600; }
+    /* DETAIL CARDS */
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.75rem; }
+    .detail-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 1.25rem;
+      transition: var(--transition);
+    }
+    .detail-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    .detail-card-icon { font-size: 1rem; margin-bottom: 0.6rem; }
+    .detail-card-title { font-size: 0.88rem; font-weight: 700; color: var(--text-white); margin-bottom: 0.35rem; }
+    .detail-card-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; }
+    /* BULLET LIST */
+    .panel-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.75rem; }
+    .panel-list-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.88rem; color: var(--text-mid); line-height: 1.55;
+    }
+    .panel-list-item i { color: var(--emerald); margin-top: 3px; font-size: 0.72rem; flex-shrink: 0; }
+    .panel-list-item strong { color: var(--text-white); }
+    /* WHY CARD */
+    .why-card {
+      background: linear-gradient(135deg, rgba(16,185,129,0.07) 0%, rgba(16,185,129,0.02) 100%);
+      border: 1px solid rgba(16,185,129,0.18); border-radius: var(--radius-lg);
+      padding: 1.75rem;
+    }
+    .why-label { font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; color: var(--emerald); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem; }
+    .why-text { font-size: 0.92rem; color: var(--text-mid); line-height: 1.7; }
+    .why-text strong { color: var(--text-white); }
+    /* BOTTOM CTA BANNER */
+    .cta-banner {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 3rem;
+      text-align: center; margin-top: 4rem;
+      background: linear-gradient(135deg, rgba(16,185,129,0.06) 0%, var(--bg-card) 60%);
+      border-color: rgba(16,185,129,0.15);
+    }
+    /* COLOR VARIANTS PER COMPONENT */
+    .c-people   { background: rgba(16,185,129,0.1);  color: #10B981; }
+    .c-hardware { background: rgba(59,130,246,0.1);   color: #3B82F6; }
+    .c-software { background: rgba(139,92,246,0.1);   color: #8B5CF6; }
+    .c-process  { background: rgba(245,158,11,0.1);   color: #F59E0B; }
+    .c-data     { background: rgba(255,0,110,0.1);    color: #FF006E; }
+    @media(max-width:960px) {
+      .accordion-layout { grid-template-columns: 1fr; }
+      .comp-tabs { position: static; flex-direction: row; flex-wrap: wrap; }
+      .comp-tab { flex: 1; min-width: 120px; }
+    }
+    @media(max-width:640px) {
+      .detail-grid { grid-template-columns: 1fr; }
+      .comp-tab-num,.comp-tab-arrow { display: none; }
+      .ov-table thead { display: none; }
+      .ov-table td { display: block; padding: 0.6rem 1rem; border-bottom: none; }
+      .ov-table tr { border-bottom: 1px solid var(--border); display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="asset/img/Logo.png" alt="Cypher Gate" class="logo-img"/>
+        <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="index.html#dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="our-story.html" class="nav-link">About</a></li>
+        <li><a href="index.html#team" class="nav-link">Team</a></li>
+        <li><a href="is-components.html" class="nav-link" style="color:var(--emerald)">IS Components</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="index.html#contact" class="btn btn-ghost">Contact Us</a>
+        <a href="index.html#contact" class="btn btn-primary">Get Protected</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html#services" class="mobile-link">Services</a></li>
+        <li><a href="our-story.html" class="mobile-link">About</a></li>
+        <li><a href="mission.html" class="mobile-link">Mission</a></li>
+        <li><a href="vision.html" class="mobile-link">Vision</a></li>
+        <li><a href="is-components.html" class="mobile-link">IS Components</a></li>
+        <li><a href="index.html#contact" class="mobile-link">Contact</a></li>
+      </ul>
+      <div class="mobile-actions">
+        <a href="index.html#contact" class="btn btn-primary btn-full">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span>Company</span>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span>IS Components</span>
+      </div>
+      <div class="page-tag"><i class="fa-solid fa-cubes"></i> Section 04</div>
+      <h1 class="page-title">5 Core <span class="gradient-text">IS Components</span></h1>
+      <p class="page-subtitle">Every aspect of CypherGate maps to the five fundamental components of Information Systems — People, Hardware, Software, Process, and Data. This is how and why CypherGate works.</p>
+    </div>
+  </section>
+
+  <!-- OVERVIEW TABLE -->
+  <section class="overview-section">
+    <div class="container">
+      <div class="section-label mono" style="margin-bottom:1rem;"><span class="label-dot"></span> QUICK REFERENCE</div>
+      <h2 class="section-title" style="margin-bottom:2rem;">The 5 Components at a Glance</h2>
+      <div class="overview-table-wrap">
+        <table class="ov-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Role in CypherGate</th>
+              <th>Key Examples</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="ov-comp"><div class="ov-comp-icon c-people"><i class="fa-solid fa-users"></i></div>People</div></td>
+              <td>Human intelligence and expertise driving all decisions</td>
+              <td>MDR analysts, IR specialists, IAM engineers, security team, client IT contacts</td>
+            </tr>
+            <tr>
+              <td><div class="ov-comp"><div class="ov-comp-icon c-hardware"><i class="fa-solid fa-server"></i></div>Hardware</div></td>
+              <td>Physical and cloud infrastructure powering the platform</td>
+              <td>Monitoring servers, endpoint agents, network sensors, cloud (AWS/Azure), MFA tokens</td>
+            </tr>
+            <tr>
+              <td><div class="ov-comp"><div class="ov-comp-icon c-software"><i class="fa-solid fa-shield-halved"></i></div>Software</div></td>
+              <td>Applications and tools delivering protection services</td>
+              <td>MDR platform, vulnerability scanner, IAM portal, IR system, client dashboard, SIEM</td>
+            </tr>
+            <tr>
+              <td><div class="ov-comp"><div class="ov-comp-icon c-process"><i class="fa-solid fa-diagram-project"></i></div>Process</div></td>
+              <td>Structured methodologies for consistent, reliable protection</td>
+              <td>Detect-Defend-Recover workflow, vulnerability triage, IR runbooks, access lifecycle</td>
+            </tr>
+            <tr>
+              <td><div class="ov-comp"><div class="ov-comp-icon c-data"><i class="fa-solid fa-database"></i></div>Data</div></td>
+              <td>Threat intelligence and security telemetry powering decisions</td>
+              <td>Network logs, endpoint telemetry, CVE feeds, access records, threat intelligence DBs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE ACCORDION -->
+  <section class="accordion-section">
+    <div class="container">
+      <div class="section-label mono" style="margin-bottom:0.5rem;"><span class="label-dot"></span> DEEP DIVE</div>
+      <h2 class="section-title" style="margin-bottom:2.5rem;">Explore Each Component</h2>
+      <div class="accordion-layout">
+
+        <!-- TABS -->
+        <div class="comp-tabs">
+          <div class="comp-tab active" data-target="panel-people">
+            <div class="comp-tab-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="comp-tab-info">
+              <div class="comp-tab-num">01 / 05</div>
+              <div class="comp-tab-name">People</div>
+            </div>
+            <i class="fa-solid fa-chevron-right comp-tab-arrow"></i>
+          </div>
+          <div class="comp-tab" data-target="panel-hardware">
+            <div class="comp-tab-icon"><i class="fa-solid fa-server"></i></div>
+            <div class="comp-tab-info">
+              <div class="comp-tab-num">02 / 05</div>
+              <div class="comp-tab-name">Hardware</div>
+            </div>
+            <i class="fa-solid fa-chevron-right comp-tab-arrow"></i>
+          </div>
+          <div class="comp-tab" data-target="panel-software">
+            <div class="comp-tab-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="comp-tab-info">
+              <div class="comp-tab-num">03 / 05</div>
+              <div class="comp-tab-name">Software</div>
+            </div>
+            <i class="fa-solid fa-chevron-right comp-tab-arrow"></i>
+          </div>
+          <div class="comp-tab" data-target="panel-process">
+            <div class="comp-tab-icon"><i class="fa-solid fa-diagram-project"></i></div>
+            <div class="comp-tab-info">
+              <div class="comp-tab-num">04 / 05</div>
+              <div class="comp-tab-name">Process</div>
+            </div>
+            <i class="fa-solid fa-chevron-right comp-tab-arrow"></i>
+          </div>
+          <div class="comp-tab" data-target="panel-data">
+            <div class="comp-tab-icon"><i class="fa-solid fa-database"></i></div>
+            <div class="comp-tab-info">
+              <div class="comp-tab-num">05 / 05</div>
+              <div class="comp-tab-name">Data</div>
+            </div>
+            <i class="fa-solid fa-chevron-right comp-tab-arrow"></i>
+          </div>
+        </div>
+
+        <!-- PANELS -->
+        <div class="comp-panels">
+
+          <!-- 01 PEOPLE -->
+          <div class="comp-panel active" id="panel-people">
+            <div class="panel-header">
+              <div class="panel-header-icon c-people"><i class="fa-solid fa-users"></i></div>
+              <div>
+                <div class="panel-section-num">Component 01 / 05</div>
+                <div class="panel-title">People</div>
+                <div class="panel-role">Human intelligence and expertise driving all decisions</div>
+              </div>
+            </div>
+            <p class="panel-desc">People are the <strong>irreplaceable core</strong> of CypherGate's value proposition. Technology can detect anomalies, but it is human expertise that distinguishes a real threat from a false positive, decides the escalation path, and communicates clearly with a panicking business owner at 3:00 AM. No algorithm replaces that judgment call.</p>
+            <div class="detail-grid">
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#10B981;"><i class="fa-solid fa-eye"></i></div>
+                <div class="detail-card-title">MDR Analysts</div>
+                <div class="detail-card-text">Monitor client environments 24/7 and make real-time triage decisions on every alert — separating real threats from noise.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#FF006E;"><i class="fa-solid fa-fire"></i></div>
+                <div class="detail-card-title">IR Specialists</div>
+                <div class="detail-card-text">Deploy within minutes of a confirmed breach, coordinating rapid containment, eradication, and recovery operations.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#10B981;"><i class="fa-solid fa-id-badge"></i></div>
+                <div class="detail-card-title">IAM Engineers</div>
+                <div class="detail-card-text">Configure and maintain role-based access controls tailored to each client's organizational structure and compliance needs.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#F59E0B;"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="detail-card-title">Strategic Planners</div>
+                <div class="detail-card-text">Ensure CypherGate's services evolve ahead of the threat landscape through market forecasting and security research.</div>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-label"><i class="fa-solid fa-lightbulb" style="margin-right:6px;"></i>Why This Matters for Clients</div>
+              <div class="why-text">When you engage CypherGate, you're not buying software — you're hiring a <strong>team of specialists</strong>. The interface makes security visible. The people make security real. Every alert that lands on your dashboard has already been reviewed by a human analyst who decided it warranted your attention.</div>
+            </div>
+          </div>
+
+          <!-- 02 HARDWARE -->
+          <div class="comp-panel" id="panel-hardware">
+            <div class="panel-header">
+              <div class="panel-header-icon c-hardware"><i class="fa-solid fa-server"></i></div>
+              <div>
+                <div class="panel-section-num">Component 02 / 05</div>
+                <div class="panel-title">Hardware</div>
+                <div class="panel-role">Physical and cloud infrastructure powering the platform</div>
+              </div>
+            </div>
+            <p class="panel-desc">CypherGate's hardware layer is the <strong>physical and virtual infrastructure</strong> that enables always-on visibility across client environments. Without the right hardware in place, real-time threat detection and response at scale would be impossible — there is no software without the machines running it.</p>
+            <div class="panel-list">
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Endpoint Agents:</strong> Lightweight software deployed on client devices to collect real-time telemetry, behavioral data, and process activity without impacting performance.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Network Sensors:</strong> Positioned at client infrastructure boundaries to detect unusual traffic patterns, lateral movement, and intrusion attempts the moment they begin.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Cloud Monitoring Servers (AWS / Azure):</strong> Scalable, redundant infrastructure processing millions of security events per hour with 99.9% uptime SLA.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Hardware MFA Tokens:</strong> Physical second-factor authentication devices for clients requiring the highest level of identity assurance.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Backup & Recovery Infrastructure:</strong> Redundant storage systems enabling rapid restore operations after ransomware, data corruption, or hardware failure incidents.</span></div>
+            </div>
+            <div class="why-card">
+              <div class="why-label"><i class="fa-solid fa-lightbulb" style="margin-right:6px;"></i>Why This Matters for Clients</div>
+              <div class="why-text">Clients never have to build or maintain monitoring infrastructure themselves. CypherGate's hardware layer is <strong>invisible to daily operations</strong> but always active beneath the surface — watching every packet, every login, every file write. The infrastructure scales with your business automatically.</div>
+            </div>
+          </div>
+
+          <!-- 03 SOFTWARE -->
+          <div class="comp-panel" id="panel-software">
+            <div class="panel-header">
+              <div class="panel-header-icon c-software"><i class="fa-solid fa-shield-halved"></i></div>
+              <div>
+                <div class="panel-section-num">Component 03 / 05</div>
+                <div class="panel-title">Software</div>
+                <div class="panel-role">Applications and tools delivering protection services</div>
+              </div>
+            </div>
+            <p class="panel-desc">The software layer is where CypherGate's services are <strong>delivered, experienced, and measured</strong>. It encompasses everything from the client-facing dashboard to the backend detection engines operating silently in the background — the full stack of tools that make security visible and actionable.</p>
+            <div class="detail-grid">
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#8B5CF6;"><i class="fa-solid fa-gauge-high"></i></div>
+                <div class="detail-card-title">Client Portal Dashboard</div>
+                <div class="detail-card-text">The white-background, friendly interface showing Security Health Score, active alerts, vulnerability findings, and incident status in real time.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#10B981;"><i class="fa-solid fa-eye"></i></div>
+                <div class="detail-card-title">MDR / SIEM Platform</div>
+                <div class="detail-card-text">Backend system ingesting logs, correlating events across sources, and surfacing threats for analyst review and automated response.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#F59E0B;"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="detail-card-title">Vulnerability Scanner</div>
+                <div class="detail-card-text">Automated engine checking systems against known CVE databases, configuration benchmarks, and outdated software inventories.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#10B981;"><i class="fa-solid fa-id-badge"></i></div>
+                <div class="detail-card-title">IAM Portal</div>
+                <div class="detail-card-text">Role-based access control management with MFA enforcement, access lifecycle tracking, and audit logs for every login event.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#FF006E;"><i class="fa-solid fa-fire"></i></div>
+                <div class="detail-card-title">IR Case Management</div>
+                <div class="detail-card-text">Structured workflow system tracking incidents from initial detection through containment, eradication, restore, and post-mortem.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#3B82F6;"><i class="fa-solid fa-database"></i></div>
+                <div class="detail-card-title">Threat Intelligence Feed</div>
+                <div class="detail-card-text">Continuously updated database of threat actors, malware signatures, attack vectors, and IOCs — updated in real time from global sources.</div>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-label"><i class="fa-solid fa-lightbulb" style="margin-right:6px;"></i>Why This Matters for Clients</div>
+              <div class="why-text">The software layer turns raw security data into <strong>plain-English insights</strong>. A non-technical business owner can log in and immediately understand their security posture — not because the data has been dumbed down, but because the interface has been designed to surface exactly what matters, when it matters.</div>
+            </div>
+          </div>
+
+          <!-- 04 PROCESS -->
+          <div class="comp-panel" id="panel-process">
+            <div class="panel-header">
+              <div class="panel-header-icon c-process"><i class="fa-solid fa-diagram-project"></i></div>
+              <div>
+                <div class="panel-section-num">Component 04 / 05</div>
+                <div class="panel-title">Process</div>
+                <div class="panel-role">Structured methodologies for consistent, reliable protection</div>
+              </div>
+            </div>
+            <p class="panel-desc">Process is what transforms CypherGate from a <strong>collection of tools into a reliable, repeatable security service</strong>. Every client engagement follows documented, battle-tested methodologies that ensure consistent outcomes regardless of the threat or the client. Without process, even the best people and tools produce unpredictable results.</p>
+            <div class="detail-grid">
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#10B981;"><i class="fa-solid fa-search"></i></div>
+                <div class="detail-card-title">Phase 01 — Detect</div>
+                <div class="detail-card-text">Continuous monitoring identifies anomalies across networks, endpoints, and identity systems. Every alert triaged by an analyst within 15 minutes.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#F59E0B;"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="detail-card-title">Phase 02 — Defend</div>
+                <div class="detail-card-text">Confirmed threats neutralized immediately — accounts locked, traffic blocked, systems patched — before damage spreads to the wider network.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#10B981;"><i class="fa-solid fa-rotate-left"></i></div>
+                <div class="detail-card-title">Phase 03 — Recover</div>
+                <div class="detail-card-text">IR team executes the structured runbook: contain, eradicate, restore from backup, and deliver a full post-mortem report to stakeholders.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#8B5CF6;"><i class="fa-solid fa-list-check"></i></div>
+                <div class="detail-card-title">Vulnerability Triage</div>
+                <div class="detail-card-text">All scan findings classified by CVSS score and business risk impact, then prioritized into a structured, scheduled patching plan.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#3B82F6;"><i class="fa-solid fa-id-card"></i></div>
+                <div class="detail-card-title">Access Lifecycle Mgmt</div>
+                <div class="detail-card-text">Onboarding, role-change, and offboarding procedures ensure no stale credentials ever become a liability. Zero lingering access.</div>
+              </div>
+              <div class="detail-card">
+                <div class="detail-card-icon" style="color:#F59E0B;"><i class="fa-solid fa-file-lines"></i></div>
+                <div class="detail-card-title">Monthly Exec Reporting</div>
+                <div class="detail-card-text">Structured PDF reports delivered to stakeholders summarizing health scores, threats blocked, open vulnerabilities, and next steps.</div>
+              </div>
+            </div>
+            <div class="why-card">
+              <div class="why-label"><i class="fa-solid fa-lightbulb" style="margin-right:6px;"></i>Why This Matters for Clients</div>
+              <div class="why-text">Process is the guarantee. When a ransomware attack lands at 2 AM on a Saturday, the CypherGate IR team doesn't improvise — they execute a <strong>documented, rehearsed runbook</strong> that has been refined across every incident. Clients benefit from collective experience baked into structured procedures.</div>
+            </div>
+          </div>
+
+          <!-- 05 DATA -->
+          <div class="comp-panel" id="panel-data">
+            <div class="panel-header">
+              <div class="panel-header-icon c-data"><i class="fa-solid fa-database"></i></div>
+              <div>
+                <div class="panel-section-num">Component 05 / 05</div>
+                <div class="panel-title">Data</div>
+                <div class="panel-role">Threat intelligence and security telemetry powering decisions</div>
+              </div>
+            </div>
+            <p class="panel-desc">Data is the <strong>lifeblood of CypherGate's intelligence</strong>. Without rich, real-time, and historical data flowing through its systems, threat detection would be reactive, vulnerability management would be incomplete, and incident response would be operating blind. Every decision CypherGate makes is data-driven.</p>
+            <div class="panel-list">
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Network & Endpoint Logs:</strong> Petabytes of telemetry collected from client environments, analyzed for behavioral anomalies and known attack signatures around the clock.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>CVE & Threat Intelligence Databases:</strong> Real-time feeds from NIST NVD, MITRE ATT&CK, and CypherGate's own proprietary threat research, continuously updated.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>User Access Records:</strong> Full audit logs of every login, permission change, and access event — the foundation of IAM compliance and forensic investigation.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Security Health Scores:</strong> Aggregated metrics across Network, Endpoint, Identity, and Vulnerability dimensions — computed per client, per day, surfaced on the dashboard.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Incident Records:</strong> Full case histories including timeline, attack vector, affected systems, actions taken, and outcome — feeding the intelligence loop for future protection.</span></div>
+              <div class="panel-list-item"><i class="fa-solid fa-circle-check"></i><span><strong>Executive Report Archive:</strong> Historical monthly reports giving clients and stakeholders a longitudinal view of their security posture and improvement trends over time.</span></div>
+            </div>
+            <div class="why-card">
+              <div class="why-label"><i class="fa-solid fa-lightbulb" style="margin-right:6px;"></i>Why This Matters for Clients</div>
+              <div class="why-text">Presenting security data publicly demonstrates that CypherGate is <strong>not a black box</strong>. Clients see exactly how People, Hardware, Software, Process, and Data combine to protect them — building trust before the first conversation even happens. Data transparency is a feature, not just a byproduct.</div>
+            </div>
+          </div>
+
+        </div><!-- end comp-panels -->
+      </div><!-- end accordion-layout -->
+
+      <!-- BOTTOM CTA -->
+      <div class="cta-banner">
+        <div class="section-label mono" style="justify-content:center;margin-bottom:1rem;"><span class="label-dot"></span> ALL 5 COMPONENTS WORKING TOGETHER</div>
+        <h2 class="section-title" style="margin-bottom:1rem;">This Is What <span class="gradient-text">Full Protection</span> Looks Like</h2>
+        <p style="color:var(--text-mid);max-width:540px;margin:0 auto 2rem;font-size:0.95rem;line-height:1.7;">People who watch. Hardware that listens. Software that acts. Processes that guarantee results. Data that learns. Five components — one mission: <strong style="color:var(--text-white);">Know You're Protected.</strong></p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="index.html#contact" class="btn btn-primary btn-lg"><i class="fa-solid fa-shield-halved"></i> Get Protected Today</a>
+          <a href="our-story.html" class="btn btn-outline btn-lg"><i class="fa-solid fa-book-open"></i> Read Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top"><div class="container"><div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <span class="logo-icon"><i class="fa-solid fa-shield-halved"></i></span>
+          <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+        </a>
+        <p class="footer-tagline">"Don't Just Hope You're Safe —<br/><strong>Know You're Protected.</strong>"</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com" class="social-link" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.twitter.com" class="social-link" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.facebook.com" class="social-link" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="mailto:CypherGate@gmail.com" class="social-link"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Services</h4>
+        <ul>
+          <li><a href="index.html#services">Managed Detection & Response</a></li>
+          <li><a href="index.html#services">Vulnerability Management</a></li>
+          <li><a href="index.html#services">Identity & Access Management</a></li>
+          <li><a href="index.html#services">Incident Response & Recovery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Company</h4>
+        <ul>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="mission.html">Mission Statement</a></li>
+          <li><a href="vision.html">Vision Statement</a></li>
+          <li><a href="is-components.html">IS Components</a></li>
+          <li><a href="index.html#team">Our Team</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Contact</h4>
+        <ul>
+          <li><a href="tel:+639993907410">+63 993 907 3410</a></li>
+          <li><a href="mailto:CypherGate@gmail.com">CypherGate@gmail.com</a></li>
+        </ul>
+        <div class="footer-status mono">
+          <span class="pulse-dot green" style="display:inline-block;margin-right:.4rem"></span>All systems operational
+        </div>
+      </div>
+    </div></div></div>
+    <div class="footer-bottom"><div class="container">
+      <p class="copyright mono">© 2026 Cypher Gate. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="coming-soon.html">Privacy Policy</a>
+        <a href="coming-soon.html">Terms of Service</a>
+      </div>
+    </div></div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Interactive component tabs
+    document.querySelectorAll('.comp-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.comp-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.comp-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        const target = document.getElementById(tab.dataset.target);
+        if (target) target.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

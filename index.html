@@ -36,6 +36,31 @@
         <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#team" class="nav-link">Team</a></li>
+        <li class="nav-dropdown-wrap" style="position:relative;">
+          <a href="#" class="nav-link nav-dropdown-trigger" style="display:flex;align-items:center;gap:0.3rem;">
+            Company <i class="fa-solid fa-chevron-down" style="font-size:0.6rem;"></i>
+          </a>
+          <div class="nav-dropdown" style="
+            display:none;position:absolute;top:calc(100% + 8px);left:0;
+            background:rgba(16,24,32,0.98);backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,0.07);border-radius:12px;
+            padding:0.5rem;min-width:210px;z-index:999;
+            box-shadow:0 16px 40px rgba(0,0,0,0.5);">
+            <a href="mission.html" style="display:flex;align-items:center;gap:0.65rem;padding:0.65rem 0.9rem;border-radius:8px;color:rgba(255,255,255,0.7);font-size:0.85rem;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='rgba(16,185,129,0.08)';this.style.color='#fff';" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,0.7)';">
+              <i class="fa-solid fa-bullseye" style="color:#10B981;width:16px;text-align:center;font-size:0.8rem;"></i> Mission Statement
+            </a>
+            <a href="vision.html" style="display:flex;align-items:center;gap:0.65rem;padding:0.65rem 0.9rem;border-radius:8px;color:rgba(255,255,255,0.7);font-size:0.85rem;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='rgba(16,185,129,0.08)';this.style.color='#fff';" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,0.7)';">
+              <i class="fa-solid fa-binoculars" style="color:#F59E0B;width:16px;text-align:center;font-size:0.8rem;"></i> Vision Statement
+            </a>
+            <a href="our-story.html" style="display:flex;align-items:center;gap:0.65rem;padding:0.65rem 0.9rem;border-radius:8px;color:rgba(255,255,255,0.7);font-size:0.85rem;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='rgba(16,185,129,0.08)';this.style.color='#fff';" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,0.7)';">
+              <i class="fa-solid fa-book-open" style="color:#10B981;width:16px;text-align:center;font-size:0.8rem;"></i> Our Story
+            </a>
+            <div style="height:1px;background:rgba(255,255,255,0.06);margin:0.35rem 0.9rem;"></div>
+            <a href="is-components.html" style="display:flex;align-items:center;gap:0.65rem;padding:0.65rem 0.9rem;border-radius:8px;color:rgba(255,255,255,0.7);font-size:0.85rem;transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='rgba(16,185,129,0.08)';this.style.color='#fff';" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,0.7)';">
+              <i class="fa-solid fa-cubes" style="color:#8B5CF6;width:16px;text-align:center;font-size:0.8rem;"></i> IS Components
+            </a>
+          </div>
+        </li>
       </ul>
 
       <div class="nav-actions">
@@ -57,6 +82,11 @@
         <li><a href="#about" class="mobile-link">About</a></li>
         <li><a href="#team" class="mobile-link">Team</a></li>
         <li><a href="#contact" class="mobile-link">Contact</a></li>
+        <li style="padding:0.5rem 0.5rem 0;font-size:0.7rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;font-family:'JetBrains Mono',monospace;">Company</li>
+        <li><a href="mission.html" class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; Mission Statement</a></li>
+        <li><a href="vision.html" class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; Vision Statement</a></li>
+        <li><a href="our-story.html" class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; Our Story</a></li>
+        <li><a href="is-components.html" class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; IS Components</a></li>
       </ul>
       <div class="mobile-actions">
         <a href="#contact" class="btn btn-primary btn-full">Get Protected</a>
@@ -670,7 +700,7 @@
         <div class="team-card" data-reveal>
           <div class="team-card__glow"></div>
           <div class="team-avatar">
-            <div class="team-avatar__placeholder mono">GJA</div>
+            <div class="team-avatar__placeholder mono"><img src="asset/members/goldwyn.jpg" alt=""></div>
             <div class="team-avatar__ring"></div>
           </div>
           <div class="team-badge mono">Strategic Planner</div>
@@ -680,17 +710,17 @@
             <span class="team-tag">Growth Strategist</span>
             <span class="team-tag">Risk Director</span>
           </div>
-          <span class="team-portfolio-btn team-portfolio-btn--disabled">
-            <i class="fas fa-clock"></i>
-            Coming Soon
-          </span>
+          <a href="https://sites.google.com/view/alcuizar-portfolio" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i>
+            View Portfolio
+          </a>
         </div>
 
         <!-- Member 6: Business Manager -->
         <div class="team-card" data-reveal>
           <div class="team-card__glow"></div>
           <div class="team-avatar">
-            <div class="team-avatar__placeholder mono">PB</div>
+            <div class="team-avatar__placeholder mono"><img src="asset/members/bolar.jpg" alt=""></div>
             <div class="team-avatar__ring"></div>
           </div>
           <div class="team-badge mono">Business Manager</div>
@@ -700,10 +730,10 @@
             <span class="team-tag">Operations Manager</span>
             <span class="team-tag">Efficiency Director</span>
           </div>
-          <span class="team-portfolio-btn team-portfolio-btn--disabled">
-            <i class="fas fa-clock"></i>
-            Coming Soon
-          </span>
+          <a href="https://ahronbolar.my.canva.site/" class="team-portfolio-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-external-link-alt"></i>
+            View Portfolio
+          </a>
         </div>
 
       </div>
@@ -799,7 +829,10 @@
           <div class="footer-col">
             <h4 class="footer-col-title">Company</h4>
             <ul>
-              <li><a href="#about">About Us</a></li>
+              <li><a href="our-story.html">Our Story</a></li>
+              <li><a href="mission.html">Mission Statement</a></li>
+              <li><a href="vision.html">Vision Statement</a></li>
+              <li><a href="is-components.html">IS Components</a></li>
               <li><a href="#how-it-works">How It Works</a></li>
               <li><a href="#contact">Contact</a></li>
               <li><a href="#dashboard">Dashboard</a></li>
@@ -840,5 +873,22 @@
 
   <!-- Main JS -->
   <script src="script.js"></script>
+  <script>
+    // Company dropdown toggle
+    const trigger = document.querySelector('.nav-dropdown-trigger');
+    const dropdown = document.querySelector('.nav-dropdown');
+    if (trigger && dropdown) {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = dropdown.style.display === 'block';
+        dropdown.style.display = isOpen ? 'none' : 'block';
+      });
+      document.addEventListener('click', (e) => {
+        if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
