@@ -78,6 +78,49 @@
       hamburger.focus(); // return focus for accessibility
     }
   });
+
+  // ── COMPANY DROPDOWN (desktop) ─────────────────────────
+  const dropWrap    = document.querySelector('.nav-dropdown-wrap');
+  const dropTrigger = document.querySelector('.nav-dropdown-trigger');
+  const dropMenu    = document.querySelector('.nav-dropdown');
+
+  if (dropWrap && dropTrigger && dropMenu) {
+
+    function openDropdown() {
+      dropWrap.classList.add('open');
+      dropTrigger.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDropdown() {
+      dropWrap.classList.remove('open');
+      dropTrigger.setAttribute('aria-expanded', 'false');
+    }
+
+    // Toggle on trigger click — stopPropagation so document listener doesn't
+    // immediately close the dropdown on the same event (Bug Fix #2)
+    dropTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropWrap.classList.contains('open') ? closeDropdown() : openDropdown();
+    });
+
+    // Close when clicking anywhere outside the dropdown
+    document.addEventListener('click', (e) => {
+      if (dropWrap && !dropWrap.contains(e.target)) {
+        closeDropdown();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDropdown();
+    });
+
+    // Close when a dropdown link is clicked
+    dropMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeDropdown);
+    });
+  }
 })();
 
 

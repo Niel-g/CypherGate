@@ -242,6 +242,8 @@ img { max-width: 100%; }
   align-items: center;
   gap: 0;
   margin-left: auto;
+  flex-shrink: 0;        /* BUG FIX: prevent items overflowing onto CTA buttons */
+  overflow: visible;     /* BUG FIX: allow dropdown panel to paint outside nav-links bounds */
 }
 
 .nav-link {
@@ -270,6 +272,76 @@ img { max-width: 100%; }
   cursor: pointer;
   padding: 6px;
   margin-left: auto;
+}
+
+/* ── COMPANY DROPDOWN ── */
+.nav-dropdown-wrap {
+  position: relative;
+  list-style: none;
+}
+.nav-dropdown-trigger {
+  display: flex !important;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+.nav-dropdown-trigger .nav-chevron {
+  font-size: 0.58rem;
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+.nav-dropdown-wrap.open .nav-chevron {
+  transform: rotate(180deg);
+}
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 15, 20, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.5rem;
+  min-width: 220px;
+  z-index: 500;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(16,185,129,0.06);
+  animation: dropdown-in 0.18s ease;
+}
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.nav-dropdown-wrap.open .nav-dropdown {
+  display: block;
+}
+.nav-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 9px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.84rem;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav-dropdown a:hover {
+  background: rgba(16, 185, 129, 0.09);
+  color: #fff;
+}
+.nav-dropdown a .dd-icon {
+  width: 18px;
+  text-align: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+.nav-dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0.3rem 0.9rem;
 }
 .hamburger span {
   display: block;
@@ -1415,7 +1487,7 @@ a.contact-value:hover { color: var(--emerald); }
   .step-title { font-size: 1.4rem; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   .nav-links, .nav-actions { display: none; }
   .hamburger { display: flex; }
 
