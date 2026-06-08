@@ -174,20 +174,14 @@
               -->
 
               <!-- ── OPTION A: HTML5 Video Player (local/hosted) ── -->
-              <video
-                class="player-video"
-                id="mainVideo"
-                controls
-                preload="metadata"
-                poster=""
-              >
-                <!-- ★ ADD YOUR VIDEO PATH HERE ★ -->
-                <source src="asset/Video/1000023563.mp4" type="video/mp4" />
-
-                <!-- Fallback for browsers that do not support <video> -->
-                Your browser does not support the video tag.
-                Please <a href="" download style="color:var(--emerald);">download the video</a> instead.
-              </video>
+              <iframe
+  class="player-video"
+ src="https://drive.google.com/file/d/1UKhnnG-pUfxSEboPiVJR10TF-DBf7mmn/preview"
+  title="CypherGate Video Presentation"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
 
               <!--
               ── OPTION B: YouTube / External Embed ──
@@ -481,21 +475,13 @@
   <!-- ═══════════════════════════════════
        SCRIPTS
   ═══════════════════════════════════ -->
-  <script src="script.js"></script>
   <script>
     /* ── Video Page Logic ─────────────────────────────── */
     (function initVideoPage() {
 
-      const video      = document.getElementById('mainVideo');
+      /* Hide empty state since we're using an iframe */
       const emptyState = document.getElementById('emptyState');
-
-      /* Hide empty state if video has a valid src */
-      function checkVideoSrc() {
-        const source = video ? video.querySelector('source') : null;
-        const hasSrc = source && source.src && source.src !== window.location.href;
-        if (emptyState) emptyState.style.display = hasSrc ? 'none' : 'flex';
-      }
-      checkVideoSrc();
+      if (emptyState) emptyState.style.display = 'none';
 
       /* ── Fullscreen ── */
       window.requestFullscreen = function() {
