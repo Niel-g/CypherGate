@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Presentation — CypherGate</title>
+  <link rel="icon" href="asset/img/Logo-favicon.png" type="image/png" />
+  <meta name="description" content="Watch the CypherGate video presentation — a complete walkthrough of our Security-as-a-Service platform and how we protect your business 24/7." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Shared Site Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Video Page Styles (separated) -->
+  <link rel="stylesheet" href="video.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+
+      <a href="index.html" class="nav-logo">
+        <img src="asset/img/Logo.png" alt="CypherGate" class="logo-img" />
+        <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#services"     class="nav-link">Services</a></li>
+        <li><a href="index.html#dashboard"    class="nav-link">Dashboard</a></li>
+        <li><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="our-story.html"          class="nav-link">About</a></li>
+        <li><a href="index.html#team"         class="nav-link">Team</a></li>
+
+        <!-- Company Dropdown -->
+        <li class="nav-dropdown-wrap">
+          <a href="#" class="nav-link nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+            Company <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </a>
+          <div class="nav-dropdown" role="menu">
+            <a href="mission.html" role="menuitem">
+              <i class="fa-solid fa-bullseye    dd-icon" style="color:#10B981;"></i> Mission Statement
+            </a>
+            <a href="vision.html" role="menuitem">
+              <i class="fa-solid fa-binoculars  dd-icon" style="color:#F59E0B;"></i> Vision Statement
+            </a>
+            <a href="our-story.html" role="menuitem">
+              <i class="fa-solid fa-book-open   dd-icon" style="color:#10B981;"></i> Our Story
+            </a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="is-components.html" role="menuitem">
+              <i class="fa-solid fa-cubes       dd-icon" style="color:#8B5CF6;"></i> IS Components
+            </a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="video.html" role="menuitem" style="color:var(--emerald);">
+              <i class="fa-solid fa-circle-play dd-icon" style="color:#10B981;"></i> Video Presentation
+            </a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="index.html#contact" class="btn btn-ghost">Contact Us</a>
+        <a href="index.html#contact" class="btn btn-primary">Get Protected</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="index.html#services"     class="mobile-link">Services</a></li>
+        <li><a href="index.html#dashboard"    class="mobile-link">Dashboard</a></li>
+        <li><a href="index.html#how-it-works" class="mobile-link">How It Works</a></li>
+        <li><a href="our-story.html"          class="mobile-link">About</a></li>
+        <li><a href="index.html#team"         class="mobile-link">Team</a></li>
+        <li><a href="index.html#contact"      class="mobile-link">Contact</a></li>
+
+        <li style="padding:0.5rem 0.5rem 0;font-size:0.7rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;font-family:'JetBrains Mono',monospace;">Company</li>
+        <li><a href="mission.html"       class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; Mission Statement</a></li>
+        <li><a href="vision.html"        class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; Vision Statement</a></li>
+        <li><a href="our-story.html"     class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; Our Story</a></li>
+        <li><a href="is-components.html" class="mobile-link" style="color:rgba(16,185,129,0.8);">&#8594; IS Components</a></li>
+        <li><a href="video.html"         class="mobile-link" style="color:rgba(16,185,129,0.8);">&#9654; Video Presentation</a></li>
+      </ul>
+      <div class="mobile-actions">
+        <a href="index.html#contact" class="btn btn-primary btn-full">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       PAGE HERO
+  ═══════════════════════════════════ -->
+  <section class="video-hero">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+        <span>Company</span>
+        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+        <span>Video Presentation</span>
+      </nav>
+
+      <div class="video-hero-tag">
+        <i class="fa-solid fa-circle-play"></i> Official Presentation
+      </div>
+
+      <h1 class="video-hero-title">
+        CypherGate in <span class="gradient-text">Action.</span>
+      </h1>
+
+      <p class="video-hero-sub">
+        Watch our complete presentation on Cybersecurity in Information Systems. Learn why cybersecurity is essential in protecting digital assets, explore the technologies and strategies used to defend against cyber threats, discover real-world applications from leading companies, and understand the future of cybersecurity in an increasingly connected world.
+
+      </p>
+
+      <div class="hero-meta">
+        <span class="meta-chip live">
+          <i class="fa-solid fa-circle"></i> Official Presentation
+        </span>
+        <span class="meta-chip">
+          <i class="fa-solid fa-shield-halved"></i> CypherGate · 2026
+        </span>
+        <span class="meta-chip">
+          <i class="fa-solid fa-users"></i> CypherGate Core Team
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       MAIN VIDEO CONTENT
+  ═══════════════════════════════════ -->
+  <section class="video-content">
+    <div class="container">
+      <div class="video-layout">
+
+        <!-- ── LEFT: PLAYER + DESCRIPTION ── -->
+        <div class="video-player-wrap">
+
+          <!-- Player Container -->
+          <div class="player-container">
+            <div class="player-aspect">
+
+              <!--
+              ╔══════════════════════════════════════════════╗
+              ║         VIDEO SOURCE — ADD YOUR PATH         ║
+              ║                                              ║
+              ║  OPTION A — Local / Hosted File:             ║
+              ║  Replace src="" with your video file path.   ║
+              ║  Example: src="assets/video/presentation.mp4"║
+              ║                                              ║
+              ║  OPTION B — YouTube Embed:                   ║
+              ║  Comment out the <video> block below and     ║
+              ║  uncomment the <iframe> block underneath it. ║
+              ║  Replace VIDEO_ID with your YouTube video ID.║
+              ╚══════════════════════════════════════════════╝
+              -->
+
+              <!-- ── OPTION A: HTML5 Video Player (local/hosted) ── -->
+              <video
+                class="player-video"
+                id="mainVideo"
+                controls
+                preload="metadata"
+                poster=""
+              >
+                <!-- ★ ADD YOUR VIDEO PATH HERE ★ -->
+                <source src="asset/Video/1000023563.mp4" type="video/mp4" />
+
+                <!-- Fallback for browsers that do not support <video> -->
+                Your browser does not support the video tag.
+                Please <a href="" download style="color:var(--emerald);">download the video</a> instead.
+              </video>
+
+              <!--
+              ── OPTION B: YouTube / External Embed ──
+              Remove the comment tags below and fill in your embed URL.
+
+              <iframe
+                class="player-video"
+                src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1"
+                title="CypherGate Video Presentation"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+              -->
+
+              <!-- Empty state shown automatically when video has no src -->
+              <div class="player-empty-state" id="emptyState">
+                <div class="player-empty-icon">
+                  <i class="fa-solid fa-circle-play"></i>
+                </div>
+                <div class="player-empty-label">
+                  <strong>Video Presentation</strong>
+                  Add your video path to <code style="color:var(--emerald);font-size:0.8rem;">video.html</code> to display here.
+                </div>
+              </div>
+
+            </div><!-- /.player-aspect -->
+
+            <!-- Player Footer Bar -->
+            <div class="player-footer">
+              <div>
+                <div class="player-footer-title">CypherGate — CyberSecurity Presentation</div>
+                <div class="player-footer-meta mono">CypherGate Core Team · 2026 · Security-as-a-Service</div>
+              </div>
+              <div class="player-footer-actions">
+                <a href="" download class="player-action-btn">
+                  <i class="fa-solid fa-download"></i>
+                  <span>Download</span>
+                </a>
+                <button class="player-action-btn" onclick="shareVideo()">
+                  <i class="fa-solid fa-share-nodes"></i>
+                  <span>Share</span>
+                </button>
+                <button class="player-action-btn" id="fullscreenBtn" onclick="requestFullscreen()">
+                  <i class="fa-solid fa-expand"></i>
+                  <span>Fullscreen</span>
+                </button>
+              </div>
+            </div>
+
+          </div><!-- /.player-container -->
+
+        
+
+        </div><!-- /.video-player-wrap -->
+
+        <!-- ── RIGHT: SIDEBAR ── -->
+        <aside class="video-sidebar">
+
+          <!-- Presentation Info -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">
+              <i class="fa-solid fa-circle-info"></i> Presentation Info
+            </div>
+            <div class="sidebar-stats">
+              <div class="sidebar-stat">
+                <div class="sidebar-stat-icon"><i class="fa-solid fa-circle-play"></i></div>
+                <div>
+                  <div class="sidebar-stat-label">Format</div>
+                  <div class="sidebar-stat-value">Single Presentation</div>
+                </div>
+              </div>
+              <div class="sidebar-stat">
+                <div class="sidebar-stat-icon"><i class="fa-solid fa-building"></i></div>
+                <div>
+                  <div class="sidebar-stat-label">Company</div>
+                  <div class="sidebar-stat-value">CypherGate</div>
+                </div>
+              </div>
+              <div class="sidebar-stat">
+                <div class="sidebar-stat-icon"><i class="fa-solid fa-calendar"></i></div>
+                <div>
+                  <div class="sidebar-stat-label">Year</div>
+                  <div class="sidebar-stat-value">2026</div>
+                </div>
+              </div>
+              <div class="sidebar-stat">
+                <div class="sidebar-stat-icon"><i class="fa-solid fa-globe"></i></div>
+                <div>
+                  <div class="sidebar-stat-label">Market</div>
+                  <div class="sidebar-stat-value">Southeast Asia</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Presenters -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">
+              <i class="fa-solid fa-users"></i> Presented By
+            </div>
+            <div class="presenter-list">
+              <div class="presenter-item">
+                <div class="presenter-avatar">
+                  <img src="asset/members/Mariah.jpg" alt="Mariah Sumicad" />
+                </div>
+                <div>
+                  <div class="presenter-name">Mariah Sumicad</div>
+                  <div class="presenter-role">Chief Executive Officer</div>
+                </div>
+              </div>
+              <div class="presenter-item">
+                <div class="presenter-avatar">
+                  <img src="asset/members/poliapoy.jpg" alt="Emjay Poliapoy" />
+                </div>
+                <div>
+                  <div class="presenter-name">Emjay Poliapoy</div>
+                  <div class="presenter-role">Co-Founder</div>
+                </div>
+              </div>
+              <div class="presenter-item">
+                <div class="presenter-avatar">
+                  <img src="asset/members/UY.jpg" alt="Chrislyn Jae Perez Uy" />
+                </div>
+                <div>
+                  <div class="presenter-name">Chrislyn Jae Perez Uy</div>
+                  <div class="presenter-role">Lead Developer</div>
+                </div>
+              </div>
+              <div class="presenter-item">
+                <div class="presenter-avatar">
+                  <img src="asset/members/niel Profile.png" alt="Joebeniel Ayes" />
+                </div>
+                <div>
+                  <div class="presenter-name">Joebeniel Ayes</div>
+                  <div class="presenter-role">Designer</div>
+                </div>
+              </div>
+              <div class="presenter-item">
+                <div class="presenter-avatar">
+                  <img src="asset/members/goldwyn.jpg" alt="Goldwyn Josh Alcuizar" />
+                </div>
+                <div>
+                  <div class="presenter-name">Goldwyn Alcuizar</div>
+                  <div class="presenter-role">Strategic Planner</div>
+                </div>
+              </div>
+              <div class="presenter-item">
+                <div class="presenter-avatar">
+                  <img src="asset/members/bolar.jpg" alt="Popoy Bolar" />
+                </div>
+                <div>
+                  <div class="presenter-name">Popoy Bolar</div>
+                  <div class="presenter-role">Business Manager</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">
+              <i class="fa-solid fa-arrow-pointer"></i> Explore More
+            </div>
+            <div class="quick-links">
+              <a href="index.html#contact" class="quick-link highlight">
+                <i class="fa-solid fa-shield-halved"></i> Get Protected Today
+              </a>
+              <a href="our-story.html" class="quick-link">
+                <i class="fa-solid fa-book-open"></i> Our Story
+              </a>
+              <a href="mission.html" class="quick-link">
+                <i class="fa-solid fa-bullseye"></i> Mission Statement
+              </a>
+              <a href="vision.html" class="quick-link">
+                <i class="fa-solid fa-binoculars"></i> Vision Statement
+              </a>
+              <a href="is-components.html" class="quick-link">
+                <i class="fa-solid fa-cubes"></i> IS Components
+              </a>
+              <a href="index.html#services" class="quick-link">
+                <i class="fa-solid fa-grid-2"></i> All Services
+              </a>
+            </div>
+          </div>
+
+        </aside>
+
+    </div><!-- /.container -->
+  </section>
+
+  <!-- ═══════════════════════════════════
+       CTA SECTION
+  ═══════════════════════════════════ -->
+  <section class="video-cta">
+    <div class="container">
+      <div class="section-label mono" style="justify-content:center; margin-bottom:1rem;">
+        <span class="label-dot"></span> READY TO START?
+      </div>
+      <h2 class="section-title">
+        Don't Just Hope You're Safe —<br/>
+        <span class="gradient-text">Know You're Protected.</span>
+      </h2>
+      <p class="section-sub">
+        Start your free security assessment today. Our team will have your environment
+        monitored and defended within 24 hours.
+      </p>
+      <div class="video-cta-actions">
+        <a href="index.html#contact" class="btn btn-primary btn-lg">
+          <i class="fa-solid fa-shield-halved"></i> Start Free Assessment
+        </a>
+        <a href="our-story.html" class="btn btn-outline btn-lg">
+          <i class="fa-solid fa-book-open"></i> Read Our Story
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+
+          <div class="footer-brand">
+            <a href="index.html" class="nav-logo">
+              <span class="logo-icon"><i class="fa-solid fa-shield-halved"></i></span>
+              <span class="logo-text">Cypher<span class="logo-accent">Gate</span></span>
+            </a>
+            <p class="footer-tagline">"Don't Just Hope You're Safe —<br /><strong>Know You're Protected.</strong>"</p>
+            <div class="social-links">
+              <a href="https://www.linkedin.com" class="social-link" aria-label="LinkedIn"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://www.twitter.com"  class="social-link" aria-label="Twitter"   target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.facebook.com" class="social-link" aria-label="Facebook"  target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="mailto:CypherGate@gmail.com" class="social-link" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <ul>
+              <li><a href="index.html#services">Managed Detection & Response</a></li>
+              <li><a href="index.html#services">Vulnerability Management</a></li>
+              <li><a href="index.html#services">Identity & Access Management</a></li>
+              <li><a href="index.html#services">Incident Response & Recovery</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <ul>
+              <li><a href="our-story.html">Our Story</a></li>
+              <li><a href="mission.html">Mission Statement</a></li>
+              <li><a href="vision.html">Vision Statement</a></li>
+              <li><a href="is-components.html">IS Components</a></li>
+              <li><a href="video.html" style="color:var(--emerald);"><i class="fa-solid fa-circle-play" style="font-size:0.7rem;margin-right:4px;"></i>Video Presentation</a></li>
+              <li><a href="index.html#how-it-works">How It Works</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Contact</h4>
+            <ul>
+              <li><a href="tel:+639993907410">+63 993 907 3410</a></li>
+              <li><a href="mailto:CypherGate@gmail.com">CypherGate@gmail.com</a></li>
+            </ul>
+            <div class="footer-status mono">
+              <span class="pulse-dot green" style="display:inline-block; margin-right:.4rem"></span>
+              All systems operational
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright mono">© 2026 Cypher Gate. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="coming-soon.html">Privacy Policy</a>
+          <a href="coming-soon.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════ -->
+  <script src="script.js"></script>
+  <script>
+    /* ── Video Page Logic ─────────────────────────────── */
+    (function initVideoPage() {
+
+      const video      = document.getElementById('mainVideo');
+      const emptyState = document.getElementById('emptyState');
+
+      /* Hide empty state if video has a valid src */
+      function checkVideoSrc() {
+        const source = video ? video.querySelector('source') : null;
+        const hasSrc = source && source.src && source.src !== window.location.href;
+        if (emptyState) emptyState.style.display = hasSrc ? 'none' : 'flex';
+      }
+      checkVideoSrc();
+
+      /* ── Fullscreen ── */
+      window.requestFullscreen = function() {
+        const container = document.querySelector('.player-container');
+        if (!container) return;
+        const fn = container.requestFullscreen
+          || container.webkitRequestFullscreen
+          || container.mozRequestFullScreen
+          || container.msRequestFullscreen;
+        if (fn) fn.call(container);
+      };
+
+      /* ── Share ── */
+      window.shareVideo = function() {
+        if (navigator.share) {
+          navigator.share({
+            title: 'CypherGate — Video Presentation',
+            text:  'Watch the CypherGate platform presentation.',
+            url:   window.location.href
+          }).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(window.location.href)
+            .then(() => alert('Link copied to clipboard!'))
+            .catch(() => {});
+        }
+      };
+
+    })();
+  </script>
+
+</body>
+</html>
