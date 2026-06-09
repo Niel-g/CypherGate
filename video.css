@@ -1,7 +1,5 @@
 /* ═══════════════════════════════════════════════════════
-   CYPHER GATE — video.css  (FIXED — mobile + fullscreen)
-   Video Presentation Page Styles
-   Imports: style.css (shared tokens), Font Awesome, Google Fonts
+   CYPHER GATE — video.css  v2 (mobile-first, fullscreen modal)
 ════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────────────────────────────────
@@ -13,37 +11,22 @@
   overflow: hidden;
   background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-base) 100%);
 }
-
 .video-hero::before {
   content: '';
   position: absolute;
-  top: -120px;
-  left: 50%;
+  top: -120px; left: 50%;
   transform: translateX(-50%);
-  width: 900px;
-  height: 900px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(16, 185, 129, 0.07) 0%,
-    rgba(16, 185, 129, 0.02) 40%,
-    transparent 70%
-  );
+  width: 900px; height: 900px;
+  background: radial-gradient(ellipse at center,
+    rgba(16,185,129,0.07) 0%, rgba(16,185,129,0.02) 40%, transparent 70%);
   pointer-events: none;
 }
-
 .video-hero::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(16, 185, 129, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(16,185,129,0.2), transparent);
 }
 
 /* ─── Breadcrumb ── */
@@ -57,16 +40,9 @@
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
-.breadcrumb a {
-  color: var(--emerald);
-  text-decoration: none;
-  transition: var(--transition);
-}
+.breadcrumb a { color: var(--emerald); text-decoration: none; transition: var(--transition); }
 .breadcrumb a:hover { color: #34D399; }
-.breadcrumb-sep {
-  font-size: 0.55rem;
-  opacity: 0.5;
-}
+.breadcrumb-sep { font-size: 0.55rem; opacity: 0.5; }
 
 /* ─── Hero Tag ── */
 .video-hero-tag {
@@ -89,7 +65,6 @@
   letter-spacing: -0.03em;
   margin-bottom: 1rem;
 }
-
 .video-hero-sub {
   font-size: 1.05rem;
   color: var(--text-mid);
@@ -98,7 +73,7 @@
   margin-bottom: 2rem;
 }
 
-/* ─── Hero Meta Chips ── */
+/* ─── Meta Chips ── */
 .hero-meta {
   display: flex;
   align-items: center;
@@ -109,30 +84,25 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: 999px;
   padding: 0.35rem 0.9rem;
   font-size: 0.78rem;
   color: var(--text-mid);
   font-family: 'JetBrains Mono', monospace;
 }
-.meta-chip i {
-  font-size: 0.7rem;
-  color: var(--emerald);
-}
+.meta-chip i { font-size: 0.7rem; color: var(--emerald); }
 .meta-chip.live {
-  border-color: rgba(16, 185, 129, 0.25);
-  background: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16,185,129,0.25);
+  background: rgba(16,185,129,0.06);
   color: var(--emerald);
 }
 
 /* ─────────────────────────────────────────────────────
-   MAIN CONTENT LAYOUT
+   MAIN LAYOUT
 ───────────────────────────────────────────────────── */
-.video-content {
-  padding: 3.5rem 0 6rem;
-}
+.video-content { padding: 3.5rem 0 6rem; }
 
 .video-layout {
   display: grid;
@@ -142,61 +112,61 @@
 }
 
 /* ─────────────────────────────────────────────────────
-   VIDEO PLAYER
+   PLAYER
 ───────────────────────────────────────────────────── */
 .video-player-wrap {
   position: relative;
   width: 100%;
-  min-width: 0; /* FIX: prevent grid blowout */
+  min-width: 0;
 }
 
-/* ─── Player Container ── */
 .player-container {
   position: relative;
   width: 100%;
   background: #000;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow:
-    0 0 0 1px rgba(16, 185, 129, 0.08),
-    0 32px 80px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 0 0 1px rgba(16,185,129,0.08), 0 32px 80px rgba(0,0,0,0.6);
 }
 
-/* ─── 16:9 Aspect Ratio Wrapper ── */
+/* 16:9 ratio box — the iframe sits inside this */
 .player-aspect {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* 16:9 */
+  padding-top: 56.25%;
+  background: #000;
 }
 
-/* ─── IFRAME / Video Element ── */
 .player-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
+  border: none;
   background: #000;
-  object-fit: contain;
-  border: none; /* FIX: remove any default iframe border */
 }
 
-/* ─── Player Footer Bar ── */
+/* ─── Player Footer ── */
 .player-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.1rem;
-  background: rgba(10, 15, 20, 0.8);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(10,15,20,0.9);
+  border-top: 1px solid rgba(255,255,255,0.05);
   flex-wrap: wrap;
   gap: 0.75rem;
 }
+.player-footer-info { flex: 1; min-width: 0; }
 .player-footer-title {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .player-footer-meta {
   font-size: 0.72rem;
@@ -208,7 +178,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap; /* FIX: wrap on very small screens */
+  flex-shrink: 0;
 }
 .player-action-btn {
   display: inline-flex;
@@ -218,112 +188,137 @@
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255,255,255,0.08);
   background: transparent;
   color: var(--text-mid);
   cursor: pointer;
   transition: var(--transition);
   text-decoration: none;
   font-family: 'Inter', sans-serif;
-  white-space: nowrap; /* FIX: prevent text wrapping inside button */
+  white-space: nowrap;
 }
 .player-action-btn:hover {
-  border-color: rgba(16, 185, 129, 0.3);
+  border-color: rgba(16,185,129,0.3);
   color: var(--text-white);
-  background: rgba(16, 185, 129, 0.05);
+  background: rgba(16,185,129,0.05);
 }
 .player-action-btn i { font-size: 0.7rem; }
 
-/* ─── Fullscreen overlay styles ── */
-/* FIX: When player-container enters native fullscreen, iframe fills the viewport */
-.player-container:fullscreen,
-.player-container:-webkit-full-screen,
-.player-container:-moz-full-screen,
-.player-container:-ms-fullscreen {
-  width: 100vw !important;
-  height: 100vh !important;
-  border-radius: 0 !important;
+/* Desktop-only fullscreen button hidden on mobile */
+.desktop-only { display: inline-flex; }
+
+/* ─────────────────────────────────────────────────────
+   MOBILE OPEN BAR
+   Shows below the player on mobile — directs users to
+   open the video natively in Google Drive for true
+   fullscreen. Hidden on desktop.
+───────────────────────────────────────────────────── */
+.mobile-open-bar {
+  display: none; /* hidden on desktop */
+  margin-top: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: rgba(16,185,129,0.05);
+  border: 1px solid rgba(16,185,129,0.18);
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.mobile-open-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-mid);
+}
+.btn-open-drive {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: var(--emerald);
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.btn-open-drive:hover, .btn-open-drive:active {
+  background: rgba(16,185,129,0.2);
+  border-color: rgba(16,185,129,0.5);
+  color: #34D399;
+}
+.btn-open-drive i { font-size: 0.78rem; }
+
+/* ─────────────────────────────────────────────────────
+   FULLSCREEN MODAL
+   Pure CSS+JS modal overlay. Works on ALL browsers
+   including iOS Safari which blocks requestFullscreen()
+   on cross-origin iframes. The modal loads a fresh
+   iframe so the video plays without the page's layout
+   constraints. No black screen, no glitched controls.
+───────────────────────────────────────────────────── */
+.fs-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #000;
+  flex-direction: column;
+}
+.fs-modal.is-open {
+  display: flex;
+}
+.fs-modal-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
-
-.player-container:fullscreen .player-aspect,
-.player-container:-webkit-full-screen .player-aspect,
-.player-container:-moz-full-screen .player-aspect,
-.player-container:-ms-fullscreen .player-aspect {
-  flex: 1;
-  padding-top: 0 !important; /* FIX: disable padding-top hack in fullscreen */
-  height: 100%;
-  position: relative;
-}
-
-.player-container:fullscreen .player-video,
-.player-container:-webkit-full-screen .player-video,
-.player-container:-moz-full-screen .player-video,
-.player-container:-ms-fullscreen .player-video {
+.fs-close-btn {
   position: absolute;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* FIX: Mobile fullscreen — force iframe to true viewport size */
-@media screen and (max-width: 768px) {
-  .player-container:fullscreen,
-  .player-container:-webkit-full-screen {
-    background: #000;
-  }
-  .player-container:fullscreen .player-footer,
-  .player-container:-webkit-full-screen .player-footer {
-    display: none; /* Hide footer bar when in fullscreen on mobile */
-  }
-}
-
-/* ─── Video Description Card ── */
-.video-description {
-  margin-top: 1.25rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-}
-.video-description-label {
-  font-size: 0.68rem;
-  color: var(--emerald);
-  font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 0.75rem;
-}
-.video-description p {
-  font-size: 0.88rem;
-  color: var(--text-mid);
-  line-height: 1.75;
-  margin-bottom: 0.75rem;
-}
-.video-description p:last-child { margin-bottom: 0; }
-.video-description strong { color: var(--text-white); font-weight: 600; }
-
-/* ─── Topic Tags ── */
-.topic-tags {
+  top: 14px;
+  right: 14px;
+  z-index: 100000;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-.topic-tag {
-  display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.75rem;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
   border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 500;
-  background: rgba(16, 185, 129, 0.07);
-  border: 1px solid rgba(16, 185, 129, 0.15);
-  color: var(--emerald);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
-.topic-tag i { font-size: 0.65rem; }
+.fs-close-btn:hover, .fs-close-btn:active {
+  background: rgba(239,68,68,0.7);
+  border-color: rgba(239,68,68,0.5);
+}
+.fs-iframe-wrap {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.fs-iframe-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #000;
+}
 
 /* ─────────────────────────────────────────────────────
    SIDEBAR
@@ -334,16 +329,14 @@
   gap: 1.25rem;
   position: sticky;
   top: 90px;
-  min-width: 0; /* FIX: prevent sidebar overflow */
+  min-width: 0;
 }
-
-/* ─── Info Card ── */
 .sidebar-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  min-width: 0; /* FIX: prevent card content overflow */
+  min-width: 0;
 }
 .sidebar-card-title {
   font-size: 0.68rem;
@@ -357,13 +350,7 @@
   gap: 0.5rem;
 }
 .sidebar-card-title i { font-size: 0.7rem; }
-
-/* ─── Stats ── */
-.sidebar-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
+.sidebar-stats { display: flex; flex-direction: column; gap: 0; }
 .sidebar-stat {
   display: flex;
   align-items: center;
@@ -373,87 +360,48 @@
 }
 .sidebar-stat:last-child { border-bottom: none; }
 .sidebar-stat-icon {
-  width: 34px;
-  height: 34px;
+  width: 34px; height: 34px;
   border-radius: var(--radius-sm);
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.12);
+  display: flex; align-items: center; justify-content: center;
   font-size: 0.85rem;
   color: var(--emerald);
   flex-shrink: 0;
 }
-.sidebar-stat-label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  margin-bottom: 1px;
-}
-.sidebar-stat-value {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text-white);
-  font-family: 'JetBrains Mono', monospace;
-}
+.sidebar-stat-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 1px; }
+.sidebar-stat-value { font-size: 0.88rem; font-weight: 600; color: var(--text-white); font-family: 'JetBrains Mono', monospace; }
 
-/* ─── Presenter Cards ── */
-.presenter-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
+/* Presenters */
+.presenter-list { display: flex; flex-direction: column; gap: 0.75rem; }
 .presenter-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 0.65rem;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
   transition: var(--transition);
 }
 .presenter-item:hover {
-  background: rgba(16, 185, 129, 0.04);
-  border-color: rgba(16, 185, 129, 0.1);
+  background: rgba(16,185,129,0.04);
+  border-color: rgba(16,185,129,0.1);
 }
 .presenter-avatar {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--emerald);
-  font-family: 'JetBrains Mono', monospace;
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.2);
   flex-shrink: 0;
   overflow: hidden;
 }
-.presenter-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.presenter-name {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-white);
-}
-.presenter-role {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
+.presenter-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.presenter-name { font-size: 0.82rem; font-weight: 600; color: var(--text-white); }
+.presenter-role { font-size: 0.7rem; color: var(--text-muted); }
 
-/* ─── Quick Links ── */
-.quick-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
+/* Quick Links */
+.quick-links { display: flex; flex-direction: column; gap: 0.4rem; }
 .quick-link {
   display: flex;
   align-items: center;
@@ -468,28 +416,20 @@
 }
 .quick-link:hover {
   color: var(--text-white);
-  border-color: rgba(16, 185, 129, 0.18);
-  background: rgba(16, 185, 129, 0.04);
+  border-color: rgba(16,185,129,0.18);
+  background: rgba(16,185,129,0.04);
 }
-.quick-link i {
-  font-size: 0.75rem;
-  width: 14px;
-  text-align: center;
-  color: var(--emerald);
-}
+.quick-link i { font-size: 0.75rem; width: 14px; text-align: center; color: var(--emerald); }
 .quick-link.highlight {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.22);
+  background: rgba(16,185,129,0.08);
+  border-color: rgba(16,185,129,0.22);
   color: var(--emerald);
   font-weight: 500;
 }
-.quick-link.highlight:hover {
-  background: rgba(16, 185, 129, 0.14);
-  border-color: rgba(16, 185, 129, 0.4);
-}
+.quick-link.highlight:hover { background: rgba(16,185,129,0.14); border-color: rgba(16,185,129,0.4); }
 
 /* ─────────────────────────────────────────────────────
-   CTA STRIP
+   CTA
 ───────────────────────────────────────────────────── */
 .video-cta {
   padding: 4rem 0;
@@ -497,14 +437,8 @@
   border-top: 1px solid var(--border);
   text-align: center;
 }
-.video-cta .section-title {
-  max-width: 560px;
-  margin: 0 auto 1rem;
-}
-.video-cta .section-sub {
-  margin: 0 auto 2rem;
-  text-align: center;
-}
+.video-cta .section-title { max-width: 560px; margin: 0 auto 1rem; }
+.video-cta .section-sub { margin: 0 auto 2rem; text-align: center; }
 .video-cta-actions {
   display: flex;
   align-items: center;
@@ -514,19 +448,10 @@
 }
 
 /* ─────────────────────────────────────────────────────
-   MOBILE FULLSCREEN BUTTON — always visible tap target
-───────────────────────────────────────────────────── */
-.mobile-fullscreen-btn {
-  display: none; /* hidden on desktop */
-}
-
-/* ─────────────────────────────────────────────────────
    RESPONSIVE — TABLET (≤ 1024px)
 ───────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .video-layout {
-    grid-template-columns: 1fr;
-  }
+  .video-layout { grid-template-columns: 1fr; }
   .video-sidebar {
     position: static;
     display: grid;
@@ -537,147 +462,74 @@
 
 /* ─────────────────────────────────────────────────────
    RESPONSIVE — MOBILE (≤ 768px)
-   FIX: Expanded breakpoint from 640px → 768px
 ───────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .video-content {
-    padding: 2rem 0 4rem; /* FIX: less vertical padding on mobile */
-  }
+  .video-content { padding: 2rem 0 4rem; }
+  .video-hero { padding: 7rem 0 2.5rem; }
+  .video-hero-title { font-size: clamp(1.75rem, 6vw, 2.2rem); }
+  .video-hero-sub { font-size: 0.95rem; }
+  .hero-meta { gap: 0.5rem; }
 
-  .video-hero {
-    padding: 7rem 0 2.5rem;
-  }
+  /* Player */
+  .player-container { border-radius: 10px; }
 
-  .video-hero-title {
-    font-size: clamp(1.75rem, 6vw, 2.25rem); /* FIX: fluid scale */
-  }
-
-  .video-hero-sub {
-    font-size: 0.95rem;
-  }
-
-  .hero-meta {
-    gap: 0.5rem;
-  }
-
-  /* FIX: player-container border-radius reduced on mobile for edge-to-edge feel */
-  .player-container {
-    border-radius: 10px;
-  }
-
-  /* FIX: footer wraps properly on mobile */
+  /* Footer: wrap nicely */
   .player-footer {
     flex-direction: column;
     align-items: flex-start;
     padding: 0.75rem 1rem;
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
-
-  /* FIX: action buttons row stays on one line — scrolls if needed */
+  .player-footer-info { width: 100%; }
   .player-footer-actions {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 0.4rem;
-    padding-bottom: 2px; /* avoid clipping scrollbar shadow */
   }
 
-  /* FIX: show dedicated mobile fullscreen button */
-  .mobile-fullscreen-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    margin-top: 0.5rem;
-    padding: 0.65rem 1rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    background: rgba(16, 185, 129, 0.07);
-    color: var(--emerald);
-    cursor: pointer;
-    transition: var(--transition);
-    letter-spacing: 0.02em;
-  }
-  .mobile-fullscreen-btn:hover,
-  .mobile-fullscreen-btn:active {
-    background: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.5);
-  }
-  .mobile-fullscreen-btn i { font-size: 0.9rem; }
+  /* Hide the desktop fullscreen button — replaced by mobile open bar */
+  .desktop-only { display: none !important; }
 
-  /* FIX: sidebar stacks to 1 col on mobile */
-  .video-sidebar {
-    grid-template-columns: 1fr;
-  }
+  /* Show the mobile open bar */
+  .mobile-open-bar { display: flex; }
 
-  /* FIX: sidebar cards get less padding */
-  .sidebar-card {
-    padding: 1.1rem;
-  }
+  /* Sidebar */
+  .video-sidebar { grid-template-columns: 1fr; }
+  .sidebar-card { padding: 1.1rem; }
 
-  /* FIX: CTA buttons stack full width */
-  .video-cta-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .video-cta-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
+  /* CTA */
+  .video-cta-actions { flex-direction: column; align-items: stretch; }
+  .video-cta-actions .btn { width: 100%; justify-content: center; }
 }
 
 /* ─────────────────────────────────────────────────────
    RESPONSIVE — SMALL MOBILE (≤ 480px)
 ───────────────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .video-hero {
-    padding: 6.5rem 0 2rem;
-  }
+  .video-hero { padding: 6.5rem 0 2rem; }
+  .video-hero-title { font-size: 1.65rem; }
+  .meta-chip { font-size: 0.7rem; padding: 0.3rem 0.7rem; }
 
-  .video-hero-title {
-    font-size: 1.65rem;
-  }
+  /* Buttons: icon only to save width */
+  .player-action-btn span { display: none; }
+  .player-action-btn { padding: 0.4rem 0.65rem; }
 
-  /* FIX: hide button text labels, show icons only to save space */
-  .player-action-btn span {
-    display: none;
-  }
-
-  /* FIX: meta chips slightly smaller */
-  .meta-chip {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.7rem;
-  }
-
-  /* FIX: presenter name truncates cleanly on very narrow screens */
-  .presenter-name {
-    font-size: 0.78rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 160px;
-  }
+  /* Mobile bar: stack on tiny screens */
+  .mobile-open-bar { flex-direction: column; align-items: flex-start; }
+  .btn-open-drive { width: 100%; justify-content: center; }
 }
 
 /* ─────────────────────────────────────────────────────
    RESPONSIVE — EXTRA SMALL (≤ 360px)
 ───────────────────────────────────────────────────── */
 @media (max-width: 360px) {
-  .video-hero-title {
-    font-size: 1.45rem;
-  }
-
-  /* FIX: keep aspect ratio box from miscalculating on tiny screens */
-  .player-aspect {
-    padding-top: 56.25%;
-  }
-
-  .sidebar-card {
-    padding: 0.9rem;
+  .video-hero-title { font-size: 1.45rem; }
+  .sidebar-card { padding: 0.9rem; }
+  .presenter-name {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
   }
 }
