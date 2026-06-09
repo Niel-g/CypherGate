@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════
-   CYPHER GATE — video.css
+   CYPHER GATE — video.css  (FIXED — mobile + fullscreen)
    Video Presentation Page Styles
    Imports: style.css (shared tokens), Font Awesome, Google Fonts
 ════════════════════════════════════════════════════════ */
@@ -55,6 +55,7 @@
   color: var(--text-muted);
   font-family: 'JetBrains Mono', monospace;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 .breadcrumb a {
   color: var(--emerald);
@@ -146,6 +147,7 @@
 .video-player-wrap {
   position: relative;
   width: 100%;
+  min-width: 0; /* FIX: prevent grid blowout */
 }
 
 /* ─── Player Container ── */
@@ -168,7 +170,7 @@
   padding-top: 56.25%; /* 16:9 */
 }
 
-/* ─── Native HTML5 Video ── */
+/* ─── IFRAME / Video Element ── */
 .player-video {
   position: absolute;
   inset: 0;
@@ -177,9 +179,10 @@
   display: block;
   background: #000;
   object-fit: contain;
+  border: none; /* FIX: remove any default iframe border */
 }
 
-/* ─── Player Footer Bar (below video, above description) ── */
+/* ─── Player Footer Bar ── */
 .player-footer {
   display: flex;
   align-items: center;
@@ -205,6 +208,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap; /* FIX: wrap on very small screens */
 }
 .player-action-btn {
   display: inline-flex;
@@ -221,6 +225,7 @@
   transition: var(--transition);
   text-decoration: none;
   font-family: 'Inter', sans-serif;
+  white-space: nowrap; /* FIX: prevent text wrapping inside button */
 }
 .player-action-btn:hover {
   border-color: rgba(16, 185, 129, 0.3);
@@ -228,6 +233,51 @@
   background: rgba(16, 185, 129, 0.05);
 }
 .player-action-btn i { font-size: 0.7rem; }
+
+/* ─── Fullscreen overlay styles ── */
+/* FIX: When player-container enters native fullscreen, iframe fills the viewport */
+.player-container:fullscreen,
+.player-container:-webkit-full-screen,
+.player-container:-moz-full-screen,
+.player-container:-ms-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-container:fullscreen .player-aspect,
+.player-container:-webkit-full-screen .player-aspect,
+.player-container:-moz-full-screen .player-aspect,
+.player-container:-ms-fullscreen .player-aspect {
+  flex: 1;
+  padding-top: 0 !important; /* FIX: disable padding-top hack in fullscreen */
+  height: 100%;
+  position: relative;
+}
+
+.player-container:fullscreen .player-video,
+.player-container:-webkit-full-screen .player-video,
+.player-container:-moz-full-screen .player-video,
+.player-container:-ms-fullscreen .player-video {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* FIX: Mobile fullscreen — force iframe to true viewport size */
+@media screen and (max-width: 768px) {
+  .player-container:fullscreen,
+  .player-container:-webkit-full-screen {
+    background: #000;
+  }
+  .player-container:fullscreen .player-footer,
+  .player-container:-webkit-full-screen .player-footer {
+    display: none; /* Hide footer bar when in fullscreen on mobile */
+  }
+}
 
 /* ─── Video Description Card ── */
 .video-description {
@@ -284,6 +334,7 @@
   gap: 1.25rem;
   position: sticky;
   top: 90px;
+  min-width: 0; /* FIX: prevent sidebar overflow */
 }
 
 /* ─── Info Card ── */
@@ -292,6 +343,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
+  min-width: 0; /* FIX: prevent card content overflow */
 }
 .sidebar-card-title {
   font-size: 0.68rem;
@@ -462,6 +514,13 @@
 }
 
 /* ─────────────────────────────────────────────────────
+   MOBILE FULLSCREEN BUTTON — always visible tap target
+───────────────────────────────────────────────────── */
+.mobile-fullscreen-btn {
+  display: none; /* hidden on desktop */
+}
+
+/* ─────────────────────────────────────────────────────
    RESPONSIVE — TABLET (≤ 1024px)
 ───────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
@@ -477,31 +536,94 @@
 }
 
 /* ─────────────────────────────────────────────────────
-   RESPONSIVE — MOBILE (≤ 640px)
+   RESPONSIVE — MOBILE (≤ 768px)
+   FIX: Expanded breakpoint from 640px → 768px
 ───────────────────────────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .video-content {
+    padding: 2rem 0 4rem; /* FIX: less vertical padding on mobile */
+  }
+
   .video-hero {
-    padding: 7rem 0 3rem;
+    padding: 7rem 0 2.5rem;
   }
+
   .video-hero-title {
-    font-size: 2rem;
+    font-size: clamp(1.75rem, 6vw, 2.25rem); /* FIX: fluid scale */
   }
+
   .video-hero-sub {
     font-size: 0.95rem;
   }
+
   .hero-meta {
     gap: 0.5rem;
   }
+
+  /* FIX: player-container border-radius reduced on mobile for edge-to-edge feel */
+  .player-container {
+    border-radius: 10px;
+  }
+
+  /* FIX: footer wraps properly on mobile */
   .player-footer {
     flex-direction: column;
     align-items: flex-start;
+    padding: 0.75rem 1rem;
+    gap: 0.6rem;
   }
 
+  /* FIX: action buttons row stays on one line — scrolls if needed */
+  .player-footer-actions {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    padding-bottom: 2px; /* avoid clipping scrollbar shadow */
+  }
+
+  /* FIX: show dedicated mobile fullscreen button */
+  .mobile-fullscreen-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.07);
+    color: var(--emerald);
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: 0.02em;
+  }
+  .mobile-fullscreen-btn:hover,
+  .mobile-fullscreen-btn:active {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+  .mobile-fullscreen-btn i { font-size: 0.9rem; }
+
+  /* FIX: sidebar stacks to 1 col on mobile */
   .video-sidebar {
     grid-template-columns: 1fr;
   }
+
+  /* FIX: sidebar cards get less padding */
+  .sidebar-card {
+    padding: 1.1rem;
+  }
+
+  /* FIX: CTA buttons stack full width */
   .video-cta-actions {
     flex-direction: column;
+    align-items: stretch;
   }
   .video-cta-actions .btn {
     width: 100%;
@@ -510,11 +632,52 @@
 }
 
 /* ─────────────────────────────────────────────────────
-   RESPONSIVE — SMALL MOBILE (≤ 400px)
+   RESPONSIVE — SMALL MOBILE (≤ 480px)
 ───────────────────────────────────────────────────── */
-@media (max-width: 400px) {
-  .video-hero-title {
-    font-size: 1.75rem;
+@media (max-width: 480px) {
+  .video-hero {
+    padding: 6.5rem 0 2rem;
   }
-  .player-action-btn span { display: none; }
+
+  .video-hero-title {
+    font-size: 1.65rem;
+  }
+
+  /* FIX: hide button text labels, show icons only to save space */
+  .player-action-btn span {
+    display: none;
+  }
+
+  /* FIX: meta chips slightly smaller */
+  .meta-chip {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  /* FIX: presenter name truncates cleanly on very narrow screens */
+  .presenter-name {
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────
+   RESPONSIVE — EXTRA SMALL (≤ 360px)
+───────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .video-hero-title {
+    font-size: 1.45rem;
+  }
+
+  /* FIX: keep aspect ratio box from miscalculating on tiny screens */
+  .player-aspect {
+    padding-top: 56.25%;
+  }
+
+  .sidebar-card {
+    padding: 0.9rem;
+  }
 }

@@ -177,7 +177,7 @@
   src="https://drive.google.com/file/d/1UKhnnG-pUfxSEboPiVJR10TF-DBf7mmn/preview"
   title="CypherGate Video Presentation"
   frameborder="0"
-  allow="autoplay; encrypted-media; fullscreen"
+  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
   allowfullscreen
 ></iframe>
 
@@ -213,6 +213,12 @@
                 </button>
               </div>
             </div>
+
+            <!-- FIX: Mobile Fullscreen Button — large tap target for phones -->
+            <button class="mobile-fullscreen-btn" id="mobileFullscreenBtn" onclick="requestFullscreen()">
+              <i class="fa-solid fa-expand"></i>
+              Tap to Fullscreen
+            </button>
 
           </div><!-- /.player-container -->
 
@@ -458,32 +464,189 @@
   ═══════════════════════════════════ -->
   <script src="script.js"></script>
   <script>
-    /* ── Video Page Logic ─────────────────────────────── */
+    /* ── Video Page Logic (FIXED — mobile + fullscreen) ── */
     (function initVideoPage() {
 
-      /* ── Fullscreen — targets the iframe container ── */
+      /* ────────────────────────────────────────────────────
+         FULLSCREEN
+         FIX 1: Try iframe native fullscreen first (works on
+                 most Android browsers & desktop).
+         FIX 2: Fall back to container fullscreen if iframe
+                 API is blocked (common on iOS Safari).
+         FIX 3: On iOS, use manual CSS full-viewport overlay
+                 as last resort since iOS Safari blocks all
+                 Fullscreen API calls from cross-origin iframes.
+      ──────────────────────────────────────────────────── */
       window.requestFullscreen = function() {
         const container = document.querySelector('.player-container');
+        const iframe    = document.getElementById('mainVideo');
         if (!container) return;
-        const fn = container.requestFullscreen
-          || container.webkitRequestFullscreen
-          || container.mozRequestFullScreen
-          || container.msRequestFullscreen;
-        if (fn) fn.call(container);
+
+        /* Try iframe fullscreen first */
+        const iframeFn = iframe && (
+          iframe.requestFullscreen       ||
+          iframe.webkitRequestFullscreen ||
+          iframe.mozRequestFullScreen    ||
+          iframe.msRequestFullscreen
+        );
+
+        /* Try container fullscreen */
+        const containerFn =
+          container.requestFullscreen       ||
+          container.webkitRequestFullscreen ||
+          container.mozRequestFullScreen    ||
+          container.msRequestFullscreen;
+
+        if (containerFn) {
+          containerFn.call(container).catch(() => {
+            /* Fallback: manual CSS overlay for iOS Safari */
+            toggleIOSFullscreen(container, iframe);
+          });
+        } else if (iframeFn) {
+          iframeFn.call(iframe).catch(() => {
+            toggleIOSFullscreen(container, iframe);
+          });
+        } else {
+          /* Last resort for iOS */
+          toggleIOSFullscreen(container, iframe);
+        }
       };
 
-      /* ── Share ── */
+      /* ────────────────────────────────────────────────────
+         iOS FULLSCREEN FALLBACK
+         Creates a fixed full-viewport overlay since iOS
+         Safari does not support the Fullscreen API for
+         cross-origin iframes.
+      ──────────────────────────────────────────────────── */
+      var iosFullscreenActive = false;
+      var iosOverlay = null;
+
+      function toggleIOSFullscreen(container, iframe) {
+        if (iosFullscreenActive) {
+          exitIOSFullscreen();
+          return;
+        }
+
+        /* Build overlay */
+        iosOverlay = document.createElement('div');
+        iosOverlay.id = 'iosFullscreenOverlay';
+        Object.assign(iosOverlay.style, {
+          position:        'fixed',
+          inset:           '0',
+          zIndex:          '99999',
+          background:      '#000',
+          display:         'flex',
+          flexDirection:   'column'
+        });
+
+        /* Close button */
+        var closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> Exit Fullscreen';
+        Object.assign(closeBtn.style, {
+          position:    'absolute',
+          top:         '12px',
+          right:       '12px',
+          zIndex:      '100000',
+          background:  'rgba(0,0,0,0.6)',
+          color:       '#fff',
+          border:      '1px solid rgba(255,255,255,0.2)',
+          borderRadius:'999px',
+          padding:     '0.4rem 0.9rem',
+          fontSize:    '0.8rem',
+          cursor:      'pointer',
+          fontFamily:  'Inter, sans-serif',
+          display:     'flex',
+          alignItems:  'center',
+          gap:         '0.4rem'
+        });
+        closeBtn.addEventListener('click', exitIOSFullscreen);
+
+        /* Clone iframe src into a new iframe filling the overlay */
+        var fsIframe = document.createElement('iframe');
+        fsIframe.src         = iframe ? iframe.src : '';
+        fsIframe.frameBorder = '0';
+        fsIframe.allow       = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        fsIframe.allowFullscreen = true;
+        Object.assign(fsIframe.style, {
+          flex:   '1',
+          width:  '100%',
+          height: '100%',
+          border: 'none'
+        });
+
+        iosOverlay.appendChild(closeBtn);
+        iosOverlay.appendChild(fsIframe);
+        document.body.appendChild(iosOverlay);
+        document.body.style.overflow = 'hidden';
+        iosFullscreenActive = true;
+
+        /* Update button icon */
+        updateFullscreenBtnIcon(true);
+      }
+
+      function exitIOSFullscreen() {
+        if (iosOverlay) {
+          document.body.removeChild(iosOverlay);
+          iosOverlay = null;
+        }
+        document.body.style.overflow = '';
+        iosFullscreenActive = false;
+        updateFullscreenBtnIcon(false);
+      }
+
+      /* ────────────────────────────────────────────────────
+         FULLSCREEN BUTTON ICON SYNC
+         Keep the expand/compress icon in sync with state.
+      ──────────────────────────────────────────────────── */
+      function updateFullscreenBtnIcon(isFullscreen) {
+        var btns = document.querySelectorAll('#fullscreenBtn, #mobileFullscreenBtn');
+        btns.forEach(function(btn) {
+          var icon = btn.querySelector('i');
+          var txt  = btn.querySelector('span') || btn.childNodes[btn.childNodes.length - 1];
+          if (icon) {
+            icon.className = isFullscreen
+              ? 'fa-solid fa-compress'
+              : 'fa-solid fa-expand';
+          }
+        });
+        /* Update mobile btn text */
+        var mobileBtn = document.getElementById('mobileFullscreenBtn');
+        if (mobileBtn) {
+          var textNode = mobileBtn.lastChild;
+          if (textNode && textNode.nodeType === 3) {
+            textNode.textContent = isFullscreen ? ' Exit Fullscreen' : ' Tap to Fullscreen';
+          }
+        }
+      }
+
+      /* Listen for native fullscreen change events */
+      ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange']
+        .forEach(function(ev) {
+          document.addEventListener(ev, function() {
+            var isFs = !!(
+              document.fullscreenElement       ||
+              document.webkitFullscreenElement ||
+              document.mozFullScreenElement    ||
+              document.msFullscreenElement
+            );
+            updateFullscreenBtnIcon(isFs);
+          });
+        });
+
+      /* ────────────────────────────────────────────────────
+         SHARE
+      ──────────────────────────────────────────────────── */
       window.shareVideo = function() {
         if (navigator.share) {
           navigator.share({
             title: 'CypherGate — Video Presentation',
             text:  'Watch the CypherGate platform presentation on Google Drive.',
             url:   window.location.href
-          }).catch(() => {});
+          }).catch(function() {});
         } else {
           navigator.clipboard.writeText(window.location.href)
-            .then(() => alert('Link copied to clipboard!'))
-            .catch(() => {});
+            .then(function() { alert('Link copied to clipboard!'); })
+            .catch(function() {});
         }
       };
 
