@@ -125,8 +125,7 @@
       </h1>
 
       <p class="video-hero-sub">
-        Watch our complete presentation on Cybersecurity in Information Systems. Learn why cybersecurity is essential in protecting digital assets, explore the technologies and strategies used to defend against cyber threats, discover real-world applications from leading companies, and understand the future of cybersecurity in an increasingly connected world.
-
+        Watch our complete presentation on cybersecurity in Information Systems, exploring why it matters, the threats organizations face, the technologies used to protect digital assets, real-world applications, and the future of cybersecurity.
       </p>
 
       <div class="hero-meta">
@@ -159,67 +158,50 @@
             <div class="player-aspect">
 
               <!--
-              ╔══════════════════════════════════════════════╗
-              ║         VIDEO SOURCE — ADD YOUR PATH         ║
-              ║                                              ║
-              ║  OPTION A — Local / Hosted File:             ║
-              ║  Replace src="" with your video file path.   ║
-              ║  Example: src="assets/video/presentation.mp4"║
-              ║                                              ║
-              ║  OPTION B — YouTube Embed:                   ║
-              ║  Comment out the <video> block below and     ║
-              ║  uncomment the <iframe> block underneath it. ║
-              ║  Replace VIDEO_ID with your YouTube video ID.║
-              ╚══════════════════════════════════════════════╝
+              ╔══════════════════════════════════════════════════╗
+              ║        GOOGLE DRIVE VIDEO — ADD YOUR LINK        ║
+              ║                                                  ║
+              ║  1. Upload your video to Google Drive            ║
+              ║  2. Right-click → Share → Anyone with the link  ║
+              ║  3. Copy the File ID from the share URL:        ║
+              ║     drive.google.com/file/d/ ► FILE_ID ◄ /view  ║
+              ║  4. Paste the full embed URL below:             ║
+              ║     https://drive.google.com/file/d/FILE_ID/preview
+              ╚══════════════════════════════════════════════════╝
               -->
 
-              <!-- ── OPTION A: HTML5 Video Player (local/hosted) ── -->
-              <iframe
-  class="player-video"
- src="https://drive.google.com/file/d/1UKhnnG-pUfxSEboPiVJR10TF-DBf7mmn/preview"
-  title="CypherGate Video Presentation"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  allowfullscreen
-></iframe>
-
-              <!--
-              ── OPTION B: YouTube / External Embed ──
-              Remove the comment tags below and fill in your embed URL.
-
+              <!-- ★ GOOGLE DRIVE EMBED — PASTE YOUR URL IN src="" ★ -->
               <iframe
                 class="player-video"
-                src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1"
+                id="mainVideo"
+                src="https://drive.google.com/file/d/1UKhnnG-pUfxSEboPiVJR10TF-DBf7mmn/view?usp=sharing"
                 title="CypherGate Video Presentation"
                 frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="autoplay; encrypted-media; fullscreen"
                 allowfullscreen
               ></iframe>
-              -->
-
-              <!-- Empty state shown automatically when video has no src -->
-              <div class="player-empty-state" id="emptyState">
-                <div class="player-empty-icon">
-                  <i class="fa-solid fa-circle-play"></i>
-                </div>
-                <div class="player-empty-label">
-                  <strong>Video Presentation</strong>
-                  Add your video path to <code style="color:var(--emerald);font-size:0.8rem;">video.html</code> to display here.
-                </div>
-              </div>
 
             </div><!-- /.player-aspect -->
 
             <!-- Player Footer Bar -->
             <div class="player-footer">
               <div>
-                <div class="player-footer-title">CypherGate — CyberSecurity Presentation</div>
-                <div class="player-footer-meta mono">CypherGate Core Team · 2026 · Security-as-a-Service</div>
+                <div class="player-footer-title">CypherGate — Full Product Presentation</div>
+                <div class="player-footer-meta mono">
+                  <i class="fa-brands fa-google-drive" style="color:#10B981;margin-right:4px;"></i>
+                  Hosted on Google Drive · CypherGate Core Team · 2026
+                </div>
               </div>
               <div class="player-footer-actions">
-                <a href="" download class="player-action-btn">
-                  <i class="fa-solid fa-download"></i>
-                  <span>Download</span>
+                <a
+                  href=""
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="player-action-btn"
+                  title="Open in Google Drive"
+                >
+                  <i class="fa-brands fa-google-drive"></i>
+                  <span>Open in Drive</span>
                 </a>
                 <button class="player-action-btn" onclick="shareVideo()">
                   <i class="fa-solid fa-share-nodes"></i>
@@ -234,7 +216,6 @@
 
           </div><!-- /.player-container -->
 
-        
 
         </div><!-- /.video-player-wrap -->
 
@@ -248,10 +229,10 @@
             </div>
             <div class="sidebar-stats">
               <div class="sidebar-stat">
-                <div class="sidebar-stat-icon"><i class="fa-solid fa-circle-play"></i></div>
+                <div class="sidebar-stat-icon"><i class="fa-brands fa-google-drive"></i></div>
                 <div>
-                  <div class="sidebar-stat-label">Format</div>
-                  <div class="sidebar-stat-value">Single Presentation</div>
+                  <div class="sidebar-stat-label">Hosted On</div>
+                  <div class="sidebar-stat-value">Google Drive</div>
                 </div>
               </div>
               <div class="sidebar-stat">
@@ -475,15 +456,12 @@
   <!-- ═══════════════════════════════════
        SCRIPTS
   ═══════════════════════════════════ -->
+  <script src="script.js"></script>
   <script>
     /* ── Video Page Logic ─────────────────────────────── */
     (function initVideoPage() {
 
-      /* Hide empty state since we're using an iframe */
-      const emptyState = document.getElementById('emptyState');
-      if (emptyState) emptyState.style.display = 'none';
-
-      /* ── Fullscreen ── */
+      /* ── Fullscreen — targets the iframe container ── */
       window.requestFullscreen = function() {
         const container = document.querySelector('.player-container');
         if (!container) return;
@@ -499,7 +477,7 @@
         if (navigator.share) {
           navigator.share({
             title: 'CypherGate — Video Presentation',
-            text:  'Watch the CypherGate platform presentation.',
+            text:  'Watch the CypherGate platform presentation on Google Drive.',
             url:   window.location.href
           }).catch(() => {});
         } else {
