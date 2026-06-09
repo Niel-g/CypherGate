@@ -1,2 +1,17 @@
+# Vercel
 .vercel
+
+# Env
 .env*.local
+
+# Large binary/media files — host on CDN or cloud storage
+asset/Video/
+assets/*.png
+assets/*.jpg
+assets/*.jpeg
+asset/members/*.png
+asset/members/*.jpg
+asset/members/*.jpeg
+*.mp4
+*.mov
+*.webm
